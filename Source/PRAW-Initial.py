@@ -22,18 +22,54 @@ reddit = login()
 #                          # or the the submission URL if it's a self post
     
 #####NEW CODE##########
+
+def getSubredditComments(subreddit):
+    """Takes a subreddit and returns a dictionary with (user,comment)"""
+    subs = {}
+    # Get hot urls referenced by a subreddit and the corresponding comments
+    for submission in subreddit.get_hot(limit=10):
+        subs.update({submission.author : submission.comments})
+    return subs
+    
 #subreddit = reddit.get_subreddit("funny")
-
+#
 #subs = {}
-# Get hot urls referenced by a subreddit and the corresponding comments
+## Get hot urls referenced by a subreddit and the corresponding comments
 #for submission in subreddit.get_hot(limit=10):
-#    subs.update({submission.url : submission.comments})
+#    subs.update({submission.url : (submission.user, submission.comments)})
+#
+## For each url, print the top comments alongside their original url
+#for key in subs.keys():
+#    print("URL: ", key)    
+#    print("Comments: ")
+#    for item in subs[key]:
+#        # To handle the issue of CommentForests having MoreComments (subForests)
+#        if isinstance(item, MoreComments):
+#            continue
+#        print(item.body)
+#
+## THE TRAFFIC FOR A SPECIFIC PAGE: /r/funny
+#traffic = reddit.get_traffic("funny")
+#
+##Newest Subreddits right now
+#newbie = reddit.get_new_subreddits()
+#new = []
+#for item in newbie:
+#    new.append(item)
+    
+# Most popular subreddits right now (Generator)
+popular = reddit.get_popular_subreddits()
+comms = []
+for subred in popular:
+    temp = getSubredditComments(subred)
+    comms.append(temp)
 
-# For each url, print the top comments alongside their original url
-for key in subs.keys():
-    print("URL: ", key)    
-    print("Comments: ")
-    for item in subs[key]:
-        if isinstance(item, MoreComments):
-            continue
-        print(item.body)
+for key in comms[0].keys():
+     print("User: ", key)
+     print("Comments: ")
+     for item in comms[0][key]:
+         if isinstance(item, MoreComments):
+             continue
+         print(item.body)
+ 
+

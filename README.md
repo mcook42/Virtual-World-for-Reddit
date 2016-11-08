@@ -1,4 +1,4 @@
-3D World for Reddit
+﻿3D World for Reddit
 =========================================
 Team Members
 * Gwen Brewer
@@ -38,7 +38,7 @@ Neighborhoods:
 Elevators: 
 
 
-    • Allows use to select new pages in a subreddit and choose if we want the threads to be sorted by hot, new, controversial, rising, or gilded.
+    • Allows user to select new pages in a subreddit and choose if we want the threads to be sorted by hot, new, controversial, rising, or gilded.
 
 Rooms: 
 
