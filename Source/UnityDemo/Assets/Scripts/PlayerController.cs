@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
 
 	//The rigidbody of an object defines how physics interacts with the object. 
 	//Applying a force to the rigidbody will cause the object to move.
-	private Rigidbody rigidbody; 
+	private Rigidbody playerRigidbody; 
 
 	//speed of the player.
 	//Setting this variable to public allows us to set its value out side of the script. 
@@ -29,10 +29,10 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		//gameObject is the object we are working with. 
 		//GetComponent<Rigidbody> grabs this components rigidbody.
-		rigidbody = gameObject.GetComponent<Rigidbody> ();
+		playerRigidbody = gameObject.GetComponent<Rigidbody> ();
 
 		//Prevents the player from rotating. When this is false, the player will spin upon hitting anything.
-		rigidbody.freezeRotation = true;
+		playerRigidbody.freezeRotation = true;
 	}
 
 	//FixedUpdate is called everytime the physics is updated.
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour {
 		Vector3 directionVector=new Vector3 (moveHorizontal, 0, moveVertical);
 
 		//applying our force to our rigidbody with a speed.
-		rigidbody.velocity=directionVector * speed;
+		playerRigidbody.velocity=directionVector * speed;
 
 	}
 
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour {
 	//Resets the players position to the outside position.
 	public void resetOutsidePosition()
 	{
-		rigidbody.position = outsidePosition;
+		playerRigidbody.position = outsidePosition;
 
 	}
 }

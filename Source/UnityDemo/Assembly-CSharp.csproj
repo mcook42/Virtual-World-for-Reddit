@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{3F4C2566-33D6-F143-FC49-A9C1C05902A1}</ProjectGuid>
+    <ProjectGuid>{991ACB7A-CC85-4B1E-CE9A-C9C5FDEC3F6F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -51,11 +51,25 @@
      <Compile Include="Assets\Scripts\GoInside.cs" />
      <Compile Include="Assets\Scripts\GoOutside.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\RedditSharpTest.cs" />
+     <None Include="Assets\Fonts\TextShader.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="HtmlAgilityPack">
+ <HintPath>C:/Users/Caleb/Documents/GitHub/-Untitled-/Virtual-World-for-Reddit/Source/UnityDemo/Assets/Plugins/Resources/HtmlAgilityPack.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Users/Caleb/Documents/GitHub/-Untitled-/Virtual-World-for-Reddit/Source/UnityDemo/Assets/Plugins/Resources/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="RedditSharp">
+ <HintPath>C:/Users/Caleb/Documents/GitHub/-Untitled-/Virtual-World-for-Reddit/Source/UnityDemo/Assets/Plugins/Resources/RedditSharp.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Threading">
+ <HintPath>C:/Users/Caleb/Documents/GitHub/-Untitled-/Virtual-World-for-Reddit/Source/UnityDemo/Assets/Plugins/Resources/System.Threading.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,5 @@
 # UnityDemo
-This project is a rough test of a few of Unity's properities.
+This project is a test/documenation of the Unity features we will need for our project.
 
 Currently this project looks at Unities ability to:
 
@@ -9,4 +9,15 @@ Currently this project looks at Unities ability to:
 
 - switch scenes
 
-I plan to add onto this project as I learn more about Unity and its capabilites. I am currently working on getting C# to call a phython script. Some preliminary code for this is commented out in the CreateCubes script under Assets/Scripts.
+-Create text that is blocked by other objects.
+
+- connect to Reddit with RedditSharp (Currently in progress. To access this features use the menu item RedditSharp.)
+
+This demo will be updated as we figure out how Unity/Our Server/Reddit API work.
+
+Know Issues/Things to work on:
+
+-Player falls through floor when rapidly switching scenes.
+
+-RedditSharp does not work with Oath2.
+

@@ -25,7 +25,8 @@ public class CreateCubes : MonoBehaviour {
 				//Creates a new cube prefab
 				GameObject cube = Instantiate (cubePrefab);
 				//sets the cubes position
-				cube.transform.position = new Vector3 (x * 10, 0, y*10);
+				cube.transform.position = new Vector3 (x * 10, 5, y*10);
+
 			}
 		}
 
