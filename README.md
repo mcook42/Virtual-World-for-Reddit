@@ -1,4 +1,4 @@
-﻿3D World for Reddit
+﻿Virtual World for Reddit
 =========================================
 Team Members
 * Gwen Brewer
@@ -6,7 +6,7 @@ Team Members
 * Kay Seidel
 * Caleb Whitman
 
-Project Name: 3D World for Reddit
+Project Name: Virtual World for Reddit
 
 Project Description:
 
