@@ -1,9 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GoInside.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\RedditSharpTest.cs">
     <Files>
       <File FileName="Assets\Scripts\CreateCubes.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\RedditSharpTest.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\RedditSharpTest.cs" Line="42" Column="38" />
       <File FileName="Assets\Scripts\PlayerController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GoInside.cs" Line="1" Column="1" />
     </Files>
