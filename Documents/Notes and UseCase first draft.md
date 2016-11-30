@@ -63,7 +63,8 @@
  * Server: Must correctly structure data and preserve user preferences
 
  * Reddit: Requires its data to be appropriately used and represented, no misuse via content downloading or uploading
-Preconditions
+ 
+###Preconditions
 
  * Server is currently running
 
