@@ -1,5 +1,27 @@
 #Notes
+ 
+#Introduction
 
+We aim to create a 3D city based off of the popular social media site Reddit. In the city, a building will be created for every Subreddit on Reddit. Inside the building, a room will be created for every thread within that Subreddit. Inside every room, stick figure characters will be created for every comment within that thread. Through interaction with these objects, the user will be able to view/interact with Reddit in a three dimensional setting. We make the assumption that our users will already be familiar with Reddit's structure and features.
+
+##Stakeholders and Interests
+
+1. People who have experience using Reddit:
+
+ View Reddit content in a 3D setting.
+
+2. People with a Reddit account: 
+ 
+ View and interact with Reddit content in a 3D setting.
+ 
+3. Reddit Admins/Moderators: 
+
+ Performing moderator and administrator actions is not within the scope of our application. 
+ 
+4. Reddit: 
+
+ Request information from the website using the specific format that Reddit outlines [here](https://github.com/reddit/reddit/wiki/OAuth2).
+ 
 ##Actors and Goals:	
 
 1. Content viewer:
@@ -37,10 +59,23 @@
  Stay current using automatic and on-demand updates
 
  Analyze contents for graphics purposes
- 
+
 #Use Cases
 
-##Use Case: 1, Server Responds to Requests and Processes Information
+##Use Case Overview
+
+1. Our server periodically loads and stores information from Reddit 
+
+2. Our application gets Reddit information from our server 
+
+3. Our application creates a three dimensional world based off of the Reddit information
+
+4. Users without Reddit accounts travel around the world and view the Reddit content
+
+5. Users with a Reddit account login, and then interact with Reddit through our application 
+
+
+##Use Case: 2, Server Responds to Requests and Processes Information
 
 ###Characteristic Information
 
@@ -132,7 +167,7 @@
    
 **Due Date:** release 1.0
 
-##Use Case: 2, User Navigates World and Views Reddit Content
+##Use Case: 3, User Navigates World and Views Reddit Content
 
 ###Characteristic Information
 
@@ -214,7 +249,7 @@
 
 **Due Date:** release 1.0
 
-##Use Case: 3, User Interacts With World and Reddit
+##Use Case: 4, User Interacts With World and Reddit
 
 ###Characteristic Information
 
