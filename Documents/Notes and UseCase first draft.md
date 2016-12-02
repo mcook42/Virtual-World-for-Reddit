@@ -75,8 +75,6 @@ Our application has three summary level use cases.
 3. Users travel around the world, view Reddit content, and if they have an account, log in and interact with Reddit content.
 
 
-
-
 ##Use Case: 1, Server Responds to Requests and Processes Information
 
 ###Characteristic Information
@@ -169,11 +167,37 @@ Our application has three summary level use cases.
    
 **Due Date:** release 1.0
 
-##Use Case: 2, User Navigates World and Views Reddit Content
+##Use Case: 2, Mapping Reddit Features to a 3D World
+
+###Charactersitic Information
+
+**Goal:** Our application will map the majority of Reddit's features into a 3D world. Reddit objects such as posts, comments, and subreddits will be represented in objects in our city such as buildings, stick figures and neighborhoods. Interactions with Reddit will be available through interactions with these objects. 
+
+**Primary Actor:** Our Unity Application
+
+**Scope:** Backend of Application
+
+**Level:** System
+
+**Trigger:** User opens application or user travels to a part of the world that is not yet loaded.
+
+**Success End Condition:** A 3D world is created from Reddit content.
+
+**Failed End Condition:** An error message is produced.
+
+###Stakeholders/Interests
+
+
+
+
+
+##Use Case: 3, User Navigates World and Views Reddit Content
 
 ###Characteristic Information
 
 **Primary Actor:** Reddit Guest
+
+**Goal:** Actor will be able to travel around our world, navigate to the Reddit content they desire, and view that content.
 
 **Scope:** User Interface
 
@@ -251,11 +275,14 @@ Our application has three summary level use cases.
 
 **Due Date:** release 1.0
 
-##Use Case: 3, User Interacts With World and Reddit
+
+##Use Case: 4, User Interacts With World and Reddit
 
 ###Characteristic Information
 
 **Primary Actor:** Reddit User
+
+**Goal:** Actor will interact with objects in our world in order to up/downvote posts, create posts and comments, and view their profile. 
 
 **Scope:** User Interface
 
