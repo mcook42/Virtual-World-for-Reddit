@@ -167,13 +167,14 @@ Our application has three summary level use cases.
    
 **Due Date:** release 1.0
 
+
 ##Use Case: 2, Mapping Reddit Features to a 3D World
 
 ###Charactersitic Information
 
 **Goal:** Our application will map the majority of Reddit's features into a 3D world. Reddit objects such as posts, comments, and subreddits will be represented in objects in our city such as buildings, stick figures and neighborhoods. Interactions with Reddit will be available through interactions with these objects. 
 
-**Primary Actor:** Our Unity Application
+**Primary Actor:** Unity Application
 
 **Scope:** Backend of Application
 
@@ -187,7 +188,45 @@ Our application has three summary level use cases.
 
 ###Stakeholders/Interests
 
+ * Unity Application: Successfully generate 3D world from provided Reddit content.
+ 
+ * User: View and interat with generated objects.
+ 
+###Preconditions
 
+ * Application has loaded Reddit content from our server
+ 
+###Minimal Guarantee
+
+ Application will create objects from all content that has been loaded. 
+
+###Main Success Scenario
+
+Application will create objects from all Reddit content loaded. All of the objects together will form a fully interactive city environment. Listed below is the overall city structure and all Reddit features we plan to implement. The list does not explain the Reddit features. For those new to Reddit, Reddit's main features are explained on the [Reddit Wikipedia page](https://en.wikipedia.org/wiki/Reddit) as well as in this [article](http://www.makeuseof.com/tag/download-best-of-the-web-delivered-the-reddit-manual/). A list of all Reddit's features (without explanation) can be found [here](https://www.reddit.com/dev/api/). 
+
+####Overall Layout
+
+The city will consist of buildings. Every building will represent a Subreddit. The buildings will be organized according to the categorization found [here](http://rhiever.github.io/redditviz/clustered/), created by researchers Randal S. Olson and Zachary P. Neal. The overall idea is that similiar Subreddit buildings will be found next to each other. If the user wishes to travel to any subreddits not listed in the categorization, the Subreddit building will be created on the outskirts of the city. Sections of the city will be divided off into neighborhoods. Each neighborhood will have its own style (described more under the Subreddit implementation). Neighborhoods will be created based on a predetermined category. An example categorization created by the Reddit user JAVOK is found [here](http://i.imgur.com/pAUoJLB.jpg). 
+
+####Subreddit Implementation:
+
+A building will be created for every Subreddit. The outside appearance of the building will depend on the neighborhood that the Subreddit is in. Each neighforhood will have a different building style. For example, the gaming neighborhood will consist of buildings that are all gameshops and the minecraft neighborhood will consist of buildings that are all minecraft style dirt houses. Subreddits existing on the outskirts of the city, not inside a neighborhood, will be simple houses.
+
+Each building will have a main entrance. Upon entering one will find themselves in a room with an information desk, an elevator, and 25 doors along the walls. Each one of these objects is described in more detail below.
+
+ * Posts: Each post will be a door on the wall. The name of the post as well as a description will be written beside the door. 
+
+ * Name: Name will be posted above the main entrance of the building.
+ 
+ * Posting Rules: An information desk will hold the posting rules. The information desk will consist of a kiosk with a single stick figure person inside of it. Interaction with the person will cause them to show the user the posting rules, in the form of a text that fills up the screen. 
+ 
+ * Surscriber number: The more surscribers a Subreddit has, the larger the building will become. For every building style, there will be three sizes of buildings. Subreddits with more than 400,000 surscribers will have the maximum building size (approximately 100 Subreddits). Subreddits with more than 100,000 surscribers will have the middle building size (approximately 400 Subreddits). All other Subredditss will have the smallest building size.
+ 
+ * Number of users viewing Subreddit: For every 1000 users viewing a Subreddit, one stick figure person will be created to walk around the building. If there are more than 20,000 users viewing a Subreddit, only 20 stick figure people will be created.
+ 
+ * Activeness of Subreddit: For each building style and size, we will have three models representing the upkeep of the building. The condition will be based on the activeness of the Subreddit. We will look at the most recent 25 new posts and the posting time in order to determine the activeness of a Subreddit. If the average posting time of the 25 most recent posts is below 24 hours, then the building will look brand new. If the average posting time of the 25 most recent posts is below 30 days, the building will look worn. If the average posting time of the 25 most recent psots is above 30 days, the building will look rundown. 
+ 
+ * Organize Subreddit by Top/Hot/New etc: 
 
 
 
