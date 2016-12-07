@@ -26,6 +26,10 @@
 
  * Application has loaded Reddit content from our server
  
+###Trigger
+
+Unity Application starts.
+ 
 ###Minimal Guarantee
 
  Application will create objects from all content that has been loaded. 
@@ -66,11 +70,13 @@ Each thread within a subreddit is represented by a door on the wall inside the m
  
  * Up/downvote: The upvotes count is posted on the door to enter the thread. An upvote button exists outside the door. Clicking it causes the post to be updated if the user is logged in.
  
- * Thread Creator: The thread creator is a stick figure at the front of the room. He/she greets the user as they enter the room.
+ * Thread creator: The thread creator is a stick figure at the front of the room. He/she greets the user as they enter the room.
  
  * Submision time: A clock and calander exist on the wall inside the thread room next to the door. The clock shows the time posted and the calander shows the day posted.
  
  * Announcements: A stick figure with a megaphone exists outside of every door that is an announcement thread. 
+ 
+ * Create thread: Clicking the "t" keyboard key within a building causes a post submission box to appear. When a new post is submitted, they teleport into a room representing the thread they created. 
  
 ####Comment Implementation:
 
@@ -91,6 +97,8 @@ For every comment within a thread, a stick figure character is created and put i
  * [removed]: When the comment is removed, the stick figure will not have a name tag and will have a paper bag over their head.
  
  * Flair: The stick figure wears a tee shirt with the flair on the front.
+ 
+ * Add comment: Interacting with a stick figure brings up an option to comment on that stick figure's post/comment. Submitting a new comment causes a new stick figure representing that comment to be created. 
 
 ####User Profile Implemenation:
 
@@ -109,3 +117,27 @@ Every user profile is represented by a house. If the user of our application is 
  * Posts: Every post the user creates corresponds to a door inside the hallway. Only the first 25 newest posts appear initially. The elevator functions similarily to the elevator within a subreddit and allows the user to view more posts or organize posts differently. 
  
  * Comments: Every comment the user creates corresponds to a picture frame on the wall with that comment inside of it. Only the first 25 comments appear initially. The elevator has an option to load more comments or rank the comments differently. 
+ 
+ * Create new user profile: Clicking the "u" keboard key brings up a new user login page. Upon logging in, a house represeting the user profile will appear in the center of the city. The user will be teleported to the outside of the house.
+ 
+###Extensions:
+
+ * Create thread: Unable to post within subreddit.
+ 
+  + Give error message.
+  
+ * Add comment: Unable to post within thread.
+ 
+  + Give error message.
+  
+ * Add comment: More than 25 stick figures exist within the room.
+ 
+  + Remove the stick figure that appears at the bottom of the current comment chain being represented.
+  
+ * Create new user profile: Unable to create new user.
+ 
+  + Give error message.
+
+SCHEDULE
+
+Due Date: release 1.0
