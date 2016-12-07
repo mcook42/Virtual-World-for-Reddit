@@ -10,7 +10,7 @@ In the backend, the application will be created using [Unity](https://unity3d.co
 
 1. People with experience using Reddit:
 
-  Our application will provide this stackholder with an alternative method of viewing Reddit. Using features provided in the world, this stackholder will be able to:
+  Our application will provide this stakeholder with an alternative method of viewing Reddit. Using features provided in the world, this stakeholder will be able to:
   
  * View posts and comments.
 
@@ -20,7 +20,7 @@ In the backend, the application will be created using [Unity](https://unity3d.co
 
 2. People with a Reddit account: 
  
- In addition to viewing Reddit content, this stackholder will be able to:
+ In addition to viewing Reddit content, this stakeholder will be able to:
  
  * Create posts. 
  
@@ -40,7 +40,7 @@ In the backend, the application will be created using [Unity](https://unity3d.co
  
 4. Server: 
 
- In order to request data from Reddit, we will use a server. The goal of our server is to keep itself updated with Reddit content and provide this content to our all application upon request. The server performs the following actions:
+ In order to request data from Reddit, we will use a server. The goal of our server is to keep itself updated with Reddit content and provide this content to our application upon request. The server performs the following actions:
  
  * Requests data from Reddit
  
