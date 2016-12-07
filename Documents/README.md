@@ -6,11 +6,11 @@ We aim to create a 3D city based off of the popular social media site Reddit. In
 
 1. People with experience using Reddit:
 
-  Our application will provide this stackholder with an alternative method of viewing Reddit. This stackholder will be able to view posts and comments, travel around our world, and create/login to a Reddit account using the objects and features provided in our three dimensional world.
+  Our application will provide this stakeholder with an alternative method of viewing Reddit. This stakeholder will be able to view posts and comments, travel around our world, and create/login to a Reddit account using the objects and features provided in our three dimensional world.
 
 2. People with a Reddit account: 
  
- In addition to viewing Reddit content, this stackholder will be able to create, posts and comments, create bookmarks, view and edit their account profile (bookmarks, mailbox, karma, trophies, and saved comments), give gold, and manage friends.
+ In addition to viewing Reddit content, this stakeholder will be able to create posts and comments, create bookmarks, view and edit their account profile (bookmarks, mailbox, karma, trophies, and saved comments), give gold, and manage friends.
  
 3. Reddit Admins/Moderators: 
 
@@ -22,7 +22,7 @@ We aim to create a 3D city based off of the popular social media site Reddit. In
  
 5. Server: 
 
- In order to request data from Reddit, we will use a server. The server will request data from Reddit, store this data in a database, and then send the data to our application upon request. The goal of our server is to keep itself updated with Reddit content and provide this content to our all application upon request. 
+ In order to request data from Reddit, we will use a server. The server will request data from Reddit, store this data in a database, and then send the data to our application upon request. The goal of our server is to keep itself updated with Reddit content and provide this content to our application upon request. 
  
 ##Actors and Goals:	
 
