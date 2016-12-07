@@ -30,7 +30,7 @@
 
  * Server is currently running
 
- * User is connected to the internet and has a system with correct capabilities (windows, android)
+ * User is connected to the Internet and has a system with correct capabilities (i.e. windows, android)
 
 ###Minimal Gaurantee
 
@@ -40,17 +40,19 @@
 
 ###Main Success Scenario
 
-1. User appears in the main page of the virtual world
+1. User appears in the main page of the virtual world (their home)
 
 2. User successfully navigates to desired content (subreddit, thread, comment)
 
  a) Using map
 
  b) Using searchbar
+ 
+ c) Using teleportation device
 
 3. User views content
 
- a) If the user attempts to interact with content, the program will prompt the user to login or create an account
+ a) If the user attempts to interact with content, the program will prompt the user to login or create an account through a text box      overlayed on the screen
 
 4. User downloads content to their device’s library (images, gifs, videos, etc.)
 
@@ -60,9 +62,9 @@
  
    + 1: Give error message
    
-   + 2: Quit application
+   + 2: Quit application (is this appropriate, or should we let the user exit on their own?)
 
- * 2: Content unavailable (server down, subreddit private, Reddit down etc.)
+ * 2: Content unavailable (server down, subreddit private, Reddit down etc.) (how EXACTLY is this different from the first extension?)
  
    + 1: Tell user that the content is unavailable
  
