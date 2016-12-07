@@ -2,7 +2,7 @@
 
 ###Charactersitic Information
 
-**Goal:** Our application maps the majority of Reddit's features into a 3D world. Reddit objects such as posts, comments, and subreddits are represented as objects in our city such as buildings, stick figures and neighborhoods. Interactions with Reddit are available through interactions with these objects. 
+**Goal:** Our application maps the majority of Reddit's features into a 3D world. Reddit objects such as posts, comments, and subreddits are represented as objects such as buildings, stick figures and neighborhoods. Interactions with Reddit are available through interactions with these objects. 
 
 **Primary Actor:** Unity Application
 
@@ -48,7 +48,7 @@ Each building has a main entrance. Inside the building is a room with an informa
  
  * Organize subreddit by hot/new/rising/controversial/top/gilded/promoted: The elevator has a button for each possible ranking that Reddit provides (hot, new, rising, controversial, top, gilded, and promoted). Hitting the button takes the user to a room with the top 25 posts for that ranking. 
 
- * Name: The name of the Subreddit is posted above the main entrance of the building. Once inside the building, the name appears at the top of the screen and remains there until the user exists the building.
+ * Name: The name of the Subreddit is posted above the main entrance of the building. Once inside the building, the name appears at the top of the screen until the user exits the building.
  
  * Posting Rules: An information desk holds the posting rules. The information desk consists of a kiosk with a single stick figure person inside of it. Interaction with the person causes them to show the user the posting rules, in the form of a text that fills up the screen. 
  
@@ -78,16 +78,15 @@ For every comment within a thread, a stick figure character is created and put i
 
  * View parent/children comments: Interaction with a stick figure brings up an option to view that comments parents or children. When the user chooses to view the parents/children, all other stick figures in the room vanish in a poof of dust. The top 24 parent/children comments then appear in the room. Interaction with the thread creator presents the user with an option to load the next or previous 24 parents/children.
   
- * Comment text: Interaction causes the stick figures to say their comment. A text bubble appears above the stick with the comment. 
-    When the comment contains more than one link, only the first link is shown. 
-    When the comment contains a link to an image, an art canvas appears next to the figure with the image. 
-    When the comment contains a link to another website, then what?
-    When the comment contains a link to a GIF, then what?
+ * Comment text: Interaction causes the stick figures to say their comment. A text bubble appears above the figure with the comment. 
+ 
+  +  When the comment contains a link to an image/gif, an art canvas appears next to the figure with the image/gif. Gifs are initially paused and will only play upon interaction. When there is more than one link to an image/gif, only the first link is shown on the art canvas. 
+  
+  + When the comment contains a link to a subreddit, thread, or comment, clicking on the link teleports the user to that subreddit/thread/comment within our world.
+  
+  + When the comment contains a link to a website, clicking the link suspends our application and takes the user to the website through their internet browser. Upon return to our application, the world will be in the same state that the user left it in (same comments loaded, user in same location etc.).
   
  * User name: Each stick figure has a name tag with their username on it.
- 
- * User age: There are three different models to represent the age of the user. Users created within the last month are stick figure babies. Users created more than 5 years ago appear as stick figures with beards and grey hair. All other users appear as normal stick figures.
- Do we really need this? It's not terribly obvious most of the time how old a user is, unless you click on their profile. 
  
  * Up/down vote: The upvote count alters the mood of the stick figures. Stick figures with 100 or more upvotes have a smiley face. Stick figures with 1-100 upvotes have a neutral face. Stick figures with less than 1 upvote appear angry. When the user is logged in, they are equipped with a paint gun that allows them to upvote or downvote comments. The paint gun allows the user to paint the stick figure orange or blue. Painting them blue upvotes the comment. Painting them orange downvotes the comment. The user must open the comment before they are able to paint the stick figure.
  
@@ -105,7 +104,7 @@ Every user profile is represented by a house. If the user of our application is 
  
  * Post/Comment Karma: There are three different house models to represent Post/Comment Karma. When the user has more than 500,000 combined karma, the house is a mansion. When the user has between 1,000 and 500,000 karma, the house is a normal house. When the user has less than 1,000 karma, the house is a cardboard box.
  
- * Subscribed subreddits: A teleportation device exists along the wall of the living room for every subscribed subreddit. Stepping inside the teleportation device causes the user to appear in front of the corresponding subreddit building.
+ * Subscribed subreddits: A teleportation device exists in the center of the living room. Stepping inside the teleportation device brings up an option menu containing a list of all subscribed subreddits. Upon choosing a subreddit, the user is teleported outside of the building representing that subreddit.
  
  * Mailbox: A mailbox exists outside of every house to represent the mailbox. Interaction with the mailbox allows the user to view all messages within the mailbox.
 
