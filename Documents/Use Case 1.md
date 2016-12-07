@@ -38,7 +38,7 @@
 
 ###Main Success Scenario
 
-1. Recognizes a need to update data
+1. Server recognizes a need to update data
 
  a) Request from user
 
@@ -46,13 +46,18 @@
 
  c) Processing of graphic-specific data
 
-2. Respond to the request
+2. Server responds to the request
 
  a) Query the table for data
 
  b) Request the data from Reddit
 
-3. Process, format, and return the acquired data to the user
+3. Server returns the acquired data to the user
+
+ a) Process the acquired data
+
+ b) Format the data 
+ 
 
 ###Extensions
 
