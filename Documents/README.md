@@ -1,8 +1,8 @@
 #Introduction
 
-We aim to create a 3D city based off of the popular social media site Reddit. In the city, a building is created for every Subreddit on Reddit. Inside the building, a room is created for every thread within that Subreddit. Inside every room, stick figure characters are created for every comment within that thread. Through interaction with these objects, the user is able to view/interact with Reddit in a three dimensional setting. We make the assumption that our users are already be familiar with Reddit's structure and features.
+We aim to create a 3D city based off of the popular social media site Reddit. In the city, a building is created for every Subreddit on Reddit. Inside the building, a room is created for every thread within that Subreddit. Inside every room, stick figure characters are created for every comment within that thread. Through interaction with these objects, the user is able to view/interact with Reddit in a three dimensional setting. We make the assumption that our users are already familiar with Reddit's structure and features.
 
-The application exists as both a Windows desktop application as well as a Google Cardboard virtual reality application. For both applications, a key board and mouse is used to control the movement of the user. The user views the world through a first person viewpoint. 
+The application exists as both a Windows desktop application as well as a Google Cardboard virtual reality application. For both applications, a keyboard and mouse is used to control the movement of the user. The user views the world through a first person viewpoint. 
 
 In the backend, the application will be created using [Unity](https://unity3d.com/). A server will be used to gather information from Reddit and then send this data to the application.
 
@@ -26,9 +26,9 @@ In the backend, the application will be created using [Unity](https://unity3d.co
  
  * Create comments. 
  
- * Surscribe to subreddits.
+ * Subscribe to subreddits.
  
- * View and edit their account profile (surscriptions, mailbox, karma, trophies, and saved comments).
+ * View and edit their account profile (subscriptions, mailbox, karma, trophies, and saved comments).
  
  * Give gold.
  
@@ -42,7 +42,7 @@ In the backend, the application will be created using [Unity](https://unity3d.co
 
  In order to request data from Reddit, we will use a server. The goal of our server is to keep itself updated with Reddit content and provide this content to our application upon request. The server performs the following actions:
  
- * Requests data from Reddit
+ * Requests data from Reddit.
  
  * Stores this data in a database.
  
@@ -66,4 +66,4 @@ Our application has four use cases.
 
 3. Users travel around the world and views Reddit content.
 
-4. When the user logs in, they are able to interact with the Reddit Content.
+4. When the user logs in, they can interact with the Reddit content through objects in the world.
