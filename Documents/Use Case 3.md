@@ -14,7 +14,7 @@
 
 **Success End Condition:** User navigates world, views content, and exits
 
-**Failed End Condition:** User told that content unavailable and application either exits or loads default structure
+**Failed End Condition:** User is told that content unavailable and application either exits or loads default structure
 
 ###Stakeholders/Interests
 
@@ -44,11 +44,9 @@
 
 2. User successfully navigates to desired content (subreddit, thread, comment)
 
- a) Using map
-
- b) Using searchbar
+ a) Using map:  User presses button to bring up map of subreddits organized into sections by types (i.e. NSFW area).  The user will be able to zoom in and out on certain areas and scroll around on the map, then select the subreddit they want to navigate to.  The map will also have a search bar functionality.
  
- c) Using teleportation device
+ b) Using teleportation device:  User will enter the device and be able to scroll through and select a saved location.  The device will also have the same search bar as the map.
 
 3. User views content
 
@@ -58,13 +56,13 @@
 
 ###Extensions
 
- * 1: Content unavailable (server down, server not responding, Reddit down etc.)
+ * 1: All content is unavailable (server down, server not responding, Reddit down etc.)
  
    + 1: Give error message
    
    + 2: Quit application (is this appropriate, or should we let the user exit on their own?)
 
- * 2: Content unavailable (server down, subreddit private, Reddit down etc.) (how EXACTLY is this different from the first extension?)
+ * 2: A particular piece of content cannot be loaded (server down, subreddit private, Reddit down etc.)
  
    + 1: Tell user that the content is unavailable
  
