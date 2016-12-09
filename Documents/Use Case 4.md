@@ -1,4 +1,4 @@
-##Use Case: 4, User Interacts With World and Reddit
+﻿##Use Case: 4, User Interacts With World and Reddit
 
 ###Characteristic Information
 
@@ -42,31 +42,60 @@
 
 ###Main Success Scenario
 
-1. User logs in and appears in personal area
+1. User enters Username and Password into login screen and appears in personal area.
+   (For more information on personal area view Use Case 2)
 
 2. User views personal data saved to personal area (mailbox, karma, trophy case)
 
 3. User successfully navigates to desired content (subreddit, thread, comment)
 
- a) Map
+4. User views content which is rendered on screen (for more info view Use Case 2)
 
- b) Searchbar
-
- c) Bookmarks in personal area and other saved content
-
-4. User views content
-
-5. User downloads content to their device’s library (images, gifs, videos, etc.)
+5. User downloads content to their device’s library (images, gifs, videos, etc.). The user interacts with a popup to confirm the save to device.
 
 6. User interacts with content
 
- a) Up/downvote
+ a) User clicks on up/down vote icons.  Selection is sent to Reddit with Oauth2 credentials via PRAW.
 
- b) Comment
+ b) Comment is created within a popup screen using keyboard. The post is then sent to Reddit with Oauth2 credentials via PRAW.
 
- c) Create post
+ c) Create post within a popup screen using keyboard.  The post is then sent to Reddit with Oauth2 credentials via PRAW.
  
 ###Extensions
+
+ * 1a. Username/Password incorrect
+
+   + 1: Inform user with popup that credentials are incorrect. Allow user to close popup and try again. If necessary, redirect to Reddit login page for more help.
+ 
+ * 1b. Username/Password correct
+
+   + 1: User recieves Oauth2 token to continue to interact with Reddit content later on.  Token is stored on user computer.
+
+ * 2a. User views trophies in trophy case
+
+   + 1: Trophies specific to user are rendered inside trophy case embossed with specific trophy information.
+
+ * 2b. User views mailbox
+
+   + 1: Mail is rendered as envelopes with sender's username and the subject of the mail.  Rendered as opened/unopened envelope respectively.
+
+   + 2: Mail can be opened by clicking "open" button, which renders the mail content
+  
+   + 3: Mail can be replied to by clicking "reply", or deleted by "delete".
+
+ * 3a. User uses graphical map to navigate
+   
+   + 1: User clicks on "map" icon on screen to render the map of reddit communities (more on this in Use Case 2)
+ 
+   + 2: User's can click on subreddit to navigate to it.  Popup will show to confirm navigation.
+
+ * 3b. User uses searchbar to navigate
+  
+   + 1: User enters specific subreddit to navigate to. If subreddit exists, navigation is performed. If not, suggestions will be made visible below search bar.
+
+ * 3c. User uses bookmarks to navigate
+
+   + 1: User views their bookmarked links and clicks on one.  User is navigated to the specific link within the world.
 
  * 6a. Thread archived
  
@@ -78,7 +107,7 @@
    
  * 6c. Posting restricted in subreddit
  
-  + 1: Infrom user that they cannot post in this subreddit
+   + 1: Infrom user that they cannot post in this subreddit
   
 ###SCHEDULE
 
