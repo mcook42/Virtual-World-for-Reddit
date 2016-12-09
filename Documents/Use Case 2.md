@@ -36,7 +36,7 @@ Application creates objects from all Reddit content loaded. All of the objects t
 
 ####Overall Layout
 
-The city consists of buildings. Every building represents a subreddit. The buildings are organized according to the categorization found [here](http://rhiever.github.io/redditviz/clustered/), created by researchers Randal S. Olson and Zachary P. Neal. The overall idea is that similar subreddit buildings are found next to each other. Sections of the city are divided off into neighborhoods. Each neighborhood has its own style (described more under the Subreddit Implementation section). Neighborhoods are created based on a predetermined category. An example categorization created by the Reddit user JAVOK is found [here](http://i.imgur.com/pAUoJLB.jpg). If the user wishes to travel to any subreddits not listed in the categorization, the subreddit building is created on the outskirts of the city. 
+The city consists of buildings. Every building represents a subreddit. The buildings are organized according to the categorization found [here](http://rhiever.github.io/redditviz/clustered/), created by researchers Randal S. Olson and Zachary P. Neal. The overall idea is that similar subreddit buildings are found next to each other. Sections of the city are divided off into neighborhoods. Each neighborhood has its own style (described more under the Subreddit Implementation section). Neighborhoods are created based on a predetermined category. An example categorization created by the Reddit user JAVOK is found [here](http://i.imgur.com/pAUoJLB.jpg). The special subreddits Front and Friends are found in the center of the city. If the user wishes to travel to any subreddits not listed in the categorization, the subreddit building is created on the outskirts of the city. 
 
 ####Subreddit Implementation:
 
@@ -71,6 +71,8 @@ Each thread within a subreddit is represented by a door on the wall inside the m
  * Submission Time: A clock and calendar exist on the wall inside the thread room next to the door. The clock shows the time posted and the calendar shows the day posted.
  
  * Announcements: A stick figure with a megaphone exists outside of every door that is an announcement thread. 
+ 
+ * Gild: Gilded threads have a gold door.
  
 ####Comment Implementation:
 
