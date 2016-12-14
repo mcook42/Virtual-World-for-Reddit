@@ -30,10 +30,6 @@ In the backend, the application will be created using [Unity](https://unity3d.co
  
  * View and edit their account profile (subscriptions, mailbox, karma, trophies, and saved comments).
  
- * Give gold.
- 
- * Manage friends.
- 
 3. Reddit: 
 
  In order to get data from Reddit, our application will request data in the specific format that Reddit outlines [here](https://github.com/reddit/reddit/wiki/OAuth2).
