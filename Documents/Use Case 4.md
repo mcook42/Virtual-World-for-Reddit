@@ -61,6 +61,8 @@
 
  c) Create post within a popup screen using keyboard.  The post is then sent to Reddit with Oauth2 credentials via PRAW.
  
+ d) Subscribe to a subreddit by clicking on a door bell outside the main door. The user is then subscribed to the subreddit using Oauth2 credentials via PRAW.
+ 
 ###Extensions
 
  * 1a. Username/Password incorrect
@@ -108,6 +110,7 @@
  * 6c. Posting restricted in subreddit
  
    + 1: Infrom user that they cannot post in this subreddit
+   
   
 ###SCHEDULE
 
