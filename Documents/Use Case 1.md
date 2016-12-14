@@ -4,9 +4,15 @@
 
 **Primary Actor:** Server
 
+**Goal:** 
+
+ 1) Server receives request from our application and then responds with Reddit content.
+ 
+ 2) In order to quickly respond to requests, the server periodically loads data from Reddit and stores this data in a database.
+
 **Scope:** Reddit Data Handling/Backend
 
-**Level:** Background (?)
+**Level:** Background
 
 **Trigger:** Server recieves request
 
@@ -40,23 +46,21 @@
 
 1. Server recognizes a need to update data
 
- a) Request from user
+ a) Our application requests Reddit content.
 
- b) Automatic update
-
- c) Processing of graphic-specific data
+ b) Every ten minutes the server periodically updates its database with recent Reddit content. 
 
 2. Server responds to the request
 
- a) Query the table for data
+ a) Server queries the database for the desired Reddit content.
 
- b) Request the data from Reddit
+ b) When the database does not contain the desired Reddit content or when the content is outdated, the server loads content from Reddit using PRAW. 
 
 3. Server returns the acquired data to the user
 
- a) Process the acquired data
+ a) Data is formated into a JSON document.
 
- b) Format the data 
+ b) Data is sent back to the application.
  
 
 ###Extensions
