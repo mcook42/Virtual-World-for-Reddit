@@ -4,7 +4,7 @@ We aim to create a 3D city based off of the popular social media site Reddit. In
 
 The application exists as both a Windows desktop application as well as a Google Cardboard virtual reality application. For both applications, a keyboard and mouse is used to control the movement of the user. The user views the world through a first person viewpoint. 
 
-In the backend, the application will be created using [Unity](https://unity3d.com/). A server will be used to gather information from Reddit and then send this data to the application.
+In the backend, the application will be created using [Unity](https://unity3d.com/). A server will be used to gather information from Reddit and then send this data to the application. The server will use the Python API wrapper [PRAW](https://praw.readthedocs.io/en/latest/) in order to make requests to Reddit.
 
 ##Stakeholders and Goals:
 
