@@ -16,8 +16,7 @@ public class DontDestroyOnLoad : MonoBehaviour {
 	void Awake()
 	{
 		//sets up the property so that the oject is not destroyed onload. 
-		//No idea why we are using transform.gameOject as the parameter opposed to gameObject.
-		DontDestroyOnLoad (transform.gameObject);
+		DontDestroyOnLoad (gameObject);
 
 	}
 }

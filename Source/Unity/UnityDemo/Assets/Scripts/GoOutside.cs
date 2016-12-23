@@ -1,6 +1,6 @@
 ﻿/**GoOutside.cs
  * Author: Caleb Whitman
- * October 29, 2016
+ * Dec 23, 2016
  * 
  * This script is applied to the door prefab on the house.
  * 
@@ -16,6 +16,7 @@ public class GoOutside : MonoBehaviour {
 	//This will be called whenever something collides with this object.
 	void OnTriggerEnter(Collider other) {
 
+		GameInfo.info.currentSubreddit = "";
 
 		//Load the OUside Scene. All other scenes are automatically deleted
 		SceneManager.LoadScene ("Outside");

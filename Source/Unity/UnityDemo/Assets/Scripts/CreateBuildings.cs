@@ -1,18 +1,21 @@
-﻿/**CreateCubes.cs
+﻿/**CreateBuildings.cs
  * Author: Caleb Whitman
  * October 29, 2016
  * 
- * Creates cubes and sets them up around the area.
+ * Creates buildins and sets them up around the area.
  */
 
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
+using System;
+using System.Reflection;
 
-public class CreateCubes : MonoBehaviour {
+public class CreateBuildings : MonoBehaviour {
 
-	//Will hold our cubes
+	//Will hold our buildings
 	public GameObject cubePrefab; 
 
 
@@ -26,10 +29,13 @@ public class CreateCubes : MonoBehaviour {
 				GameObject cube = Instantiate (cubePrefab);
 				//sets the cubes position
 				cube.transform.position = new Vector3 (x * 10, 5, y*10);
+				//Altering the name of the cube
+				var name = cube.transform.Find ("Name").GetComponent<TextMesh> ();
+				name.text = "Building: (" + x + "," + y+")";
+
 
 			}
 		}
-
 
 	}
 

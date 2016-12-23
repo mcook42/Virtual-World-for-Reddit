@@ -1,6 +1,6 @@
 ﻿/**GoInside.cs
  * Author: Caleb Whitman
- * October 29, 2016
+ * Dec 23, 2016
  * 
  * This script is applied to the door prefab on the house.
  * 
@@ -16,10 +16,12 @@ public class GoInside : MonoBehaviour {
 
 	//This will be called whenever something collides with this object.
 	void OnTriggerEnter(Collider other) {
-		
 
-			//Load the Inside Scenes. All other scenes are automatically deleted
-			SceneManager.LoadScene ("Inside");
+		//Remembers the name of the building
+		GameInfo.info.currentSubreddit=gameObject.transform.parent.transform.Find("Name").GetComponent<TextMesh>().text;
+
+		//Load the Inside Scenes. All other scenes are automatically deleted
+		SceneManager.LoadScene ("Inside");
 
 
 		//Find the player object.
