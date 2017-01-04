@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\GameInfo.cs" />
      <Compile Include="Assets\Scripts\GoInside.cs" />
      <Compile Include="Assets\Scripts\GoOutside.cs" />
+     <Compile Include="Assets\Scripts\LODTestScript.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\RedditSharpTest.cs" />
      <Compile Include="Assets\Scripts\SubredditName.cs" />

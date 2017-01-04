@@ -48,3 +48,11 @@ First, all of the information related to this project is either contained within
  - There are a variety of GetComponent methods to find and get objects. 
  
   - Overall, the best stategy seems to be to NOT get data from other objects. Unity is not very well designed for communicating between objects. Especially ones in different scenes.
+  
+  - The camera in any scene can be accessed using the variable camera.
+  
+####Creating/Loading Large Worlds
+
+ - LOD (level of detail, located as LOD group under Rendering under Add Component) describes how much detail is rendered based on distance. As you move farther away from an object, you can make the object become less detailed. This increases performance since Unity will not need to render every single detail when the player is far away. You need to create multiple, similar objects for each level of detail.
+ 
+ - LOD can be set through scripts or through an interactive editor. The scripts give you more control.
