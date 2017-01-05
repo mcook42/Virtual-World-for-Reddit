@@ -21,6 +21,12 @@ First, all of the information related to this project is either contained within
  - Scripts: Contains scripts.
  
  - Prefabs: Predefined objects, like a building.
+ 
+ - Buildings: The buildings we are using.
+ 
+ - Rune Assets: A sample of some free buildings. Used for testing.
+ 
+ - Streets: A sample of some free streets. Used for testing.
 
 ###Scenes
 
@@ -56,3 +62,5 @@ First, all of the information related to this project is either contained within
  - LOD (level of detail, located as LOD group under Rendering under Add Component) describes how much detail is rendered based on distance. As you move farther away from an object, you can make the object become less detailed. This increases performance since Unity will not need to render every single detail when the player is far away. You need to create multiple, similar objects for each level of detail.
  
  - LOD can be set through scripts or through an interactive editor. The scripts give you more control.
+ 
+ - We will need to load the buildings in chunks. In other words, the entire city will not be loaded at once. Still working on this.

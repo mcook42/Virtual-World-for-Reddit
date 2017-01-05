@@ -19,7 +19,7 @@ public class GoOutside : MonoBehaviour {
 		GameInfo.info.currentSubreddit = "";
 
 		//Load the OUside Scene. All other scenes are automatically deleted
-		SceneManager.LoadScene ("Outside");
+		SceneManager.LoadSceneAsync ("Outside");
 
 
 		//Find the player

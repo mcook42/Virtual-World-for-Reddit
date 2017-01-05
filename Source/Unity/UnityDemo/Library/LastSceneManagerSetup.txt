@@ -8,3 +8,6 @@ sceneSetups:
 - path: Assets/Scenes/Outside.unity
   isLoaded: 1
   isActive: 0
+- path: Assets/LoadTest.unity
+  isLoaded: 0
+  isActive: 0

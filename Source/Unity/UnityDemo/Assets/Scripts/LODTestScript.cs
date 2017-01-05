@@ -1,4 +1,4 @@
-﻿/**GoInside.cs
+﻿/**LODTestScript.cs
  * Author: Caleb Whitman
  * Jan 3, 2017
  * 
