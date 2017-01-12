@@ -1,0 +1,62 @@
+#Chunk Loader pseudocode
+
+The chunk loader class will be responsible for loading the chunks as needed. It will exist on top of an empty gameobject which will exist in the outside scene. 
+
+For this code, I am making the assumption that the building positions, names, and models are being stored somewhere else.
+
+##Class: chunk loader
+
+###Fields/information needed:
+
+ - Chunks loaded at once: A positive integer representing how many chunks are loaded at a time.
+ 
+ - The chunks: An array holding the current chunks.
+ 
+ - Player/camera info: Will need to get this info externally.
+ 
+ - Building prefabs
+ 
+ - Street/scenary prefabs
+ 
+ - Neighborhood x size: Number of buildings in between streets.
+ 
+###Methods
+
+ - Test for new chunks: Looks at the player position, the chunk the player is inside, and the camera position to determine if new chunks need to be loaded.
+ 
+ - Load new chunks: Input which ever "side" new chunks need to be loaded. Then, distroy chunks on the opposite side and load new chunks onto the other side.
+ 
+     - Loading might need to take place in the background. May need to load on a scene by scene basis.
+	 
+	 - First, load the new chunks. 
+	 
+	    - Find the relevant building positions of the adjecent chunks. Uses these to calculate the next building positions.
+		
+		- Use GetBuilding to grab new buildings. Store these in a vector.
+		
+		- Instantiate buildings. Set positions based on positions of old buildings. Set rotations. 
+		
+		- Instantiate/store the streets. Put a new street every two buildings along the z-axis and every Neiborhood_x_size along the x-axis.
+		
+		- Go through the old chunks and destroy all objects within them.
+ 
+ - GetBuilding(x,y): Gets the building at x,y. This method may make a call to the server in the future.
+
+ 
+##Class: Chunk, a simple class used to store all relevant chunk data.
+
+ - Buildings: all buildings within the chunk.
+ 
+ - Scenary: all scenary within the chunk.
+ 
+ - Chunk Size: An adjustable integer recording how many buildings exist within one chunk.
+ 
+ - Chunk Position: position of top left most building within the chunk?
+ 
+##Class: Building, a class associated with every building. Stores all building information.
+
+ - Name: subreddit name.
+
+ - Position: (x,y) coordinates. NOT the position of the gameobject, but rather the position of the building with respect to all of the other buildings
+ 
+ - Model used.
