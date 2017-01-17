@@ -32,8 +32,6 @@ public class GoInside : MonoBehaviour {
 		//This is used to when the player goes back outside.
 		playerControl.SetOutsidePosition (player.transform.position-(new Vector3(0,0,2)));
 
-		//Reset the player to the center of the map.
-		GameObject.Find ("Player").transform.position = new Vector3 (0, 1.5f, 0);
 
 	}
 }

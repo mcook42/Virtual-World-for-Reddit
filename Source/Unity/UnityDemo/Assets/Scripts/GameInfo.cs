@@ -20,6 +20,11 @@ public class GameInfo : MonoBehaviour {
 	public string currentSubreddit;
 	public string currentThread;
 
+	public Vector3 outsidePlayerPosition;
+	public GameObject player;
+
+	public int center_chunk_x, center_chunk_z;
+
 	//called first thing no matter what
 	void Awake () 
 	{
@@ -27,6 +32,7 @@ public class GameInfo : MonoBehaviour {
 		{
 			DontDestroyOnLoad (gameObject);
 			info = this;
+			outsidePlayerPosition=new Vector3(0,1,-4);
 		} 
 		else if (info != this) 
 		{
@@ -34,5 +40,6 @@ public class GameInfo : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
+
 
 }

@@ -19,17 +19,7 @@ public class GoOutside : MonoBehaviour {
 		GameInfo.info.currentSubreddit = "";
 
 		//Load the OUside Scene. All other scenes are automatically deleted
-		SceneManager.LoadSceneAsync ("Outside");
-
-
-		//Find the player
-		GameObject player = GameObject.Find("Player");
-		PlayerController playerControl = (PlayerController) player.GetComponent(typeof(PlayerController));
-
-		//Set the player's position so that they are outside of the house they entered.
-		playerControl.resetOutsidePosition ();
-
-
+		SceneManager.LoadScene("Outside");
 
 	}
 }

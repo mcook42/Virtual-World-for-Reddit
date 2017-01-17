@@ -3,14 +3,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
     <ProjectGuid>{991ACB7A-CC85-4B1E-CE9A-C9C5FDEC3F6F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
@@ -34,51 +32,56 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.XML" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\LoadTest\LoadTest.cs" />
-     <Compile Include="Assets\LoadTest\WriteTimeLoaded.cs" />
-     <Compile Include="Assets\Scripts\BuildingScripts\CreateBuildings.cs" />
-     <Compile Include="Assets\Scripts\BuildingScripts\SubredditName.cs" />
-     <Compile Include="Assets\Scripts\LODTestScript.cs" />
-     <Compile Include="Assets\Scripts\PlayerScripts\CameraController.cs" />
-     <Compile Include="Assets\Scripts\PlayerScripts\PlayerController.cs" />
-     <Compile Include="Assets\Scripts\SceneSwitchingScripts\DontDestroyOnLoad.cs" />
-     <Compile Include="Assets\Scripts\SceneSwitchingScripts\GameInfo.cs" />
-     <Compile Include="Assets\Scripts\SceneSwitchingScripts\GoInside.cs" />
-     <Compile Include="Assets\Scripts\SceneSwitchingScripts\GoOutside.cs" />
-     <None Include="Assets\Fonts\TextShader.shader" />
- <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Networking">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.PlaymodeTestsRunner">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.HoloLens">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.VR">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
- </Reference>
- <Reference Include="Mono.Cecil">
- <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
- </Reference>
+    <Compile Include="Assets\LoadTest\LoadTest.cs" />
+    <Compile Include="Assets\LoadTest\WriteTimeLoaded.cs" />
+    <Compile Include="Assets\Scripts\BuildingScripts\Chunk.cs" />
+    <Compile Include="Assets\Scripts\BuildingScripts\ChunkLoader.cs" />
+    <Compile Include="Assets\Scripts\BuildingScripts\CreateBuildings.cs" />
+    <Compile Include="Assets\Scripts\BuildingScripts\Point.cs" />
+    <Compile Include="Assets\Scripts\BuildingScripts\SubredditName.cs" />
+    <Compile Include="Assets\Scripts\GameInfo.cs" />
+    <Compile Include="Assets\Scripts\LODTestScript.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\SetInsidePlayerPosition.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\SetOutsidePlayerPosition.cs" />
+    <Compile Include="Assets\Scripts\SceneSwitchingScripts\DontDestroyOnLoad.cs" />
+    <Compile Include="Assets\Scripts\SceneSwitchingScripts\GoInside.cs" />
+    <Compile Include="Assets\Scripts\SceneSwitchingScripts\GoOutside.cs" />
+    <None Include="Assets\Fonts\TextShader.shader" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\Networking\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PlaymodeTestsRunner">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\PlaymodeTestsRunner\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\UnityAnalytics\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\UnityHoloLens\RuntimeEditor\UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VR">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\UnityVR\RuntimeEditor\UnityEngine.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>C:\Program Files\Unity\Editor\Data\Managed\Mono.Cecil.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -88,5 +91,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  
 </Project>

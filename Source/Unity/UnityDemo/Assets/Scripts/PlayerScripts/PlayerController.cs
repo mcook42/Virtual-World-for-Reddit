@@ -12,10 +12,6 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 
-	//Where the player is located right before they go inside.
-	//This allows us to appear outside the same house we entered.
-	private Vector3 outsidePosition;
-
 	//The rigidbody of an object defines how physics interacts with the object. 
 	//Applying a force to the rigidbody will cause the object to move.
 	private Rigidbody playerRigidbody; 
@@ -48,19 +44,15 @@ public class PlayerController : MonoBehaviour {
 
 		//applying our force to our rigidbody with a speed.
 		playerRigidbody.velocity=directionVector * speed;
+	
+
 
 	}
 
 	//sets the players outside position after they go inside.
 	public void SetOutsidePosition(Vector3 position){
-		outsidePosition = position;
+		GameInfo.info.outsidePlayerPosition= position;
 
 	}
-
-	//Resets the players position to the outside position.
-	public void resetOutsidePosition()
-	{
-		playerRigidbody.position = outsidePosition;
-
-	}
+		
 }
