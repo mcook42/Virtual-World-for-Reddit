@@ -1,6 +1,6 @@
 ﻿/**ChunkLoader.cs
  * Author: Caleb Whitman
- * October 29, 2016
+ * January 17, 2017
  * 
  * Loads and destroys new chunks based on player movement.
  * 
@@ -45,17 +45,15 @@ public class ChunkLoader : MonoBehaviour {
 		chunksInRow = chunksToLoad * 2 + 1;
 
 		chunks = new Dictionary<Point, Chunk> (new PointComparer());
-		chunkLength = Chunk.buildingFootprint * Chunk.buildingsInChunk;
+		chunkLength = Chunk.buildingFootprint * Chunk.buildingsInRow;
 
 
 		for (int x = -chunksInRow / 2; x <= chunksInRow / 2; x++) {
 			for (int z = -chunksInRow / 2; z <= chunksInRow / 2; z++) {
 
 
-				Point location = new Point (GameInfo.info.center_chunk_x + x, GameInfo.info.center_chunk_z+ z);
+				Point location = new Point (GameInfo.info.centerChunkX + x, GameInfo.info.centerChunkZ+ z);
 				Chunk chunk = new Chunk (location.x, location.z, location.x*chunkLength, location.z*chunkLength);
-
-				//Instantiate (chunk.getParent()); //TODO will need to call this later on.
 			
 				chunks.Add(location,chunk);
 
@@ -71,40 +69,40 @@ public class ChunkLoader : MonoBehaviour {
 	void Update () {
 
 		float positionThreshold = loadingThreshold * chunkLength;
-		float x_distance = (GameInfo.info.player.transform.position.x) - (GameInfo.info.center_chunk_x * chunkLength);
-		float z_distance = (GameInfo.info.player.transform.position.z) - (GameInfo.info.center_chunk_z * chunkLength);
+		float x_distance = (GameInfo.info.player.transform.position.x) - (GameInfo.info.centerChunkX * chunkLength);
+		float z_distance = (GameInfo.info.player.transform.position.z) - (GameInfo.info.centerChunkZ * chunkLength);
 
 
 		if (x_distance > positionThreshold) {
 
-			int old_x = GameInfo.info.center_chunk_x - chunksInRow / 2;
-			GameInfo.info.center_chunk_x++;
-			int new_x = GameInfo.info.center_chunk_x + chunksInRow / 2;
+			int old_x = GameInfo.info.centerChunkX - chunksInRow / 2;
+			GameInfo.info.centerChunkX++;
+			int new_x = GameInfo.info.centerChunkX + chunksInRow / 2;
 
 			repositionChunksX(old_x, new_x);
 
 
 		} else if (x_distance < -positionThreshold) {
 
-			int old_x = GameInfo.info.center_chunk_x + chunksInRow / 2;
-			GameInfo.info.center_chunk_x--;
-			int new_x = GameInfo.info.center_chunk_x - chunksInRow / 2;
+			int old_x = GameInfo.info.centerChunkX + chunksInRow / 2;
+			GameInfo.info.centerChunkX--;
+			int new_x = GameInfo.info.centerChunkX - chunksInRow / 2;
 
 			repositionChunksX(old_x, new_x);
 
 		}
 
 		if (z_distance > positionThreshold) {
-			int old_z = GameInfo.info.center_chunk_z - chunksInRow / 2;
-			GameInfo.info.center_chunk_z++;
-			int new_z = GameInfo.info.center_chunk_z + chunksInRow / 2;
+			int old_z = GameInfo.info.centerChunkZ - chunksInRow / 2;
+			GameInfo.info.centerChunkZ++;
+			int new_z = GameInfo.info.centerChunkZ + chunksInRow / 2;
 
 			repositionChunksZ(old_z, new_z);
 
 		} else if (z_distance < -positionThreshold) {
-			int old_z = GameInfo.info.center_chunk_z + chunksInRow / 2;
-			GameInfo.info.center_chunk_z--;
-			int new_z = GameInfo.info.center_chunk_z - chunksInRow / 2;
+			int old_z = GameInfo.info.centerChunkZ + chunksInRow / 2;
+			GameInfo.info.centerChunkZ--;
+			int new_z = GameInfo.info.centerChunkZ - chunksInRow / 2;
 
 			repositionChunksZ(old_z, new_z);
 
@@ -123,14 +121,13 @@ public class ChunkLoader : MonoBehaviour {
 	{
 		//add new chunks
 		for (int z = -chunksInRow / 2; z <= chunksInRow / 2; z++) {
-			Point location = new Point (new_x, GameInfo.info.center_chunk_z + z);
+			Point location = new Point (new_x, GameInfo.info.centerChunkZ + z);
 			Chunk chunk = new Chunk (location.x, location.z, location.x * chunkLength, location.z * chunkLength);
-			//Instantiate (chunk.getParent()); //TODO will need to call this later on.
 			chunks.Add (location, chunk);
 		}
 		//destroy old chunks
 		for (int z = -chunksInRow / 2; z <= chunksInRow / 2; z++) {
-			Point old_point = new Point (old_x, z);
+			Point old_point = new Point (old_x, GameInfo.info.centerChunkZ + z);
 			Destroy (chunks [old_point].getParent ());
 			chunks.Remove (old_point);
 		}
@@ -144,15 +141,14 @@ public class ChunkLoader : MonoBehaviour {
 	{
 		//add new chunks
 		for (int x = -chunksInRow / 2; x <= chunksInRow / 2; x++) {
-			Point location = new Point ( GameInfo.info.center_chunk_x + x,new_z);
+			Point location = new Point ( GameInfo.info.centerChunkX + x,new_z);
 			Chunk chunk = new Chunk (location.x, location.z, location.x * chunkLength, location.z * chunkLength);
-			//Instantiate (chunk.getParent()); //TODO will need to call this later on.
 			chunks.Add (location, chunk);
 		}
 
 		//destroy old chunks
 		for (int x = -chunksInRow / 2; x <= chunksInRow / 2; x++) {
-			Point old_point = new Point (x,old_z);
+			Point old_point = new Point (GameInfo.info.centerChunkX + x,old_z);
 			Destroy (chunks [old_point].getParent ());
 			chunks.Remove (old_point);
 		}

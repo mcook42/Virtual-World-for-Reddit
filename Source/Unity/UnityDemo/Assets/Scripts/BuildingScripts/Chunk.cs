@@ -1,6 +1,6 @@
 ﻿/**Chunk.cs
  * Author: Caleb Whitman
- * October 29, 2016
+ * January 17, 2017
  * 
  * Represents a single chunk in the world.
  */
@@ -20,10 +20,10 @@ public class Chunk
 	private GameObject parent=null;
 
 	[Range(1,100)]
-	public static readonly int buildingsInChunk=1; //The number of actual buildings loaded is (2*buildingsInChunk-1)^2 
+	public static readonly int buildingsInRow=3; //The number of actual buildings loaded is buildingsInChunk^2 
 
 	[Range(1,1000)]
-	public static readonly int buildingFootprint=9;
+	public static readonly int buildingFootprint=10;
 
 
 
@@ -31,13 +31,50 @@ public class Chunk
 	 * Loads and instantiates the appropriate buildings.
 	 * TODO may need to first assign the gameobjects to a scene and load in background
 	 */
-	public Chunk (int chunk_x, int chunk_y,float parent_x,float parent_z)
+	public Chunk (int chunkX, int chunkZ,float parentX,float parentZ)
 	{
-		parent = GameObject.CreatePrimitive (PrimitiveType.Cube);
-		parent.transform.position = new Vector3 (parent_x, 0, parent_z);
-		parent.transform.localScale = new Vector3 (buildingFootprint-2, 1, buildingFootprint-2);
+		
+
+		parent = new GameObject();
+		parent.transform.position = new Vector3 (parentX, 0, parentZ);
+
+		int halfRow=buildingsInRow/2;
+		int centerBuildingX = chunkX * buildingsInRow;
+		int centerBuildingZ = chunkZ * buildingsInRow;
+		for (int x = 0; x < buildingsInRow; x++) {
+			for (int z = 0; z < buildingsInRow; z++) {
+
+			
+				GameObject building = instantiateBuilding (centerBuildingX + x - halfRow, centerBuildingZ + z - halfRow);
+				building.transform.parent = parent.transform;
+				building.transform.localPosition = new Vector3 (buildingFootprint*x, 5, buildingFootprint*z);
+			}
+			
+
+		}
+
 	}
 
+	/*
+	 * Gets the building at position x,z.
+	 * In the future this will make a call to the server.
+	 */ 
+	GameObject instantiateBuilding(int x, int z)
+	{
+		
+		UnityEngine.Object prefab= AssetDatabase.LoadAssetAtPath ("Assets/Prefabs/Buildings/BlueBuilding.prefab", typeof(GameObject));
+		GameObject building = GameObject.Instantiate(prefab) as GameObject;
+		var name = building.transform.Find ("Name").GetComponent<TextMesh> ();
+		name.text = "Building: (" + x + "," + z+")";
+
+		return building;
+
+
+	}
+
+	/*
+	 *  Returns the parent of objects withint the scene.
+	 */ 
 	public GameObject getParent()
 	{
 		return parent;

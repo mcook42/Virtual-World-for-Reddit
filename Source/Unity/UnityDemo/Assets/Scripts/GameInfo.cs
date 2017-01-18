@@ -23,7 +23,7 @@ public class GameInfo : MonoBehaviour {
 	public Vector3 outsidePlayerPosition;
 	public GameObject player;
 
-	public int center_chunk_x, center_chunk_z;
+	public int centerChunkX, centerChunkZ;
 
 	//called first thing no matter what
 	void Awake () 
@@ -39,6 +39,11 @@ public class GameInfo : MonoBehaviour {
 			//ensures that only on object of this type is present at all times
 			Destroy(gameObject);
 		}
+	}
+
+	public static void savePlayerPosition()
+	{
+
 	}
 
 

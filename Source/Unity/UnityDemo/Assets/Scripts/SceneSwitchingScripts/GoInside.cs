@@ -1,6 +1,6 @@
 ﻿/**GoInside.cs
  * Author: Caleb Whitman
- * Dec 23, 2016
+ * January 17, 2016
  * 
  * This script is applied to the door prefab on the house.
  * 
@@ -24,13 +24,10 @@ public class GoInside : MonoBehaviour {
 		SceneManager.LoadScene ("Inside");
 
 
-		//Find the player object.
-		GameObject player = GameObject.Find("Player");
-		PlayerController playerControl = (PlayerController) player.GetComponent(typeof(PlayerController));
-
 		//Saves the player's position outside.
 		//This is used to when the player goes back outside.
-		playerControl.SetOutsidePosition (player.transform.position-(new Vector3(0,0,2)));
+		GameObject player = GameInfo.info.player;
+		GameInfo.info.outsidePlayerPosition= player.transform.position-(new Vector3(0,0,2));
 
 
 	}
