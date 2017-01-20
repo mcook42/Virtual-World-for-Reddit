@@ -1,6 +1,14 @@
+/*
+ * 
+ * The methods Start and RotateView where changed to be protected and virtual. 
+ * This allows them to be overriden in MyRigidbodyFirstPersonController.
+ * -Caleb Whitman, January 19, 2017
+ */ 
+
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -117,8 +125,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
         }
 
-
-        private void Start()
+		//modified to be protected and virtual
+        protected virtual void Start()
         {
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
@@ -128,6 +136,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void Update()
         {
+
+
             RotateView();
 
             if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
@@ -222,7 +232,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
 
-        private void RotateView()
+        protected virtual void RotateView()
         {
             //avoids the mouse looking if the game is effectively paused
             if (Mathf.Abs(Time.timeScale) < float.Epsilon) return;

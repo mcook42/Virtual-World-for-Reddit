@@ -15,7 +15,7 @@ public class SetOutsidePlayerPosition : MonoBehaviour {
 
 	void Awake() {
 		GameInfo.info.player.transform.position = GameInfo.info.outsidePlayerPosition+new Vector3(0,0,-2);
-
+		GameInfo.info.resetPlayerPosition ();
 	}
 
 }

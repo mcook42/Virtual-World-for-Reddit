@@ -16,10 +16,11 @@ public class GoOutside : MonoBehaviour {
 	//This will be called whenever something collides with this object.
 	void OnTriggerEnter(Collider other) {
 
-		GameInfo.info.currentSubreddit = "";
 
 		//Load the OUside Scene. All other scenes are automatically deleted
 		SceneManager.LoadScene("Outside");
+
+
 
 	}
 }

@@ -18,16 +18,23 @@ public class GoInside : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 
 		//Remembers the name of the building
-		GameInfo.info.currentSubreddit=gameObject.transform.parent.transform.Find("Name").GetComponent<TextMesh>().text;
 
-		//Load the Inside Scenes. All other scenes are automatically deleted
-		SceneManager.LoadScene ("Inside");
+
+
 
 
 		//Saves the player's position outside.
 		//This is used to when the player goes back outside.
 		GameObject player = GameInfo.info.player;
+		var buildingAttributes = gameObject.transform.parent.GetComponent<Building> ();
+
+
+		GameInfo.info.savePlayerPosition (gameObject.transform.parent.transform.rotation, buildingAttributes.position, buildingAttributes.subredditId, buildingAttributes.subredditName);
 		GameInfo.info.outsidePlayerPosition= player.transform.position-(new Vector3(0,0,2));
+
+
+		//Load the Inside Scenes. All other scenes are automatically deleted
+		SceneManager.LoadScene ("Inside");
 
 
 	}

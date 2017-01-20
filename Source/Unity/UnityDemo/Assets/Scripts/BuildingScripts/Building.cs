@@ -15,11 +15,9 @@ using UnityEngine;
 public class Building: MonoBehaviour
 {
 	 	
-	private string subredditId;
-	private string subredditName;
-	private Point position;
-
-
+	public string subredditId;
+	public Point position;
+	public string subredditName;
 
 }
 

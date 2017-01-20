@@ -1,3 +1,9 @@
+/*
+ * The attributes m_CharacterTargetRot and m_CameraTargetRot where changed to be protected. 
+ * This allows them to be used in MyMouseLook.cs.
+ * -Caleb Whitman, January 19, 2017
+ */ 
+
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
@@ -16,9 +22,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float smoothTime = 5f;
         public bool lockCursor = true;
 
-
-        private Quaternion m_CharacterTargetRot;
-        private Quaternion m_CameraTargetRot;
+		//Last two fields modiefied to be protected.
+        protected Quaternion m_CharacterTargetRot;
+        protected Quaternion m_CameraTargetRot;
         private bool m_cursorIsLocked = true;
 
         public void Init(Transform character, Transform camera)
@@ -33,11 +39,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
             float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
 
+
+
             m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
             m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
 
             if(clampVerticalRotation)
                 m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);
+
 
             if(smooth)
             {
@@ -52,8 +61,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 camera.localRotation = m_CameraTargetRot;
             }
 
+
+
             UpdateCursorLock();
         }
+
+	
 
         public void SetCursorLock(bool value)
         {

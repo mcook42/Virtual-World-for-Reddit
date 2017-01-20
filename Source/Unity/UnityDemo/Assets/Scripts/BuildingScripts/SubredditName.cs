@@ -15,7 +15,7 @@ public class SubredditName : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		var name = GetComponent<Text> ();
-			name.text=GameInfo.info.currentSubreddit;
+			name.text=GameInfo.info.currentBuilding.subredditName;
 	}
 	
 

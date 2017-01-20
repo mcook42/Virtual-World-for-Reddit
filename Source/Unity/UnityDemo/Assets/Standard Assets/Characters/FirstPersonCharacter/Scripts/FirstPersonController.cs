@@ -240,6 +240,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
 
+
+
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
             Rigidbody body = hit.collider.attachedRigidbody;
