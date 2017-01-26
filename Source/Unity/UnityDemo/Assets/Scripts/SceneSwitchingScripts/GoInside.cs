@@ -17,20 +17,10 @@ public class GoInside : MonoBehaviour {
 	//This will be called whenever something collides with this object.
 	void OnTriggerEnter(Collider other) {
 
-		//Remembers the name of the building
 
 
-
-
-
-		//Saves the player's position outside.
-		//This is used to when the player goes back outside.
-		GameObject player = GameInfo.info.player;
-		var buildingAttributes = gameObject.transform.parent.GetComponent<Building> ();
-
-
-		GameInfo.info.savePlayerPosition (gameObject.transform.parent.transform.rotation, buildingAttributes.position, buildingAttributes.subredditId, buildingAttributes.subredditName);
-		GameInfo.info.outsidePlayerPosition= player.transform.position-(new Vector3(0,0,2));
+		//Saves the building the player is going into
+		GameInfo.info.saveCurrentBuilding (gameObject.transform.parent.gameObject);
 
 
 		//Load the Inside Scenes. All other scenes are automatically deleted

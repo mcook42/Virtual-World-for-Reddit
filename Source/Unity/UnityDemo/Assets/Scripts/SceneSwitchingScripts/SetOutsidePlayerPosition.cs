@@ -2,7 +2,8 @@
  * Author: Caleb Whitman
  * Jan 13, 2017
  * 
- *Resets the players outside position to the one in gameInfo.
+ * Resets the players outside position to the one in gameInfo.
+ * Currently ChunkLoader takes care of most of the positioning in its Start function.
  */
 
 
@@ -13,8 +14,8 @@ using UnityEngine;
 public class SetOutsidePlayerPosition : MonoBehaviour {
 
 
-	void Awake() {
-		GameInfo.info.player.transform.position = GameInfo.info.outsidePlayerPosition+new Vector3(0,0,-2);
+	void Start() {
+
 		GameInfo.info.resetPlayerPosition ();
 	}
 

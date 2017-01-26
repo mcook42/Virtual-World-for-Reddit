@@ -18,5 +18,7 @@ public class DontDestroyOnLoad : MonoBehaviour {
 		//sets up the property so that the oject is not destroyed onload. 
 		DontDestroyOnLoad (gameObject);
 
+
+
 	}
 }

@@ -16,19 +16,17 @@ using UnityEngine;
 
 public class GameInfo : MonoBehaviour {
 
-	public static GameInfo info;
+	public static GameInfo info=null;
 
 
-
-	public Vector3 outsidePlayerPosition;
 	public GameObject player;
 
 	//records whether or not we are transitioning from the inside of a building to the outside.
 	//if we are, then the script FirstPersonController will reset the players rotation to the rotation stored in currentBuilding.
 	public bool inToOutTransition;
 
-	public CurrentBuilding currentBuilding =new CurrentBuilding();
-
+	//The building the player enters. This is null when the player is in the outside world.
+	public GameObject currentBuilding=null;
 
 	//The center of the loaded chunks
 	public Point loadedCenterChunk;
@@ -40,16 +38,17 @@ public class GameInfo : MonoBehaviour {
 	//TODO add position for thread room.
 
 
-	//called first thing no matter what
-	void Awake () 
+	/*If the singleton class has not been created, then it instantiates it.
+	 * Otherwise, this does nothing.
+	*/ 
+	public void Awake () 
 	{
 		if (info == null) 
 		{
 			DontDestroyOnLoad (gameObject);
 			info = this;
-			outsidePlayerPosition=new Vector3(0,1,-4);
-			loadedCenterChunk = new Point (1, 1);
-			worldCenterChunk = new Point (1, 1);
+			loadedCenterChunk = new Point (0, 0);
+			worldCenterChunk = new Point (0, 0);
 			inToOutTransition = false;
 	
 		} 
@@ -62,49 +61,32 @@ public class GameInfo : MonoBehaviour {
 
 
 
+
 	/*
-	 * Records the players position in the outside world.
-	 * The buidlingRotation is rotated by 180 degrees in the Y direction before being saved.
+	 * Saves the building that the player went inside.
 	 */ 
-	public void savePlayerPosition(Quaternion buildingRotation, Point buildingPosition, string subredditId, string subredditName)
+	public void saveCurrentBuilding(GameObject building)
 	{
+		//here we have to seperate the building from the chunk parent.
+		building.transform.parent = null;
 
-		Vector3 rot = buildingRotation.eulerAngles;
-		rot = new Vector3(rot.x,rot.y+180,rot.z);
-		this.currentBuilding.buildingRotation = Quaternion.Euler(rot);
-		this.currentBuilding.subredditId = subredditId;
-		this.currentBuilding.buildingPosition = buildingPosition;
-		this.currentBuilding.subredditName = subredditName;
+		if (currentBuilding != null)
+			Destroy (currentBuilding);
+		
+		currentBuilding = building;
+		currentBuilding.SetActive (false);
 
+		DontDestroyOnLoad (currentBuilding);
 	}
 
 	/* Resets the player's position to that of the outside world.
+	 * Currently does nothing. In the future will be implmented to set up the players rotatation upon exiting a building.
 	 */ 
 	public void resetPlayerPosition()
 	{
 		
-		player.transform.rotation = new Quaternion(currentBuilding.buildingRotation.x,currentBuilding.buildingRotation.y,currentBuilding.buildingRotation.z,currentBuilding.buildingRotation.w);
-		inToOutTransition = true;
-	
-
 	}
 
 
 }
-
-public class CurrentBuilding{
-	public string subredditId;
-	public string subredditName;
-	public Quaternion buildingRotation;
-	public Point buildingPosition;
-
-	public CurrentBuilding()
-	{
-		subredditId = "";
-		subredditName = "";
-		buildingPosition = new Point (0, 0);
-		buildingRotation = Quaternion.Euler (new Vector3 (0, 0, 0));
-
-	}
-
-};
+	

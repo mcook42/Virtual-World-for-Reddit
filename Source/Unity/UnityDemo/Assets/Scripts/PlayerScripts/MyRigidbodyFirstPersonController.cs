@@ -30,7 +30,7 @@ public class MyRigidbodyFirstPersonController : RigidbodyFirstPersonController {
 	{
 		if (GameInfo.info.inToOutTransition) {
 			GameInfo.info.inToOutTransition = false;
-			RotateViewManual (GameInfo.info.currentBuilding.buildingRotation);
+			RotateViewManual (GameInfo.info.currentBuilding.transform.localRotation);
 		} else {
 			base.RotateView ();
 		}

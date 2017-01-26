@@ -4,6 +4,8 @@
  * 
  * A script attached to every building gameObject.
  * This object holds all of the relevent building information.
+ * 
+ * The information can be accessed by calling GetComponent<Building>() on the building gameObject this script is attached to.
  */
 
 
@@ -16,8 +18,9 @@ public class Building: MonoBehaviour
 {
 	 	
 	public string subredditId;
-	public Point position;
 	public string subredditName;
+
+	public Point position;
 
 }
 
