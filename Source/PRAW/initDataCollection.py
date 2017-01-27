@@ -53,8 +53,8 @@ url = "/subreddits/"
 last_fullname = ""
 
 start_time = time.time()
-i = 0
-while i < 29:
+
+while True:
     try:
         # Blank argument for 'after' doesn't seem to affect the outcome on the initial request
         after_url = url + "?count=25&after=" + last_fullname
@@ -80,64 +80,21 @@ while i < 29:
             subreddit_info = (subreddit.fullname, subreddit.created_utc, subreddit.description,
                               subreddit.display_name, subreddit.public_description,
                               subreddit.lang, subreddit.over18, subreddit.public_traffic,
-                              subreddit.submission_type, accounts_active)
+                              accounts_active, subreddit.subscribers, start_time)
 
             # Insert info into database
-            # dbInteractions.insert_subreddit(subreddit_info)
+            dbInteractions.insert_subreddit(subreddit_info)
 
-            try:
-                # Connect to an existing database
-                conn = psycopg2.connect("dbname=redditserver user=postgres password=m5270685")
-            except psycopg2.Error:
-                print("Cannot connect to server.")
-
-            # Open a cursor to perform database operations
-            cur = conn.cursor()
-
-            """
-            Structure of the table:
-
-            TABLE reddit.subreddit(
-               full_name text,
-               created_utc bigint NOT NULL,
-               description text NOT NULL,
-               display_name text NOT NULL,
-               public_description text NOT NULL,
-               language text NOT NULL,
-               over18 bool NOT NULL,
-               public_traffic bool,
-               accounts_active int NOT NULL,
-               PRIMARY KEY(full_name)
-               );
-            """
-
-            # Pass data to fill a query placeholders and let Psycopg perform
-            # the correct conversion (no more SQL injections!)
-            # Note: Uses the tuple passed in to insert values
-            cur.executemany("""INSERT INTO reddit.subreddit (full_name, created_utc, description, display_name, public_description,
-                            language, over18, public_traffic, accounts_active)
-                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""", subreddit_info)
-
-            # Make the changes to the database persistent
-            conn.commit()
-            fetch = conn.fetchone()
-            print(fetch)
-
-            # Close communication with the database
-            cur.close()
-            conn.close()
-
-        i += 1
         # Since we are overriding PRAW, we must set the 2 second delay ourselves
         loop_time = time.time() - loop_time
+        if loop_time > 2.0:
+            loop_time = 2
+
         print(loop_time)
         time.sleep(2 - loop_time)
 
     except exceptions.APIException as e:
         logger.exception("API Exception at i = %s: ", i, e)
-        # End the loop
-        i = 30
-        pass
+        # End the program
+        exit(1)
 
-
-print(len(subreddit_info))
