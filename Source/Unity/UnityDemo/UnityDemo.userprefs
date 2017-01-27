@@ -1,13 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LODTestScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerScripts\PlayerController.cs">
     <Files>
-      <File FileName="Assets\Scripts\GoInside.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GoOutside.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\DontDestroyOnLoad.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CreateBuildings.cs" Line="59" Column="5" />
-      <File FileName="Assets\Scripts\SubredditName.cs" Line="11" Column="21" />
-      <File FileName="Assets\Scripts\LODTestScript.cs" Line="36" Column="30" />
+      <File FileName="Assets\Scripts\LODTestScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\RedditSharpTest.cs" Line="1" Column="1" />
+      <File FileName="Assets\LoadTest\LoadTest.cs" Line="1" Column="1" />
+      <File FileName="Assets\LoadTest\WriteTimeLoaded.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerScripts\PlayerController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
