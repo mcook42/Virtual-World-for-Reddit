@@ -5,6 +5,9 @@ ehthumbs.db
 #The File containing the secret
 AuthBot.py
 
+#The file containing the password
+dbInteractions.py
+
 # Folder config file
 Desktop.ini
 
