@@ -1,0 +1,95 @@
+docs https://www.postgresql.org/docs/current/static/index.html
+
+DEBUG:
+	//To stop/start/restart the server
+	https://www.postgresql.org/docs/9.1/static/app-pg-ctl.html
+	ex:
+	pg_ctl restart -D "datapath"
+
+INSTALL:
+
+-install, set ports, passwords, etc
+-Add the following paths to the main path variable (installer may or may not do this attomatically)
+	-C:\Program Files\PostgreSQL\9.6\bin
+	-C:\Program Files\PostgreSQL\9.6\data
+	PATH=$PATH:"new path"
+	//fixing the more issue(if it occurs) : https://www.postgresql.org/message-id/CANnQH_j0bbC8SPtiCT8pf9R7QyvuVmOFF7UYtxLMhKy-x_cShg@mail.gmail.com
+-Use the psql shell to interface with the database.
+	-psql -U postgres
+
+psql
+
+Commands in psql:
+	
+\l see databases
+	
+\c connect to database
+	
+\q quit
+	
+\d [tablename] see table
+\du see users
+
+
+-CREATE DATABASE redditServer; (Can also do all of this without psql createdb -h localhost -p 5432 -U postgres testdb)
+
+\c testdb //connect to the database.
+
+
+
+CREATE SCHEMA reddit; 
+
+CREATE TABLE reddit.subreddit(
+   full_name text,
+   created bigint NOT NULL,
+   description text NOT NULL,
+   display_name text NOT NULL,
+   public_description text NOT NULL,
+   language text NOT NULL,
+   over18 bool NOT NULL,
+   public_traffic bool,
+   accounts_active int NOT NULL,
+   subscribers int NOT NULL,
+   time_updated bigint NOT NULL,
+   PRIMARY KEY(full_name)
+);
+
+CREATE TABLE reddit.user(
+   id text,
+   name text NOT NULL,
+   created_utc bigint NOT NULL,
+   comment_karma int NOT NULL,
+   hide_from_robots bool NOT NULL,
+   in_beta bool NOT NULL,
+   is_suspended bool NOT NULL,
+   over18 bool NOT NULL,
+   PRIMARY KEY(id)
+);
+
+CREATE TABLE reddit.map(
+   full_name text,
+   cord_x int,
+   cord_y int,
+   category text NOT NULL,
+   PRIMARY KEY(full_name),
+   FOREIGN KEY (full_name) REFERENCES reddit.subreddit(full_name),
+   UNIQUE(cord_x,cord_y)
+);
+
+Create a new user, one without administrative privilages.
+	-CREATE USER name WITH PASSWORD 'name';
+	GRANT ALL PRIVILEGES ON DATABASE database TO user;
+	\du to users
+
+Change the config files.This will allow other machines (and scripts) to connect.
+http://dba.stackexchange.com/questions/100564/cant-connect-to-remote-postgresql-database
+
+Remote connect to the data base
+psql --host=<DB instance endpoint> --port=<port> --username <master user name> --password --dbname=<database name> 
+
+//might need to do this later, if performance is slow.
+CREATE INDEX name ON table USING HASH (column);
+
+
+Python Connect: http://initd.org/psycopg/
+Python Orm: http://docs.sqlalchemy.org/en/latest/dialects/postgresql.html#dialect-postgresql

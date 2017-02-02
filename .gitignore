@@ -54,3 +54,4 @@ Temporary Items
 Source/PRAW/dbInteractions.py
 *.xml
 *.pyc
+*.xml

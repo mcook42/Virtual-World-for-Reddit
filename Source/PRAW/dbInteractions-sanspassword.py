@@ -52,6 +52,7 @@ def insert_subreddit(in_tuple):
         conn.commit()
 
     except psycopg2.IntegrityError:
+        # Rollback failed insert attempt
         conn.rollback()
         # If the data is already in the table, update the value
         one_day_ago = time.time() - 86400
