@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{991ACB7A-CC85-4B1E-CE9A-C9C5FDEC3F6F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -19,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_0;UNITY_5_5;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_WEBGL;UNITY_WEBGL_API;UNITY_DISABLE_WEB_VERIFICATION;UNITY_GFX_USE_PLATFORM_VSYNC;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_VR;ENABLE_IL2CPP;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_0;UNITY_5_5;UNITY_5;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VIDEO;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;CROSS_PLATFORM_INPUT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -46,66 +47,90 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BuildingScripts\Building.cs" />
-     <Compile Include="Assets\Scripts\BuildingScripts\Chunk.cs" />
-     <Compile Include="Assets\Scripts\BuildingScripts\ChunkLoader.cs" />
-     <Compile Include="Assets\Scripts\BuildingScripts\Point.cs" />
-     <Compile Include="Assets\Scripts\BuildingScripts\SubredditName.cs" />
-     <Compile Include="Assets\Scripts\GameInfo\GameInfo.cs" />
-     <Compile Include="Assets\Scripts\MenuScripts\PauseMenu.cs" />
-     <Compile Include="Assets\Scripts\PlayerScripts\MyMouseLook.cs" />
-     <Compile Include="Assets\Scripts\PlayerScripts\MyRigidbodyFirstPersonController.cs" />
-     <Compile Include="Assets\Scripts\RedditSharpTest.cs" />
-     <Compile Include="Assets\Scripts\SceneSwitchingScripts\DontDestroyOnLoad.cs" />
-     <Compile Include="Assets\Scripts\SceneSwitchingScripts\GoInside.cs" />
-     <Compile Include="Assets\Scripts\SceneSwitchingScripts\GoOutside.cs" />
-     <Compile Include="Assets\Scripts\SceneSwitchingScripts\SetInsidePlayerPosition.cs" />
-     <Compile Include="Assets\Scripts\SceneSwitchingScripts\SetOutsidePlayerPosition.cs" />
-     <Compile Include="Assets\Tests\AccessingWeb\OpenURL.cs" />
-     <Compile Include="Assets\Tests\LODTest\LODTestScript.cs" />
-     <Compile Include="Assets\Tests\LoadTest\LoadTest.cs" />
-     <Compile Include="Assets\Tests\LoadTest\WriteTimeLoaded.cs" />
-     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
-     <None Include="Assets\Fonts\TextShader.shader" />
-     <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
-     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
- <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Networking">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.PlaymodeTestsRunner">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.HoloLens">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.VR">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
- </Reference>
- <Reference Include="HtmlAgilityPack">
- <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/HtmlAgilityPack.dll</HintPath>
- </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/Newtonsoft.Json.dll</HintPath>
- </Reference>
- <Reference Include="RedditSharp">
- <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/RedditSharp.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading">
- <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/System.Threading.dll</HintPath>
- </Reference>
- <Reference Include="Mono.Cecil">
- <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
- </Reference>
+    <Compile Include="Assets\Scripts\BuildingScripts\Point.cs" />
+    <Compile Include="Assets\Scripts\BuildingScripts\subredditList.cs" />
+    <Compile Include="Assets\Scripts\DontDestroyOnLoad.cs" />
+    <Compile Include="Assets\Scripts\DoorPopUp.cs" />
+    <Compile Include="Assets\Scripts\GameInfo\GameInfo.cs" />
+    <Compile Include="Assets\Scripts\MenuScripts\LoadingPanel.cs" />
+    <Compile Include="Assets\Scripts\MenuScripts\LocationPanel.cs" />
+    <Compile Include="Assets\Scripts\MenuScripts\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\MenuScripts\Menu.cs" />
+    <Compile Include="Assets\Scripts\MenuScripts\MenuController.cs" />
+    <Compile Include="Assets\Scripts\MenuScripts\PauseMenu.cs" />
+    <Compile Include="Assets\Scripts\MenuScripts\ErrorMenu.cs" />
+    <Compile Include="Assets\Scripts\MenuScripts\fatalErrorMenu.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\CrossHair.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\KeyController.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\MyMouseLook.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\MyRigidbodyFirstPersonController.cs" />
+    <Compile Include="Assets\Scripts\SceneInfo\OutsideState.cs" />
+    <Compile Include="Assets\Scripts\SceneInfo\SceneState.cs" />
+    <Compile Include="Assets\Scripts\SceneInfo\Subreddit.cs" />
+    <Compile Include="Assets\Scripts\SceneInfo\SubredditDomeState.cs" />
+    <Compile Include="Assets\Scripts\SceneInfo\SubredditSceneState.cs" />
+    <Compile Include="Assets\Scripts\SceneInfo\Thread.cs" />
+    <Compile Include="Assets\Scripts\SceneSetup\Chunk.cs" />
+    <Compile Include="Assets\Scripts\SceneSetup\ChunkLoader.cs" />
+    <Compile Include="Assets\Scripts\SceneSetup\MainMenuSetup.cs" />
+    <Compile Include="Assets\Scripts\SceneSetup\OutsideSceneSetup.cs" />
+    <Compile Include="Assets\Scripts\SceneSetup\SceneSetup.cs" />
+    <Compile Include="Assets\Scripts\SceneSetup\SubredditDomeSetup.cs" />
+    <Compile Include="Assets\Scripts\SceneSetup\SubredditSceneSetup.cs" />
+    <Compile Include="Assets\Scripts\SceneTransition\AllToMainTransition.cs" />
+    <Compile Include="Assets\Scripts\SceneTransition\MainToOutsideTransition.cs" />
+    <Compile Include="Assets\Scripts\SceneTransition\MainToSubredditDomeTransition.cs" />
+    <Compile Include="Assets\Scripts\SceneTransition\OutsideToSubredditTransition.cs" />
+    <Compile Include="Assets\Scripts\SceneTransition\SceneTransition.cs" />
+    <Compile Include="Assets\Scripts\SceneTransition\SubredditDomeToSubredditTransition.cs" />
+    <Compile Include="Assets\Scripts\SceneTransition\SubredditToOutsideTransition.cs" />
+    <Compile Include="Assets\Scripts\SceneTransition\SubredditToSubredditDomeTransition.cs" />
+    <Compile Include="Assets\Scripts\ThreadLoading\GoDown.cs" />
+    <Compile Include="Assets\Scripts\ThreadLoading\GoUp.cs" />
+    <Compile Include="Assets\Scripts\ThreadLoading\Sort.cs" />
+    <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
+    <None Include="Assets\Fonts\TextShader.shader" />
+    <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
+    <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PlaymodeTestsRunner">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VR">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RedditSharp">
+      <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/RedditSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{4B763615-BE3B-2FE1-CE65-A479CFBD5603}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{4B763615-BE3B-2FE1-CE65-A479CFBD5603}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -115,5 +140,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  
 </Project>
