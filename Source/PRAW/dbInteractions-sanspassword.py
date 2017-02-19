@@ -12,13 +12,18 @@ __version__ = "1.0.0"
 __email__ = "mattheworion.cook@gmail.com"
 
 
-def insert_subreddit(in_tuple):
-    """Insert tuple of subreddit info into redditserver reddit.subreddit table"""
+def open_conn():
+    """Opens database connection for the loop"""
     try:
         # Connect to an existing database
-        conn = psycopg2.connect("dbname=redditserver user=pg13 password=I'mNotDumbEnoughToPostThePassword_lol")
+        conn = psycopg2.connect("dbname=redditserver user=lol password=hahanah")
     except psycopg2.Error:
         print("Cannot connect to server.")
+    return conn
+
+
+def insert_subreddit(in_tuple, conn):
+    """Insert tuple of subreddit info into redditserver reddit.subreddit table"""
 
     # Open a cursor to perform database operations
     cur = conn.cursor()
@@ -63,7 +68,11 @@ def insert_subreddit(in_tuple):
             time_updated < %s;""", update_tuple)
         conn.commit()
 
-    # Close communication with the database
+    # Close database cursor
     cur.close()
+
+
+def close_conn(conn):
+    """Close the connection for the loop"""
     conn.close()
 

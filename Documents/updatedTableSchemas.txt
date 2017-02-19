@@ -1,0 +1,108 @@
+
+CREATE TABLE reddit.post(
+ full_name text,
+ subreddit text,
+ description text NOT NULL,
+ ups int NOT NULL,
+ downs int NOT NULL,
+ display_name NOT NULL,
+ PRIMARY KEY(full_name),
+ FOREIGN KEY (subreddit) REFERENCES reddit.subreddit(full_name)
+);
+
+MY UPDATED VERSION
+CREATE TABLE reddit.post(
+ created_utc int,
+ subreddit text NOT NULL,
+ subreddit_id text NOT NULL,
+ author text NOT NULL,
+ domain text,
+ num_comments int,
+ score int,
+ title text,
+ selftext text,
+ full_name text NOT NULL,
+ gilded int,
+ over_18 bool,
+ thumbnail text,
+ is_self bool,
+ from_id text,
+ permalink text,
+ name text,
+ distinguished text,
+ PRIMARY KEY (full_name),
+ FOREIGN KEY (subreddit_id) REFERENCES reddit.subreddit(full_name)
+);
+
+
+MY UPDATED VERSION
+CREATE TABLE reddit.comment(
+ body text,
+ score_hiddden bool,
+ name text NOT NULL,
+ author text NOT NULL,
+ created_utc int NOT NULL,
+ subreddit_id text,
+ link_id text,
+ parent_id text,
+ controversiality int,
+ gilded int,
+ id text,
+ subreddit text,
+ distinguished text,
+ PRIMARY KEY (id),
+ FOREIGN KEY (link_id) REFERENCES reddit.post(full_name),
+ FOREIGN KEY (subreddit_id) REFERENCES reddit.subreddit(full_name)
+);
+
+CREATE TABLE reddit.comment(
+ full_name text,
+ parent_id text,
+ post_id text NOT NULL,
+ subreddit_id text NOT NULL,
+ author text NOT NULL,
+ ups int NOT NULL,
+ downs int NOT NULL,
+ PRIMARY KEY(full_name),
+ FOREIGN KEY (post_id) REFERENCES reddit.post(full_name),
+ FOREIGN KEY(subreddit_id) REFERENCES reddit.subreddit(full_name)
+);
+
+
+
+User table:
+
+
+CREATE TABLE reddit.user(
+   id text,
+   name text NOT NULL,
+   hide_from_robots bool NOT NULL,
+   over18 bool NOT NULL,
+   PRIMARY KEY(id)
+);
+
+cross post table: For every cross post, we add a new row to this table.
+
+CREATE TABLE reddit.crossPost(
+ post1 text,
+ post2 text,
+ subreddit1 text,
+ subreddit2 text,
+ PRIMARY KEY(full_name1,full_name2,subreddit1,subreddit2),
+ FOREIGN KEY(subreddit1) REFERENCES reddit.subreddit(full_name),
+ FOREIGN KEY(subreddit2) REFERENCES reddit.subreddit(full_name),
+ FOREIGN KEY(post1) REFERENCES reddit.post(full_name),
+ FOREIGN KEY(post2) REFERENCES reddit.post(full_name)
+);
+
+
+Once we actually start analyzing the data, we will probably end up with a table like the following initially:
+
+CREATE TABLE userFrequency(
+ user_full_name text,
+ subreddit_full_name text,
+ submissionFrequency int DEFAULT 0,
+ commentFrequency int DEFAULT 0,
+ PRIMARY KEY(user_full_name,subreddit_full_name)
+);
+
