@@ -13,16 +13,11 @@ using UnityEngine.SceneManagement;
 public class SubredditToOutsideTransition : SceneTransition {
 
 
-    //This will be called whenever something collides with this object.
-    void OnMouseDown()
-    {
-        activateLoadingScreen();
-        transferInfo();
 
-    }
 
     protected override void transferInfo()
     {
+        activateLoadingScreen();
         SubredditSceneState.instance.clear();
        // var name = GameInfo.instance.locationText.GetComponent<UnityEngine.UI.Text>();
        // name.text = "";

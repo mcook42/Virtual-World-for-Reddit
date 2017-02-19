@@ -12,8 +12,7 @@ class MainToSubredditDomeTransition : SceneTransition
     public void clickPlay()
     {
         
-        activateLoadingScreen();
-        SceneManager.LoadScene("SubredditDome");
+        
         transferInfo();
         
     }
@@ -23,6 +22,8 @@ class MainToSubredditDomeTransition : SceneTransition
     /// </summary>
     protected override void transferInfo()
     {
+        activateLoadingScreen();
+        SceneManager.LoadScene("SubredditDome");
         SubredditDomeState.instance.centerBuilding = Instantiate(buildingPrefab) as GameObject;
         DontDestroyOnLoad(SubredditDomeState.instance.centerBuilding);
 

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// SceneTransistion classes handle the transition of information between scenes.
@@ -20,6 +21,11 @@ using UnityEngine;
 public abstract class SceneTransition : MonoBehaviour
 {
 
+    public void OnMouseDown()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject())
+            transferInfo();
+    }
 
     /// <summary>
     /// Puts the player into a loading screen.

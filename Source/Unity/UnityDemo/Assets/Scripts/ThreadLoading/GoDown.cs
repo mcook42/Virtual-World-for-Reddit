@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Causes the previous 25 threads to load.
@@ -18,6 +19,9 @@ public class GoDown : MonoBehaviour {
     /// </summary>
     void OnMouseDown()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         GameInfo.instance.menuController.GetComponent<LoadingPanel>().loadPanel();
         subredditSceneSetup.GetComponent<SubredditSceneSetup>().loadThreads(-25, true);
         Debug.Log("Going Down!");

@@ -4,16 +4,12 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 class SubredditDomeToSubredditTransition : SceneTransition
 {
-    //This will be called whenever something collides with this object.
-    void OnMouseDown()
-    {
 
-        transferInfo();
 
-    }
 
     /// <summary>
     /// Resets the SubredditSceneState, saves the building, and then loads the new scene.
@@ -40,15 +36,16 @@ class SubredditDomeToSubredditTransition : SceneTransition
     public void saveCurrentBuilding(GameObject building)
     {
         //here we have to seperate the building from the chunk parent.
+        
         building.transform.parent = null;
-
-
         building.SetActive(false);
 
-        DontDestroyOnLoad(building);
-        SubredditSceneState.instance.init(building);
+        GameObject toSave = Instantiate(building);
+        DontDestroyOnLoad(toSave);
+        SubredditSceneState.instance.init(toSave);
+        
+        
     }
-
 
 }
 

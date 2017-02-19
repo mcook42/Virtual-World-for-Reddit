@@ -48,7 +48,8 @@ class SubredditSceneState : SceneState<SubredditSceneState>
     /// </summary>
     public override void clear()
     {
-        //currentSubreddit = null;
+        if (currentSubreddit != null)
+            GameObject.Destroy(currentSubreddit);
     }
 
     /// <summary>
