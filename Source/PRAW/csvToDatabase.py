@@ -7,6 +7,7 @@ For initial conversion from csv data to database. Data collected from GoogleBigQ
 import os
 import sys
 import pandas
+import numpy as np
 import dbInteractions
 
 __author__ = "Matt Cook"
@@ -18,15 +19,31 @@ def clean_data(table_struct, filename):
     """Cleans unecessary data from table and converts empty entries to NULL"""
     # NOTE: If you run this twice, you WILL DUPLICATE THE DUPLICATES OF YOUR FILES.
     # BigQuery has no null representation, so go through and add NULL
-    df = pandas.read_csv(filename)
-    df.rename(columns={'name': 'full_name'}, inplace=True)
+    dtypes = {"created_utc": np.int64, "subreddit": np.str_, "subreddit_id": np.str_, "author": np.str}
+    namez = ["ï»¿created_utc", "subreddit", "subreddit_id", "author", "domain", "num_comments",
+                                 "score", "title", "selftext", "full_name", "gilded", "over_18", "thumbnail", "is_self",
+                                 "from_id", "permalink", "distinguished"]
+    try:
+        df = pandas.read_csv(filename, header=0, low_memory=False,
+                             usecols=[0, 1, 2, 3, 5, 6, 9, 10, 14, 18, 19, 20, 25, 27, 28, 32])
+    except Exception as e:
+        print("error: ", e)
+    df.rename(columns={'name': 'full_name', 'ï»¿created_utc': "created_utc"}, inplace=True)
+    #df.dropna(inplace=True)
     newname = filename.replace(".csv", "-new.csv")
     if table_struct is "posts":
         # Write to file
-        df.to_csv(newname, sep=',', na_rep="NULL",
-                  columns=(("created_utc", "subreddit", "subreddit_id", "author", "domain", "num_comments",
-                            "score", "title", "selftext", "full_name", "gilded", "over_18", "thumbnail", "is_self",
-                            "from_id", "permalink", "name", "distinguished")), encoding='utf-8')
+        df.to_csv(newname, sep=',',
+                  # columns=(("created_utc", "subreddit", "subreddit_id", "author", "domain", "num_comments",
+                  #           "score", "title", "selftext", "full_name", "gilded", "over_18", "thumbnail", "is_self",
+                  #           "permalink", "distinguished")),
+                  na_rep="NULL", quoting=1,
+                  encoding='utf-8', index=False)
+    if table_struct is "comments":
+        df.to_csv(newname, sep=",", na_rep="NULL",
+                  columns=("body", "score_hiddden", "name", "author", "created_utc", "subreddit_id",
+                           "link_id", "parent_id", "controversiality", "gilded", "id", "subreddit",
+                           "distinguished"), dtypes=dtypes, index=False)
     return newname
 
 
@@ -44,41 +61,40 @@ def main():
     files = os.listdir(directory)
 
     for filename in files:
-        if "comments" in filename and "new" not in filename:
-            new_filename = clean_data(table_struct="comments", filename=filename)
-        elif "posts" in filename and "new" not in filename:
-            new_filename = clean_data(table_struct="posts", filename=filename)
+        # if "comments" in filename:
+        #     new_filename = clean_data(table_struct="comments", filename=filename)
+        # elif "post" in filename:
+        #new_filename = clean_data(table_struct="posts", filename=filename)
+        new_filename = "vreddit_2017posts000000000000-new.csv"
+       # print(new_filename)
 
-        with open(new_filename, 'r') as infile:
+        with open(filename, 'r', encoding='utf-8') as infile:
             # Open connection and cursor for the insertion of the table
             conn = dbInteractions.open_conn()
             cur = conn.cursor()
 
             # Check which table it's supposed to go into
-            if "post" in new_filename:
+            if "post" in filename:
+                query = "COPY reddit.post FROM %s CSV HEADER"
                 try:
-                    cur.copy_from(infile, "reddit.post", null="NULL", sep=",",
-                                  columns=("created_utc", "subreddit", "subreddit_id", "author", "domain",
-                                           "num_comments", "score", "title", "selftext", "full_name", "gilded",
-                                           "over_18", "thumbnail", "is_self", "from_id", "permalink", "name",
-                                           "distinguished")
-                                  )
+                    path = "'" + directory + "\\" + filename + "'"
+                    cur.copy_expert(sql=query % path, file=infile)
                 except Exception as e:
                     print("something went wrong: ", e)
-                    cur.rollback()
+                    conn.rollback()
 
-            elif "comment" in new_filename:
+            elif "comment" in filename:
                 try:
                     cur.copy_from(infile, "reddit.comment", null='', sep=',',
-                                  columns=("body", "score_hiddden", "name", "author", "created_utc", "subreddit_id",
+                                  columns=("body", "score_hiddden", "author", "created_utc", "subreddit_id",
                                            "link_id", "parent_id", "controversiality", "gilded", "id", "subreddit",
                                            "distinguished")
                                   )
                 except Exception as e:
                     print("Something went wrong: ", e)
-                    cur.rollback()
+                    conn.rollback()
 
-            cur.commit()
+            conn.commit()
             cur.close()
             conn.close()
     return 0

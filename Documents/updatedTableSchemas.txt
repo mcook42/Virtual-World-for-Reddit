@@ -12,23 +12,21 @@ CREATE TABLE reddit.post(
 
 MY UPDATED VERSION
 CREATE TABLE reddit.post(
- created_utc int,
+ created_utc bigint,
  subreddit text NOT NULL,
- subreddit_id text NOT NULL,
  author text NOT NULL,
  domain text,
  num_comments int,
  score int,
  title text,
  selftext text,
- full_name text NOT NULL,
  gilded int,
  over_18 bool,
  thumbnail text,
+ subreddit_id text NOT NULL,
  is_self bool,
- from_id text,
  permalink text,
- name text,
+ full_name text NOT NULL,
  distinguished text,
  PRIMARY KEY (full_name),
  FOREIGN KEY (subreddit_id) REFERENCES reddit.subreddit(full_name)
@@ -39,7 +37,7 @@ MY UPDATED VERSION
 CREATE TABLE reddit.comment(
  body text,
  score_hiddden bool,
- name text NOT NULL,
+ full_name text NOT NULL,
  author text NOT NULL,
  created_utc int NOT NULL,
  subreddit_id text,
@@ -92,8 +90,7 @@ CREATE TABLE reddit.crossPost(
  FOREIGN KEY(subreddit1) REFERENCES reddit.subreddit(full_name),
  FOREIGN KEY(subreddit2) REFERENCES reddit.subreddit(full_name),
  FOREIGN KEY(post1) REFERENCES reddit.post(full_name),
- FOREIGN KEY(post2) REFERENCES reddit.post(full_name)
-);
+ FOREIGN KEY(post2) REFERENCES reddit.post(full_name));
 
 
 Once we actually start analyzing the data, we will probably end up with a table like the following initially:
