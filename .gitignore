@@ -57,3 +57,4 @@ Source/PRAW/dbInteractions.py
 *.xml
 *.xml
 *.pyc
+*.xml

@@ -24,12 +24,12 @@ def clean_data(table_struct, filename):
                                  "score", "title", "selftext", "full_name", "gilded", "over_18", "thumbnail", "is_self",
                                  "from_id", "permalink", "distinguished"]
     try:
-        df = pandas.read_csv(filename, header=0, low_memory=False,
+        df = pandas.read_csv(filename, header=0, low_memory=False, quoting=1,
                              usecols=[0, 1, 2, 3, 5, 6, 9, 10, 14, 18, 19, 20, 25, 27, 28, 32])
     except Exception as e:
         print("error: ", e)
     df.rename(columns={'name': 'full_name', 'ï»¿created_utc': "created_utc"}, inplace=True)
-    #df.dropna(inplace=True)
+    df.dropna(subset=["subreddit"], inplace=True)
     newname = filename.replace(".csv", "-new.csv")
     if table_struct is "posts":
         # Write to file
@@ -64,8 +64,8 @@ def main():
         # if "comments" in filename:
         #     new_filename = clean_data(table_struct="comments", filename=filename)
         # elif "post" in filename:
-        #new_filename = clean_data(table_struct="posts", filename=filename)
-        new_filename = "vreddit_2017posts000000000000-new.csv"
+        new_filename = clean_data(table_struct="posts", filename=filename)
+       # new_filename = "vreddit_2017posts000000000000-new.csv"
        # print(new_filename)
 
         with open(filename, 'r', encoding='utf-8') as infile:
