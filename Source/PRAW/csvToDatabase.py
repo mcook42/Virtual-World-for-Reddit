@@ -48,7 +48,7 @@ def clean_data(table_struct, filename):
 
 
 def main():
-    directory = "C:\\Users\\Someone\\Desktop\\testDir"  # sys.argv[1]
+    directory = sys.argv[1]
 
     if not directory:
         print("Please provide the directory of the file(s) to be read into the db.\n")
@@ -65,10 +65,8 @@ def main():
         #     new_filename = clean_data(table_struct="comments", filename=filename)
         # elif "post" in filename:
         new_filename = clean_data(table_struct="posts", filename=filename)
-       # new_filename = "vreddit_2017posts000000000000-new.csv"
-       # print(new_filename)
 
-        with open(filename, 'r', encoding='utf-8') as infile:
+        with open(new_filename, 'r', encoding='utf-8') as infile:
             # Open connection and cursor for the insertion of the table
             conn = dbInteractions.open_conn()
             cur = conn.cursor()
@@ -77,7 +75,7 @@ def main():
             if "post" in filename:
                 query = "COPY reddit.post FROM %s CSV HEADER"
                 try:
-                    path = "'" + directory + "\\" + filename + "'"
+                    path = "'" + directory + "\\" + new_filename + "'"
                     cur.copy_expert(sql=query % path, file=infile)
                 except Exception as e:
                     print("something went wrong: ", e)
