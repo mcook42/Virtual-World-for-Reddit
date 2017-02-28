@@ -58,3 +58,4 @@ Source/PRAW/dbInteractions.py
 *.xml
 *.pyc
 *.xml
+*.xml
