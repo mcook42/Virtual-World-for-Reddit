@@ -11,7 +11,7 @@ import numpy as np
 import dbInteractions
 
 __author__ = "Matt Cook"
-__version__ = "0.0.1"
+__version__ = "1.0.0"
 __email__ = "mattheworion.cook@gmail.com"
 
 
@@ -64,7 +64,7 @@ def clean_data(table_struct, filename, cur):
 
 
 def main():
-    directory = "C:\\Users\\Someone\\Desktop\\testDir" #sys.argv[1]
+    directory = "C:\\Users\\Someone\\Desktop\\testDir"
 
     if not directory:
         print("Please provide the directory of the file(s) to be read into the db.\n")
