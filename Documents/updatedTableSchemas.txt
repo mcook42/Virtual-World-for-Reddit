@@ -36,16 +36,15 @@ CREATE TABLE reddit.post(
 MY UPDATED VERSION
 CREATE TABLE reddit.comment(
  body text,
- score_hiddden bool,
- full_name text NOT NULL,
  author text NOT NULL,
  created_utc int NOT NULL,
  subreddit_id text,
  link_id text,
  parent_id text,
+ score int,
  controversiality int,
  gilded int,
- id text,
+ id text NOT NULL,
  subreddit text,
  distinguished text,
  PRIMARY KEY (id),
