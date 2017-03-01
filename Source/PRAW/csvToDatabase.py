@@ -7,6 +7,7 @@ For initial conversion from csv data to database. Data collected from GoogleBigQ
 import os
 import sys
 import pandas
+from time import sleep
 import numpy as np
 import dbInteractions
 
@@ -60,11 +61,12 @@ def clean_data(table_struct, filename, cur):
     # Drop entries where no subreddit is specified. We do not need this data.
     df.dropna(subset=["subreddit"], inplace=True)
     df.to_csv(newname, sep=',', na_rep="NULL", quoting=1, encoding='utf-8', index=False)
+    print(newname)
     return newname
 
 
 def main():
-    directory = "C:\\Users\\Someone\\Desktop\\testDir"
+    directory = "/media/usb/decompressed_posts"
 
     if not directory:
         print("Please provide the directory of the file(s) to be read into the db.\n")
@@ -75,6 +77,7 @@ def main():
 
     # Get the names of the files in the directory specified
     files = os.listdir(directory)
+
     # Sort in reverse alphabetical order to ensure that posts are inserted before comments into the db
     files.sort(reverse=True)
 
@@ -83,7 +86,7 @@ def main():
         conn = dbInteractions.open_conn()
         cur = conn.cursor()
 
-        if "comments" in filename:
+        if "comment" in filename:
             new_filename = clean_data(table_struct="comments", filename=filename, cur=cur)
             table_name = "reddit.comment"
 
@@ -91,13 +94,14 @@ def main():
             new_filename = clean_data(table_struct="posts", filename=filename, cur=cur)
             table_name = "reddit.post"
 
+        sleep(0.5)
         with open(new_filename, 'r', encoding='utf-8') as infile:
             query = "COPY %s FROM %s CSV HEADER"
             try:
-                path = "'" + directory + "\\" + new_filename + "'"
+                path = "'" + directory + "/" + new_filename + "'"
                 cur.copy_expert(sql=query % (table_name, path), file=infile)
             except Exception as e:
-                print("something went wrong with ", filename, ": ", e)
+                print("something went wrong with ", new_filename, ": ", e)
                 conn.rollback()
                 conn.commit()
         cur.close()
