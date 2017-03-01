@@ -66,7 +66,7 @@ def clean_data(table_struct, filename, cur):
 
 
 def main():
-    directory = "/media/usb/decompressed_posts"
+    directory = "D:\\decompressed_comments\\"
 
     if not directory:
         print("Please provide the directory of the file(s) to be read into the db.\n")
@@ -94,16 +94,19 @@ def main():
             new_filename = clean_data(table_struct="posts", filename=filename, cur=cur)
             table_name = "reddit.post"
 
-        sleep(0.5)
-        with open(new_filename, 'r', encoding='utf-8') as infile:
-            query = "COPY %s FROM %s CSV HEADER"
-            try:
-                path = "'" + directory + "/" + new_filename + "'"
-                cur.copy_expert(sql=query % (table_name, path), file=infile)
-            except Exception as e:
-                print("something went wrong with ", new_filename, ": ", e)
-                conn.rollback()
-                conn.commit()
+        # sleep(1.5)
+        # with open(new_filename, 'r', encoding='utf-8') as infile:
+        #     query = "COPY %s FROM %s CSV HEADER"
+        #     print("file opened")
+        #     try:
+        #         path = "'" + directory + '\\' + new_filename + "'"
+        #         print("got to path spec")
+        #         cur.copy_expert(sql=query % (table_name, path), file=infile)
+        #         print("got past copy")
+        #     except Exception as e:
+        #         print("something went wrong with ", new_filename, ": ", e)
+        #         conn.rollback()
+        #         conn.commit()
         cur.close()
         print("Done with: ", new_filename)
 
