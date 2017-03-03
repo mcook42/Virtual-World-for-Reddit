@@ -13,12 +13,13 @@ using UnityEngine;
 using RedditSharp;
 
 /// <summary>
-/// Holds all information related to the subreddit scene.
+/// Holds all information related to the Subreddit scene.
 /// </summary>
 class SubredditSceneState : SceneState<SubredditSceneState>
 {
-    //The building that holds all of the subreddit information.
+    //The building that holds all of the Subreddit information.
     public GameObject currentSubreddit = null;
+    public GameObject subbredditSetup = null;
 
     public  RedditSharp.Things.Sort sortingMethod= RedditSharp.Things.Sort.Hot;
     public int firstThreadLoaded = 1;
@@ -32,7 +33,7 @@ class SubredditSceneState : SceneState<SubredditSceneState>
     }
 
     /// <summary>
-    /// Stores the current subreddit building gameObject.
+    /// Stores the current Subreddit building gameObject.
     /// </summary>
     /// <param name="currentSubreddit">The building gameObject entered.</param>
     public void init(GameObject currentSubreddit)
@@ -48,6 +49,7 @@ class SubredditSceneState : SceneState<SubredditSceneState>
     /// </summary>
     public override void clear()
     {
+        subbredditSetup = null;
         if (currentSubreddit != null)
             GameObject.Destroy(currentSubreddit);
     }
@@ -57,6 +59,7 @@ class SubredditSceneState : SceneState<SubredditSceneState>
     /// </summary>
     public override void reset()
     {
+        subbredditSetup = null;
         if (currentSubreddit != null)
             GameObject.Destroy(currentSubreddit);
     }

@@ -56,6 +56,7 @@ public abstract class Menu<T>: MonoBehaviour
         }
         if(Time.timeScale!=1)
             Time.timeScale = 1;
+        
     }
 }
 

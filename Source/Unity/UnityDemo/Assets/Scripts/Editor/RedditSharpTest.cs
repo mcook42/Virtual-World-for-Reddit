@@ -14,139 +14,117 @@
 
 using UnityEngine;
 using System.Collections;
-using Stopwatch=System.Diagnostics.Stopwatch;
+using Stopwatch = System.Diagnostics.Stopwatch;
 using RedditSharp;
-using Scope =RedditSharp.AuthProvider.Scope;
+using Scope = RedditSharp.AuthProvider.Scope;
 using UnityEditor;
+using System.Text;
+using System.Net;
 
 
-#pragma warning disable 414, 168 //ignoring "variable not used" warnings.
+#pragma warning disable 0219,414, 168 //ignoring "variable not used" warnings.
 public class RedditSharpTest  {
 
 
-	//enter the app secret here
-	private static string 	app_secret="goBg60WClYUhNaOmy1cnAfrD_K4";
+    //For installed applications, the app_secret must always be an empty string.
+    private static string app_secret = "";
 
-	private static string 	user_agent = "User-Agent: UwyoSenDesign2017:v0.0.1 (by /u/mcook42)";
-	private static string	app_id = "DNvP_RE1N9NqQg";
-	private static string	app_uri = "https://127.0.0.1:65010/authorize_callback";
-	private static string	app_code = "KxpXC7clBaDYsBPU1E3JJlq77j8";
-	private static string	app_refresh = "64281718-kVkekkFsh-YOeFKUmqlpZF0lCkE";
-	private static string 	app_state="533swmzldjwu9a5"; 
-	private static Scope 	app_scopes = Scope.edit | Scope.flair | Scope.history | Scope.identity |Scope.modconfig |Scope.modflair | Scope.modlog| Scope.modposts | Scope.modwiki|Scope.mysubreddits | Scope.privatemessages |Scope.read|Scope.report|Scope.save|Scope.submit|Scope.subscribe|Scope.vote|Scope.wikiedit|Scope.wikiread;
+    //These values are all retrieved from the application account.
+    private static string user_agent = "User-Agent: UwyoSenDesign2017-InstalledApp:v0.0.1 (by /u/3DWorldForReddit)";
+    private static string app_id = "pQnwWWwHYJGFnQ";
+    private static string app_uri = "https://127.0.0.1:65010/authorize_callback";
+    private static Scope app_scopes = Scope.edit | Scope.flair | Scope.history | Scope.identity | Scope.modconfig | Scope.modflair | Scope.modlog | Scope.modposts | Scope.modwiki | Scope.mysubreddits | Scope.privatemessages | Scope.read | Scope.report | Scope.save | Scope.submit | Scope.subscribe | Scope.vote | Scope.wikiedit | Scope.wikiread;
 
-	//enter your own username and password here.
-	private static string 	username="testUser34";
+    //These values will be retrieved from the code as needed.
+    private static string app_code = "";
+    private static string app_refresh = "";
+    private static string app_state = "";
+
+    //enter your own username and password here.
+    private static string 	username="testUser34";
 	private static string 	password="testUser34";
 
 	[MenuItem ("RedditSharp/LoadFront")]
 	public static void loadFront()
-	{ 
+	{
+
+        app_state = CreateState(20);
+
+        try
+        {
 
 
-		try{
+            NonLoginLoad();
 
 
+        }
+        catch (System.Security.Authentication.AuthenticationException ae)
+        {
+            System.Console.WriteLine("Login refused: " + ae.Message);
+            return;
+        }
+        catch (System.Net.WebException we)
+        {
+            System.Console.WriteLine("Network error when connecting to reddit: " + we.Message);
+            return;
+        }
 
 
+    }
+
+    //Generates a random string of alphaNumberic characters.
+    public static string CreateState(int length)
+    {
+        const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder res = new StringBuilder();
+        System.Random rnd = new System.Random();
+        while (0 < length--)
+        {
+            res.Append(valid[rnd.Next(valid.Length)]);
+        }
+        return res.ToString();
+    }
+
+    /*
+  * Retrieves some subreddit data from Reddit using our application.
+  */
+    public static void NonLoginLoad()
+    {
+        //Web Agent handles all of the requests. The Constructor does abolutely nothing and so everything must be initialzed outside of it.
+		var webAgent = new WebAgent();
+
+		//Without this method the web agent will not work on Mono platforms. Including Unity.
+		InitializeMonoWebAgent (webAgent);
+		//This initialezes the rest fo the web agent. You don't really even have to use the authProvider after this.
+        var authProvider = new AuthProvider(app_id, app_secret, app_uri, webAgent);
+
+        //Create a new Reddit object to interface with. false indicates that there will be no user attached to the object.
+        var reddit = new Reddit(webAgent,false);
 
 
+        //Get Reddit info.
+        var subreddit = reddit.GetSubreddit("/r/AskReddit");
 
-		/*
-		if (username == "" || password == "") {
-			Debug.Log ("You need to enter a Reddit username and password in the script scripts/RedditSharpTest.cs\nSo far, I can only get RedditSharp to function if you pass in an username and password");
-			return;
-		}
+        int i = 0;
+        foreach (var post in subreddit.Hot)
+        {
+            Debug.Log(post.Title);
 
+            if (i > 24)
+                break;
+            i++;
+        }
 
+    }
 
-			var reddit = new Reddit(username,password);
-			var timer =new Stopwatch();
-			timer.Start();
-			Debug.Log("Log in successful. Loading threads.");
-
-			var subreddit = reddit.RSlashAll;
-			int stop=25;
-			foreach(var post in subreddit.Hot)
-			{
-				Debug.Log(post.Subreddit.Name);
-				if(stop<=0)
-					break;
-				stop--;
-			}
-
-			timer.Stop();
-			Debug.Log("Seconds taken: " + (timer.ElapsedMilliseconds/1000) );
-
-
-
-
-			//Code that does not work.
-			//This code is coppied almost directly from the github page (in Program.cs)
-			//The code throws a NullPointerException when the Reddit object is encountered
-		/*
-
-		
-			if (app_secret=="") {
-				Debug.Log ("You need to enter the app_secret in the script scripts/RedditSharpTest.cs\nRemove this upon uploading to github.");
-				return;
-			}
-			var webAgent=new WebAgent();
-			WebAgent.UserAgent=user_agent;
-			var authProvider = new AuthProvider (app_id,app_secret, app_uri,webAgent);
-
-			var authTokenString = authProvider.GetOAuthToken(username, password);
-
-			//copy and paste this url into a browser. Click accept. Copy the code in the returned url and use it as the app_code.
-			//var authURL=authProvider.GetAuthUrl(app_state,app_scopes,true); Debug.Log(authURL);
-
-			var authToken = authProvider.GetOAuthToken(app_code);
-			Debug.Log(authToken);
-
-			
-			var reddit = new Reddit(authToken);//code crashes right here.
-
-
-			var timer =new Stopwatch();
-			timer.Start();
-
-			var subreddit = reddit.RSlashAll;
-			int stop=25;
-			foreach(var post in subreddit.Hot)
-			{
-				Debug.Log(post.Subreddit.Name);
-				if(stop<=0)
-					break;
-				stop--;
-			}
-
-			timer.Stop();
-			Debug.Log("Seconds taken: " + (timer.ElapsedMilliseconds/1000) );
-
-
-
-
-*/
-	
-	
-
-
-
-		}
-		catch (System.Security.Authentication.AuthenticationException ae)
-		{
-			Debug.Log("Login refused: "+ae.Message);
-			return;
-		}
-		catch (System.Net.WebException we)
-		{
-			Debug.Log("Network error when connecting to reddit: "+we.Message);
-			return;
-		}
-
-
-
-
+	/// <summary>
+	/// Initializes the web agent for Mono Platforms..
+	/// </summary>
+	/// <param name="agent">Agent.</param>
+	public static void InitializeMonoWebAgent(WebAgent agent)
+	{
+		ServicePointManager.ServerCertificateValidationCallback = (s, c, ch, ssl) => true;
+		agent.Cookies = new CookieContainer();
 	}
-		
+
 }

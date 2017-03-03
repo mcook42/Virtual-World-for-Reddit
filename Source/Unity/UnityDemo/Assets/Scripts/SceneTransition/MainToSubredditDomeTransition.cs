@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using RedditSharp.Things;
 
 class MainToSubredditDomeTransition : SceneTransition
 {
-    public GameObject buildingPrefab=null;
 
     public void clickPlay()
     {
@@ -24,17 +24,12 @@ class MainToSubredditDomeTransition : SceneTransition
     {
         activateLoadingScreen();
         SceneManager.LoadScene("SubredditDome");
-        SubredditDomeState.instance.centerBuilding = Instantiate(buildingPrefab) as GameObject;
-        DontDestroyOnLoad(SubredditDomeState.instance.centerBuilding);
 
-        //give building values using the Building script
-        var buildingAttributes = SubredditDomeState.instance.centerBuilding.GetComponent<Subreddit>();
-        buildingAttributes.subredditId = "";
-        buildingAttributes.subredditName = "center";
+		List<String> subreddit = new List<String> ();
+		subreddit.Add ("/r/askscience");
 
-        //set the name on the front of the building
-        var name = SubredditDomeState.instance.centerBuilding.transform.Find("Name").GetComponent<TextMesh>();
-        name.text = buildingAttributes.subredditName;
+		Subreddit center = GameInfo.instance.server.getSubreddits(subreddit)[0];
+        SubredditDomeState.instance.loadBuildings(center);
 
         GameInfo.instance.player.SetActive(true);
         GameInfo.instance.menuController.SetActive(true);

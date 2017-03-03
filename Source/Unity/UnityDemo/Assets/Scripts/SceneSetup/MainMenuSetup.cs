@@ -13,6 +13,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 /// </summary>
 public class MainMenuSetup : SceneSetUp {
 
+
     /// <summary>
     /// Unactivates the player.
     /// </summary>
@@ -26,6 +27,7 @@ public class MainMenuSetup : SceneSetUp {
     /// </summary>
     protected override void setUpScene()
     {
+
         GameInfo.instance.menuController.GetComponent<MainMenu>().loadMenu(false);
     }
 

@@ -21,7 +21,7 @@ public class MenuController : MonoBehaviour {
     public GameObject threadPrefab;
     public GameObject elevatorPrefab;
     public GameObject mapPrefab;
-    public GameObject subredditPrefab;
+    public GameObject SubredditPrefab;
     */
 
 

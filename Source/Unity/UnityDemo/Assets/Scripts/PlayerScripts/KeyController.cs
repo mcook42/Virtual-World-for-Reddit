@@ -5,9 +5,13 @@
  */
 
 
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using RedditSharp;
 using UnityEngine;
+
 
 /// <summary>
 /// Controls key inputs besides the player keys.
@@ -28,7 +32,24 @@ public class KeyController : MonoBehaviour {
 
         if(Input.GetKeyDown("r"))
         {
-            GameInfo.instance.menuController.GetComponent<ErrorMenu>().loadMenu("You can't press that");
+            GameInfo.instance.menuController.GetComponent<Sort>().OnMouseDown();
+        }
+
+		if (Input.GetKeyDown ("c")) {
+
+			var sub = GameInfo.instance.reddit.GetSubreddit ("/r/AskReddit");
+			var posts = sub.Hot.Take (1);
+			var post = posts.ToArray () [0];
+			if (post == null) {
+				Debug.Log ("here");
+			}
+
+			GameInfo.instance.menuController.GetComponent<CommentMenu> ().loadMenu (post);
+		}
+
+        if(Input.GetKeyDown("m"))
+        {
+            GameInfo.instance.menuController.GetComponent<MapMenu>().loadMenu(true);
         }
 	}
 }

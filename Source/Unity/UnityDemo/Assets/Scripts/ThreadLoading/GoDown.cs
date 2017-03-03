@@ -12,7 +12,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class GoDown : MonoBehaviour {
 
-    public GameObject subredditSceneSetup;
+    public GameObject SubredditSceneSetup;
 
     /// <summary>
     /// Loads the previous 25 threads.
@@ -23,7 +23,7 @@ public class GoDown : MonoBehaviour {
             return;
 
         GameInfo.instance.menuController.GetComponent<LoadingPanel>().loadPanel();
-        subredditSceneSetup.GetComponent<SubredditSceneSetup>().loadThreads(-25, true);
+        SubredditSceneSetup.GetComponent<SubredditSceneSetup>().loadThreads(-25, true);
         Debug.Log("Going Down!");
         GameInfo.instance.menuController.GetComponent<LoadingPanel>().unLoadMenu();
     }

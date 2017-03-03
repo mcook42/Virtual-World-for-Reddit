@@ -16,7 +16,7 @@ class SubredditDomeToSubredditTransition : SceneTransition
     /// </summary>
     protected override void transferInfo()
     {
-
+        GameInfo.instance.menuController.GetComponent<DoorPopUp>().unLoadMenu();
         activateLoadingScreen();
 
         //Saves the building the player is going into.
@@ -40,9 +40,8 @@ class SubredditDomeToSubredditTransition : SceneTransition
         building.transform.parent = null;
         building.SetActive(false);
 
-        GameObject toSave = Instantiate(building);
-        DontDestroyOnLoad(toSave);
-        SubredditSceneState.instance.init(toSave);
+        DontDestroyOnLoad(building);
+        SubredditSceneState.instance.init(building);
         
         
     }

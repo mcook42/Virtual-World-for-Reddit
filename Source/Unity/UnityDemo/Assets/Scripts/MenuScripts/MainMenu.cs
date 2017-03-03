@@ -20,7 +20,7 @@ class MainMenu : Menu<MainMenu>
     /// </summary>
     public void play()
     {
-        unLoadMenu();
+		GameInfo.instance.menuController.GetComponent<MainMenu>().unLoadMenu();
         GameInfo.instance.setCursorLock(true);
         GameInfo.instance.menuController.GetComponent<MainToSubredditDomeTransition>().clickPlay();
     }

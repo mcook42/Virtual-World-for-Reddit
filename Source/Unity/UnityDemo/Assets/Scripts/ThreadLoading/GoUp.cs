@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class GoUp : MonoBehaviour {
 
-    public GameObject subredditSceneSetup;
+    public GameObject SubredditSceneSetup;
 
     /// <summary>
     /// Loads 25 new Threads.
@@ -16,7 +16,7 @@ public class GoUp : MonoBehaviour {
             return;
 
         GameInfo.instance.menuController.GetComponent<LoadingPanel>().loadPanel();
-        subredditSceneSetup.GetComponent<SubredditSceneSetup>().loadThreads(25,true);
+        SubredditSceneSetup.GetComponent<SubredditSceneSetup>().loadThreads(25,true);
         Debug.Log("Going Up!");
         GameInfo.instance.menuController.GetComponent<LoadingPanel>().unLoadMenu();
     }

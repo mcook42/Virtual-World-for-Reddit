@@ -17,7 +17,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class Sort: Menu<Sort> {
 
-    public GameObject subredditSceneSetup;
+
 
     /// <summary>
     /// Unactivates the panel.
@@ -25,10 +25,9 @@ public class Sort: Menu<Sort> {
     /// <param name="sortingMethod"></param>
     void onClick(RedditSharp.Things.Sort sortingMethod)
     {
-        
         GameInfo.instance.menuController.GetComponent<LoadingPanel>().loadPanel();
         unLoadMenu();
-        subredditSceneSetup.GetComponent<SubredditSceneSetup>().loadThreads(sortingMethod);
+        SubredditSceneState.instance.subbredditSetup.GetComponent<SubredditSceneSetup>().loadThreads(sortingMethod);
         Debug.Log("Sorting!");
         MouseLook mouseLook = GameInfo.instance.player.GetComponent<MyRigidbodyFirstPersonController>().mouseLook;
         mouseLook.SetCursorLock(true);

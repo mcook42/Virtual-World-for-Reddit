@@ -8,16 +8,12 @@ using UnityEngine.SceneManagement;
 class SubredditToSubredditDomeTransition: SceneTransition
 {
 
-
     protected override void transferInfo()
     {
         activateLoadingScreen();
         SubredditSceneState.instance.clear();
-        SubredditDomeState.instance.activateCenterBuilding();
         GameInfo.instance.menuController.GetComponent<LocationPanel>().unLoadMenu();
         SceneManager.LoadScene("SubredditDome");
-
-
 
     }
 }

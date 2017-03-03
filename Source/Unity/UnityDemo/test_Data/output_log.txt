@@ -2,13 +2,13 @@ Mono path[0] = 'C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-W
 Mono path[1] = 'C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/test_Data/Mono'
 Mono config path = 'C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/test_Data/Mono/etc'
 PlayerConnection initialized from C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/test_Data (debug = 0)
-PlayerConnection initialized network socket : 0.0.0.0 55157
-Multi-casting "[IP] 192.168.56.1 [Port] 55157 [Flags] 3 [Guid] 1589674729 [EditorId] 2214293379 [Version] 1048832 [Id] WindowsPlayer(DESKTOP-ONBFJJ4) [Debug] 1" to [225.0.0.222:54997]...
-Waiting for connection from host on [0.0.0.0:55157]...
-PlayerConnection accepted from [10.121.169.63] handle:0x290
-Started listening to [0.0.0.0:55157]
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56729
-PlayerConnection already initialized - listening to [0.0.0.0:55157]
+PlayerConnection initialized network socket : 0.0.0.0 55161
+Multi-casting "[IP] 192.168.56.1 [Port] 55161 [Flags] 3 [Guid] 2637910942 [EditorId] 1267077298 [Version] 1048832 [Id] WindowsPlayer(DESKTOP-ONBFJJ4) [Debug] 1" to [225.0.0.222:54997]...
+Waiting for connection from host on [0.0.0.0:55161]...
+Timed out. Continuing without host connection.
+Started listening to [0.0.0.0:55161]
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56942
+PlayerConnection already initialized - listening to [0.0.0.0:55161]
 Initialize engine version: 5.5.0f3 (38b4efef76f0)
 GfxDevice: creating device client; threaded=1
 Direct3D:
@@ -38,7 +38,7 @@ Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unit
 Loading C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\test_Data\Managed\RedditSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\test_Data\Managed\System.Threading.dll (this message is harmless)
 Loading C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\test_Data\Managed\System.Threading.dll into Unity Child Domain
-- Completed reload, in  0.395 seconds
+- Completed reload, in  0.545 seconds
 Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\test_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\test_Data\Managed\System.dll (this message is harmless)
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
@@ -46,31 +46,66 @@ desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 3.969812 ms
+UnloadTime: 90.030510 ms
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 2820 -> priority: 1 
+  Thread -> id: 1bcc -> priority: 1 
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.085390 ms
-System memory in use before: 18.6 MB.
-System memory in use after: 18.7 MB.
-
-Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 667.
-Total: 0.343163 ms (FindLiveObjects: 0.041054 ms CreateObjectMapping: 0.027221 ms MarkObjects: 0.261054 ms  DeleteObjects: 0.005354 ms)
-
-Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.826449 ms
+UnloadTime: 0.112008 ms
 System memory in use before: 19.1 MB.
 System memory in use after: 19.1 MB.
 
-Unloading 25 unused Assets to reduce memory usage. Loaded Objects now: 601.
-Total: 0.294076 ms (FindLiveObjects: 0.028113 ms CreateObjectMapping: 0.018296 ms MarkObjects: 0.224462 ms  DeleteObjects: 0.022312 ms)
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 958.
+Total: 1.015213 ms (FindLiveObjects: 0.058012 ms CreateObjectMapping: 0.025882 ms MarkObjects: 0.911684 ms  DeleteObjects: 0.015172 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.414563 ms
-System memory in use before: 19.1 MB.
-System memory in use after: 19.1 MB.
+UnloadTime: 51.940128 ms
+System memory in use before: 19.5 MB.
+System memory in use after: 19.6 MB.
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 688.
-Total: 0.493549 ms (FindLiveObjects: 0.058458 ms CreateObjectMapping: 0.036145 ms MarkObjects: 0.362798 ms  DeleteObjects: 0.034807 ms)
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 958.
+Total: 0.522110 ms (FindLiveObjects: 0.041501 ms CreateObjectMapping: 0.023204 ms MarkObjects: 0.452049 ms  DeleteObjects: 0.004908 ms)
 
-Waiting for finish
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.900974 ms
+System memory in use before: 19.7 MB.
+System memory in use after: 19.8 MB.
+
+Unloading 69 unused Assets to reduce memory usage. Loaded Objects now: 1075.
+Total: 0.786288 ms (FindLiveObjects: 0.076308 ms CreateObjectMapping: 0.029898 ms MarkObjects: 0.627424 ms  DeleteObjects: 0.050872 ms)
+
+Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\test_Data\Managed\System.Configuration.dll (this message is harmless)
+Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\test_Data\Managed\System.Xml.dll (this message is harmless)
+Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\test_Data\Managed\Mono.Security.dll (this message is harmless)
+Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\test_Data\Managed\System.Web.dll (this message is harmless)
+Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\test_Data\Managed\System.Data.dll (this message is harmless)
+Sorting!
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+Sort:onClick(Sort) (at C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\Assets\Scripts\ThreadLoading\Sort.cs:31)
+<OnMouseDown>c__AnonStorey0:<>m__0() (at C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit-Unity-Working\Source\Unity\UnityDemo\Assets\Scripts\ThreadLoading\Sort.cs:55)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:153)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:634)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:769)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:531)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:430)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:410)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:184)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:287)
+ 
+(Filename: C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Scripts/ThreadLoading/Sort.cs Line: 31)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.535051 ms
+System memory in use before: 19.5 MB.
+System memory in use after: 19.5 MB.
+
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 691.
+Total: 2.033105 ms (FindLiveObjects: 0.055780 ms CreateObjectMapping: 0.046856 ms MarkObjects: 1.805072 ms  DeleteObjects: 0.123164 ms)
+
