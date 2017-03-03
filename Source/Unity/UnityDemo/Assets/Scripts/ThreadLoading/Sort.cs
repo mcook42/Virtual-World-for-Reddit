@@ -19,22 +19,7 @@ public class Sort: Menu<Sort> {
 
 
 
-    /// <summary>
-    /// Unactivates the panel.
-    /// </summary>
-    /// <param name="sortingMethod"></param>
-    void onClick(RedditSharp.Things.Sort sortingMethod)
-    {
-        GameInfo.instance.menuController.GetComponent<LoadingPanel>().loadPanel();
-        unLoadMenu();
-        SubredditSceneState.instance.subbredditSetup.GetComponent<SubredditSceneSetup>().loadThreads(sortingMethod);
-        Debug.Log("Sorting!");
-        MouseLook mouseLook = GameInfo.instance.player.GetComponent<MyRigidbodyFirstPersonController>().mouseLook;
-        mouseLook.SetCursorLock(true);
-        GameInfo.instance.menuController.GetComponent<LoadingPanel>().unLoadMenu();
 
-
-    }
 
     /// <summary>
     /// Activates the panel.
@@ -55,6 +40,23 @@ public class Sort: Menu<Sort> {
             buttons[i].onClick.AddListener(() => onClick(sort));
         }
     }
+
+	/// <summary>
+	/// Sorts and then unactivates the panel. Used for the buttons.
+	/// </summary>
+	/// <param name="sortingMethod"></param>
+	void onClick(RedditSharp.Things.Sort sortingMethod)
+	{
+		GameInfo.instance.menuController.GetComponent<LoadingPanel>().loadPanel();
+		unLoadMenu();
+		SubredditSceneState.instance.subbredditSetup.GetComponent<SubredditSceneSetup>().loadThreads(sortingMethod);
+		Debug.Log("Sorting!");
+		MouseLook mouseLook = GameInfo.instance.player.GetComponent<MyRigidbodyFirstPersonController>().mouseLook;
+		mouseLook.SetCursorLock(true);
+		GameInfo.instance.menuController.GetComponent<LoadingPanel>().unLoadMenu();
+
+
+	}
 
 
 }
