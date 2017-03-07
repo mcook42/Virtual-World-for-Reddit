@@ -25,11 +25,7 @@ class MainToSubredditDomeTransition : SceneTransition
         activateLoadingScreen();
         SceneManager.LoadScene("SubredditDome");
 
-		List<String> subreddit = new List<String> ();
-		subreddit.Add ("/r/askscience");
-
-		Subreddit center = GameInfo.instance.server.getSubreddits(subreddit)[0];
-        SubredditDomeState.instance.loadBuildings(center);
+		SubredditDomeState.instance.loadBuildings("/r/askscience");
 
         GameInfo.instance.player.SetActive(true);
         GameInfo.instance.menuController.SetActive(true);

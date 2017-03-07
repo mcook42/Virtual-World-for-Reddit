@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using RedditSharp.Things;
+using GenericGraph;
 
 public class MapMenu : Menu<MapMenu> {
 
@@ -41,19 +42,21 @@ public class MapMenu : Menu<MapMenu> {
             button.transform.position = new Vector3(center.x, center.y, 1);
 
             var name = button.transform.Find("Name").GetComponent<Text>();
-			name.text = SubredditDomeState.instance.centerBuilding.DisplayName;
+			name.text = SubredditDomeState.instance.center.Value.DisplayName;
 
-            float size = 1+((float)SubredditDomeState.instance.centerBuilding.Subscribers) / 10000000;
+            float size = 1+((float)SubredditDomeState.instance.center.Value.Subscribers) / 10000000;
             button.transform.localScale = new Vector3(size, size,1);
 
-            setColor(button.GetComponent<Image>(), SubredditDomeState.instance.centerBuilding);
+            setColor(button.GetComponent<Image>(), SubredditDomeState.instance.center.Value);
 
-            Subreddit sub = SubredditDomeState.instance.centerBuilding;
-            button.GetComponent<Button>().onClick.AddListener(() => goToSubreddit(sub));
+            Subreddit sub = SubredditDomeState.instance.center.Value;
+			button.GetComponent<Button>().onClick.AddListener(() => goToSubreddit(sub.FullName));
         }
 
         float innerAngle = 2 * Mathf.PI / 13;
-        for (int i = 0; i < 13; i++)
+
+		int i = 0;
+		foreach (Node<Subreddit> node in SubredditDomeState.instance.buildings)
         {
             GameObject button = (GameObject)Instantiate(nodePrefab);
             button.transform.SetParent(content, false);
@@ -63,19 +66,21 @@ public class MapMenu : Menu<MapMenu> {
             button.transform.position = new Vector3(x, y, 1);
 
             var name = button.transform.Find("Name").GetComponent<Text>();
-			name.text = SubredditDomeState.instance.innerBuildings [i].DisplayName;
+			name.text = node.Value.DisplayName;
 
-			float size = 1+((float)SubredditDomeState.instance.innerBuildings[i].Subscribers) / 10000000;
+			float size = 1+((float)node.Value.Subscribers) / 10000000;
             button.transform.localScale = new Vector3(size, size, 1);
 
-            setColor(button.GetComponent<Image>(), SubredditDomeState.instance.innerBuildings[i]);
+			setColor(button.GetComponent<Image>(), node.Value);
 
-            Subreddit sub = SubredditDomeState.instance.innerBuildings[i];
-            button.GetComponent<Button>().onClick.AddListener(() => goToSubreddit(sub));
+			Subreddit sub = node.Value;
+            button.GetComponent<Button>().onClick.AddListener(() => goToSubreddit(sub.FullName));
+			i++;
         }
 
+		/**
         float outerAngle = 2 * Mathf.PI / 12;
-        for (int i = 0; i < 12; i++)
+		for (int i = 0; i < SubredditDomeState.instance.outerBuildings.Count; i++)
         {
             GameObject button = (GameObject)Instantiate(nodePrefab);
             button.transform.SetParent(content, false);
@@ -95,7 +100,7 @@ public class MapMenu : Menu<MapMenu> {
             Subreddit sub = SubredditDomeState.instance.outerBuildings[i];
             button.GetComponent<Button>().onClick.AddListener(() => goToSubreddit(sub));
         }
-    
+    */
         
     }
 
@@ -117,7 +122,7 @@ public class MapMenu : Menu<MapMenu> {
         */
     }
 
-    public void goToSubreddit(Subreddit sub)
+    public void goToSubreddit(string sub)
     {
         //activateLoadingScreen();SceneManager.LoadScene("SubredditDome");
 

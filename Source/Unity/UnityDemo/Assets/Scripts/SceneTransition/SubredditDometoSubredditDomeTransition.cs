@@ -7,17 +7,18 @@ using RedditSharp.Things;
 
 class SubredditDometoSubredditDomeTransition : SceneTransition
 {
-    Subreddit newCenter;
-    public void goToDome(Subreddit newCenter)
+    string newCenter;
+    public void goToDome(string newCenter)
     {
         this.newCenter = newCenter;
         transferInfo();
     }
+
     protected override void transferInfo()
     {
         activateLoadingScreen();
-        SubredditDomeState.instance.loadBuildings(newCenter);
-        SceneManager.LoadScene("SubredditDome");
+		if(SubredditDomeState.instance.loadBuildings(newCenter))
+        	SceneManager.LoadScene("SubredditDome");
 
 
     }

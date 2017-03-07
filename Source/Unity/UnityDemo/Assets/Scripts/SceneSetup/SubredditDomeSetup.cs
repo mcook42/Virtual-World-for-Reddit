@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RedditSharp.Things;
+using GenericGraph;
 
 public class SubredditDomeSetup : SceneSetUp{
 
     public GameObject center;
-    public GameObject innerBuildingParent;
-    public GameObject outerBuildingParent;
-    public GameObject innerPathParent;
-    public GameObject outerPathParent;
+    public GameObject buildingParent;
+	public GameObject pathParent;
 
     public GameObject buildingPrefabSmall;
     public GameObject buildingPrefabMedium;
@@ -24,44 +23,38 @@ public class SubredditDomeSetup : SceneSetUp{
     protected override void setUpScene()
     {
 
-        Subreddit centerSub = SubredditDomeState.instance.centerBuilding;
+		Subreddit centerSub = SubredditDomeState.instance.center.Value;
         instantiateBuilding(center.transform, centerSub);
 
+		int i = 0;
+		foreach(Node<Subreddit> node in SubredditDomeState.instance.buildings){
 
-		for(int i=0; i<SubredditDomeState.instance.innerBuildings.Count;i++){
+			if (node.Value.FullName == SubredditDomeState.instance.center.Value.FullName)
+				continue;
+				
+
 			Transform placeHolder;
 			try{
-				placeHolder = innerBuildingParent.transform.GetChild (i);
+				placeHolder = buildingParent.transform.GetChild (i);
 			}
 			catch(UnityException e) {
 				break;
 			}
-			Subreddit sub = SubredditDomeState.instance.innerBuildings[i];
+			Subreddit sub = node.Value;
 			instantiateBuilding(placeHolder, sub);
-			instantiatePath(innerPathParent.transform.GetChild(i),sub);
+			instantiatePath(pathParent.transform.GetChild(i),SubredditDomeState.instance.center,i);
+			i++;
 		}
-
-		for(int i=0; i<SubredditDomeState.instance.outerBuildings.Count;i++){
-
-			Transform placeHolder;
-			try{
-			placeHolder = outerBuildingParent.transform.GetChild (i);
-			}
-			catch(UnityException e) {
-				break;
-			}
-
-			Subreddit sub = SubredditDomeState.instance.outerBuildings[i];
-			instantiateBuilding(placeHolder, sub);
-			instantiatePath(outerPathParent.transform.GetChild(i),sub);
-		}
-        
-
-       
+			
 
 
     }
 
+	/// <summary>
+	/// Instantiates the building.
+	/// </summary>
+	/// <param name="placeHolder">Position and rotation of the new building.</param>
+	/// <param name="sub">Subreddit attached to the building.</param>
     private void instantiateBuilding(Transform placeHolder, Subreddit sub)
     {
 
@@ -80,10 +73,7 @@ public class SubredditDomeSetup : SceneSetUp{
         {
             building = Instantiate(buildingPrefabLarge) as GameObject;
         }
-
-
-
-
+			
         //adding the correct material
 
 		/**
@@ -117,14 +107,21 @@ public class SubredditDomeSetup : SceneSetUp{
 		name.text = sub.DisplayName;
     }
 
-    public void instantiatePath(Transform path, Subreddit sub)
+	/// <summary>
+	/// Instantiates the path.
+	/// </summary>
+	/// <param name="path">Path.</param>
+	/// <param name="sub">The Center Node.</param>
+	/// <param name="neighbor">The index of the path.</param>
+	public void instantiatePath(Transform path, Node<Subreddit> sub,int neighbor)
     {
-		/*
-        if (sub.weight < 0.3)
+		float weight = sub.Costs [neighbor]; //Cost of going to the ith neigbor
+
+        if (weight <=1)
         {
             path.localScale = new Vector3(path.localScale.x / 4, path.localScale.y, path.localScale.z);
         }
-        else if (sub.weight < 0.6)
+        else if (weight <= 2)
         {
             path.localScale = new Vector3(path.localScale.x / 2, path.localScale.y, path.localScale.z);
         }
@@ -132,7 +129,6 @@ public class SubredditDomeSetup : SceneSetUp{
         {
             path.localScale = new Vector3(path.localScale.x, path.localScale.y, path.localScale.z);
         }
-        */
     }
 
     protected override void setPlayerState()

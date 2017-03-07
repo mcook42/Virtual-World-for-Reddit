@@ -14,9 +14,6 @@ using UnityEngine;
 public abstract class SceneSetUp: MonoBehaviour  {
 
 
-
-
-
     /// <summary>
     /// Grabs data from the Server or Reddit.
     /// Instantiates all objects using the data.

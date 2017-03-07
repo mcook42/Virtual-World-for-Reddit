@@ -16,7 +16,7 @@ public class LoadTest : MonoBehaviour {
 
 
 
-	[MenuItem("LoadTest/CubeCreator")]
+	//[MenuItem("LoadTest/CubeCreator")]
 	static void makeSheres() {
 		if (!EditorUtility.DisplayDialog ("Warning!", "This will create hundereds of cubes. You should only have the LoadTest scene active!", "Create Cubes", "Cancel"))
 			return;
@@ -43,7 +43,7 @@ public class LoadTest : MonoBehaviour {
 	}
 
 	//Destorys everything in the scene
-	[MenuItem("LoadTest/DestroyEverything")]
+	//[MenuItem("LoadTest/DestroyEverything")]
 	static void destroySheres() {
 		if(EditorUtility.DisplayDialog("Warning!", "This will destory ALL objects in the scene. You should only have the LoadTest scene active!", "Destroy Everything", "Cancel"))
 		{foreach(GameObject o in Object.FindObjectsOfType<GameObject>()) {

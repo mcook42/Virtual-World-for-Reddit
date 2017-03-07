@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using RedditSharp.Things;
 using Newtonsoft.Json.Linq;
+using GenericGraph;
+using UnityEngine;
 
 /// <summary>
 /// Handles communication with the server.
@@ -17,15 +19,21 @@ public class Server
 
 
 	}
+		
 
 	/// <summary>
-	/// Gets the subreddits from the server.
+	/// A temporary method used to similate getting subreddits from a server.
+	/// Always loads AskScience
 	/// </summary>
 	/// <returns>The subreddits.</returns>
 	/// <param name="subreddits">The url field of each subreddit.</param>
-	public List<Subreddit> getSubreddits(List<String> subreddits)
+	public Graph<Subreddit> getSubreddits(List<String> subreddits,String center)
 	{
-		List<Subreddit> return_subs = new List<Subreddit>();
+		Graph<Subreddit> returnGraph = new Graph<Subreddit> ();
+		Subreddit tempCenter = new Subreddit ();
+		tempCenter.Init(GameInfo.instance.reddit,askscienceJson,GameInfo.instance.webAgent);
+		Node<Subreddit> centerNode = new Node<Subreddit>(tempCenter);
+		returnGraph.AddNode (centerNode);
 
 		foreach (String sub in subreddits) {
 
@@ -72,11 +80,15 @@ public class Server
 				break;
 
 			}
+			System.Random random = new System.Random ();
 
-			return_subs.Add (return_sub);
+			Node<Subreddit> node = new Node<Subreddit> (return_sub);
+			returnGraph.AddNode(node);
+			returnGraph.AddDirectedEdge (centerNode, node, Mathf.FloorToInt((float)random.NextDouble()*3));
+			returnGraph.AddDirectedEdge (node, centerNode, Mathf.FloorToInt((float)random.NextDouble()*3));
 		}
 
-		return return_subs;
+		return returnGraph;
 	}
 
 	/// <summary>
@@ -84,10 +96,24 @@ public class Server
 	/// </summary>
 	/// <returns>The subreddits.</returns>
 	/// <param name="subredditFullName">Subreddit full name.</param>
-	public List<Subreddit> getSubreddits(String subredditFullName)
+	public Graph<Subreddit> getSubreddits(String subredditFullName)
 	{
-		//TODO
-		return new List<Subreddit>();
+
+		List<String> buildingNames = new List<String> ();
+
+
+			buildingNames.Add ("/r/science"); 
+			buildingNames.Add ("/r/news");
+			buildingNames.Add ("/r/politics"); 
+			buildingNames.Add ("/r/worldnews"); 
+			buildingNames.Add ("/r/bestof"); 
+			buildingNames.Add ("/r/explainitlikeimfive");
+			buildingNames.Add ("/r/LifeProTips"); 
+			buildingNames.Add ("/r/space"); 
+
+
+
+		return getSubreddits(buildingNames,subredditFullName);
 
 	}
 
