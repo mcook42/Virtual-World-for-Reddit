@@ -82,7 +82,7 @@ public class GameInfo : MonoBehaviour {
         }
         catch (System.Net.WebException we)
         {
-            menuController.GetComponent<FatalErrorMenu>().loadMenu("Unabel to connect to Reddit Server: "+we.Message);
+            menuController.GetComponent<FatalErrorMenu>().loadMenu("Unable to connect to Reddit Server: "+we.Message);
             return null;
         }
       

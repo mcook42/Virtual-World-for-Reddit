@@ -116,6 +116,7 @@ public class SubredditDomeSetup : SceneSetUp{
 	public void instantiatePath(Transform path, Node<Subreddit> sub,int neighbor)
     {
 		float weight = sub.Costs [neighbor]; //Cost of going to the ith neigbor
+		path.gameObject.SetActive(true);
 
         if (weight <=1)
         {

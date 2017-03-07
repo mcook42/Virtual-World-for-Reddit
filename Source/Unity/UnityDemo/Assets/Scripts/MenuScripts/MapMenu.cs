@@ -10,10 +10,14 @@ public class MapMenu : Menu<MapMenu> {
 
     public GameObject nodePrefab;
 
+	public InputField inputField;
+
+
 	// Use this for initialization
 	void Start () {
 
         DrawGraph();
+		GameInfo.instance.keyController.SetActive (false);
 		
 	}
 	
@@ -122,13 +126,30 @@ public class MapMenu : Menu<MapMenu> {
         */
     }
 
+	/// <summary>
+	/// Goes to the subreddit in the input field.
+	/// </summary>
+	public void goToSubreddit()
+	{
+		goToSubreddit (inputField.text);
+	}
+
     public void goToSubreddit(string sub)
     {
         //activateLoadingScreen();SceneManager.LoadScene("SubredditDome");
-
+		Debug.Log (sub);
         SubredditDometoSubredditDomeTransition transition = GetComponent<SubredditDometoSubredditDomeTransition>();
  
         unLoadMenu();
         transition.goToDome(sub);
     }
+
+
+	void unLoadMenu()
+	{
+		GameInfo.instance.keyController.SetActive (true);
+		base.unLoadMenu ();
+
+
+	}
 }

@@ -60,6 +60,7 @@ public class GenerateBuildingPositions : MonoBehaviour {
             path.transform.LookAt(building.transform.position);
             path.transform.SetParent(pathParent.transform);
             path.name = "InnerPath:" + i;
+			path.SetActive (false);
 
 
         }
@@ -95,6 +96,7 @@ public class GenerateBuildingPositions : MonoBehaviour {
             path.transform.LookAt(building.transform.position);
             path.transform.SetParent(pathParent.transform);
             path.name = "OuterPath:" + i;
+			path.SetActive (false);
             
         }
 

@@ -18,9 +18,30 @@ public class SubredditDomeState : SceneState<SubredditDomeState> {
 	/// <param name="subredditName">Subreddit name.</param>
 	public bool loadBuildings(string subredditName)
 	{
-		buildings = GameInfo.instance.server.getSubreddits (subredditName);
-		center = buildings.Nodes [0];
-		return true;
+		Graph<Subreddit> temp;
+		temp = GameInfo.instance.server.getSubreddits (subredditName);
+
+		if (temp == null) {
+			
+			Subreddit centerSub;
+			try{
+				centerSub = GameInfo.instance.reddit.GetSubreddit (subredditName);
+			}
+			catch(System.Net.WebException we) {
+				GameInfo.instance.menuController.GetComponent<FatalErrorMenu>().loadMenu("Unable to connect to Reddit Server: "+we.Message);
+				return false;
+			}
+
+			if (centerSub == null)
+				return false;
+
+			temp = new Graph<Subreddit> ();
+			temp.AddNode (centerSub);
+		} 
+			buildings = temp;
+			center = buildings.Nodes [0];
+			return true;
+
 	}
 		
 
@@ -31,6 +52,7 @@ public class SubredditDomeState : SceneState<SubredditDomeState> {
 
     public override void reset()
     {
+		if(buildings!=null)
 		buildings.Clear ();
     }
 

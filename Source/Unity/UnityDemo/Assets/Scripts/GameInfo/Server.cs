@@ -94,13 +94,13 @@ public class Server
 	/// <summary>
 	/// Gets the subreddits.
 	/// </summary>
-	/// <returns>The subreddits.</returns>
+	/// <returns>The subreddits if found, null otherwise</returns>
 	/// <param name="subredditFullName">Subreddit full name.</param>
 	public Graph<Subreddit> getSubreddits(String subredditFullName)
 	{
 
-		List<String> buildingNames = new List<String> ();
-
+		if (subredditFullName == "/r/askscience") {
+			List<String> buildingNames = new List<String> ();
 
 			buildingNames.Add ("/r/science"); 
 			buildingNames.Add ("/r/news");
@@ -111,9 +111,11 @@ public class Server
 			buildingNames.Add ("/r/LifeProTips"); 
 			buildingNames.Add ("/r/space"); 
 
+			return getSubreddits (buildingNames, subredditFullName);
+		} else {
 
-
-		return getSubreddits(buildingNames,subredditFullName);
+			return null;
+		}
 
 	}
 

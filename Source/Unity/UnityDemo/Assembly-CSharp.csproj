@@ -46,9 +46,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CommentActions.cs" />
-     <Compile Include="Assets\CommentInfo.cs" />
-     <Compile Include="Assets\CommentSetup.cs" />
      <Compile Include="Assets\Scripts\BuildingScripts\BuildingInfo.cs" />
      <Compile Include="Assets\Scripts\BuildingScripts\DoorPopUp.cs" />
      <Compile Include="Assets\Scripts\BuildingScripts\Point.cs" />
@@ -60,7 +57,10 @@
      <Compile Include="Assets\Scripts\MapGraph\Node.cs" />
      <Compile Include="Assets\Scripts\MapGraph\NodeList.cs" />
      <Compile Include="Assets\Scripts\MapGraph\SubredditNode.cs" />
-     <Compile Include="Assets\Scripts\MenuScripts\CommentMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentActions.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentInfo.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentSetup.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\ErrorMenu.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\FatalErrorMenu.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\LoadingPanel.cs" />
@@ -70,6 +70,9 @@
      <Compile Include="Assets\Scripts\MenuScripts\Menu.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\MenuController.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\PauseMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\ThreadLoading\GoDown.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\ThreadLoading\GoUp.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\ThreadLoading\Sort.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\CrossHair.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\KeyController.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\MyMouseLook.cs" />
@@ -91,9 +94,6 @@
      <Compile Include="Assets\Scripts\SceneTransition\SubredditDometoSubredditDomeTransition.cs" />
      <Compile Include="Assets\Scripts\SceneTransition\SubredditToOutsideTransition.cs" />
      <Compile Include="Assets\Scripts\SceneTransition\SubredditToSubredditDomeTransition.cs" />
-     <Compile Include="Assets\Scripts\ThreadLoading\GoDown.cs" />
-     <Compile Include="Assets\Scripts\ThreadLoading\GoUp.cs" />
-     <Compile Include="Assets\Scripts\ThreadLoading\Sort.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />
      <Compile Include="Assets\UnityTestTools\Assertions\Assertions.cs" />
@@ -159,9 +159,6 @@
      <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
      <None Include="Assets\Plugins\Resources\System.Threading.xml" />
      <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleBlend.shader" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -176,9 +173,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
