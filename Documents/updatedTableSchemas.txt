@@ -1,16 +1,24 @@
+# SCHEMA
+CREATE SCHEMA reddit; 
 
-CREATE TABLE reddit.post(
- full_name text,
- subreddit text,
- description text NOT NULL,
- ups int NOT NULL,
- downs int NOT NULL,
- display_name NOT NULL,
- PRIMARY KEY(full_name),
- FOREIGN KEY (subreddit) REFERENCES reddit.subreddit(full_name)
+# SUBREDDIT
+CREATE TABLE reddit.subreddit(
+   full_name text,
+   created bigint NOT NULL,
+   description text NOT NULL,
+   display_name text NOT NULL,
+   public_description text NOT NULL,
+   language text NOT NULL,
+   over18 bool NOT NULL,
+   public_traffic bool,
+   accounts_active int NOT NULL,
+   subscribers int NOT NULL,
+   time_updated bigint NOT NULL,
+   PRIMARY KEY(full_name)
 );
 
-MY UPDATED VERSION
+
+# POST
 CREATE TABLE reddit.post(
  created_utc bigint,
  subreddit text NOT NULL,
@@ -32,8 +40,7 @@ CREATE TABLE reddit.post(
  FOREIGN KEY (subreddit_id) REFERENCES reddit.subreddit(full_name)
 );
 
-
-MY UPDATED VERSION
+# COMMENT
 CREATE TABLE reddit.comment(
  body text,
  author text NOT NULL,
@@ -48,57 +55,15 @@ CREATE TABLE reddit.comment(
  subreddit text,
  distinguished text,
  PRIMARY KEY (id),
- FOREIGN KEY (link_id) REFERENCES reddit.post(full_name),
  FOREIGN KEY (subreddit_id) REFERENCES reddit.subreddit(full_name)
 );
 
-CREATE TABLE reddit.comment(
- full_name text,
- parent_id text,
- post_id text NOT NULL,
- subreddit_id text NOT NULL,
- author text NOT NULL,
- ups int NOT NULL,
- downs int NOT NULL,
- PRIMARY KEY(full_name),
- FOREIGN KEY (post_id) REFERENCES reddit.post(full_name),
- FOREIGN KEY(subreddit_id) REFERENCES reddit.subreddit(full_name)
-);
+# INTERMEDIARY
+SELECT coalesce(comments.subreddit,posts.subreddit) as subreddit, coalesce(comments.author,posts.author) as author, coalesce(postNum,0) AS postNum, coalesce(commentNum,0) AS commentnum
+INTO intermediary
+FROM
+(SELECT subreddit, author, COUNT(*) as postnum FROM reddit.post GROUP BY (subreddit,author)) AS posts
+FULL OUTER JOIN (SELECT subreddit, author, COUNT(*) as commentnum FROM reddit.comment GROUP BY (subreddit,author)) AS comments
+ON posts.subreddit=comments.subreddit AND posts.author=comments.author;
 
-
-
-User table:
-
-
-CREATE TABLE reddit.user(
-   id text,
-   name text NOT NULL,
-   hide_from_robots bool NOT NULL,
-   over18 bool NOT NULL,
-   PRIMARY KEY(id)
-);
-
-cross post table: For every cross post, we add a new row to this table.
-
-CREATE TABLE reddit.crossPost(
- post1 text,
- post2 text,
- subreddit1 text,
- subreddit2 text,
- PRIMARY KEY(full_name1,full_name2,subreddit1,subreddit2),
- FOREIGN KEY(subreddit1) REFERENCES reddit.subreddit(full_name),
- FOREIGN KEY(subreddit2) REFERENCES reddit.subreddit(full_name),
- FOREIGN KEY(post1) REFERENCES reddit.post(full_name),
- FOREIGN KEY(post2) REFERENCES reddit.post(full_name));
-
-
-Once we actually start analyzing the data, we will probably end up with a table like the following initially:
-
-CREATE TABLE userFrequency(
- user_full_name text,
- subreddit_full_name text,
- submissionFrequency int DEFAULT 0,
- commentFrequency int DEFAULT 0,
- PRIMARY KEY(user_full_name,subreddit_full_name)
-);
-
+ALTER TABLE intermediary ADD CONSTRAINT intermediary_PK PRIMARY KEY (subreddit,author);

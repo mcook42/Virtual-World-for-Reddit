@@ -54,28 +54,6 @@ CREATE TABLE reddit.subreddit(
    PRIMARY KEY(full_name)
 );
 
-CREATE TABLE reddit.user(
-   id text,
-   name text NOT NULL,
-   created_utc bigint NOT NULL,
-   comment_karma int NOT NULL,
-   hide_from_robots bool NOT NULL,
-   in_beta bool NOT NULL,
-   is_suspended bool NOT NULL,
-   over18 bool NOT NULL,
-   PRIMARY KEY(id)
-);
-
-CREATE TABLE reddit.map(
-   full_name text,
-   cord_x int,
-   cord_y int,
-   category text NOT NULL,
-   PRIMARY KEY(full_name),
-   FOREIGN KEY (full_name) REFERENCES reddit.subreddit(full_name),
-   UNIQUE(cord_x,cord_y)
-);
-
 Create a new user, one without administrative privilages.
 	-CREATE USER name WITH PASSWORD 'name';
 	GRANT ALL PRIVILEGES ON DATABASE database TO user;
