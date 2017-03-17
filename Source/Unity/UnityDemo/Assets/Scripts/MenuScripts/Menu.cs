@@ -23,6 +23,9 @@ public abstract class Menu<T>: MonoBehaviour
     /// <param name="pause">Pause the game when the menu appears.</param>
     public void loadMenu(bool pause)
     {
+		if (GameInfo.instance.fatalError)
+			return;
+		
         if (pause)
         {
             Time.timeScale = 0;

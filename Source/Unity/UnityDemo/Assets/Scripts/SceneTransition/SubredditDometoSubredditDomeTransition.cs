@@ -18,7 +18,7 @@ class SubredditDometoSubredditDomeTransition : SceneTransition
     protected override void transferInfo()
     {
         activateLoadingScreen();
-		if (SubredditDomeState.instance.loadBuildings (newCenter))
+		if (SubredditDomeState.instance.init (newCenter))
 			SceneManager.LoadScene ("SubredditDome");
 		else {
 			GameInfo.instance.menuController.GetComponent<LoadingPanel> ().unLoadMenu ();

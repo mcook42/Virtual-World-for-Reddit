@@ -27,7 +27,7 @@ public abstract class SceneState<T> where T: SceneState<T>, new()
             return _instance;
         }
     }
-
+		
 
     /// <summary>
     /// Sets any stored objects that take up a lot of memory to null.

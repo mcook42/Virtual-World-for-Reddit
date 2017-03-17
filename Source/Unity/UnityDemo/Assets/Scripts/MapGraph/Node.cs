@@ -1,30 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-namespace GenericGraph
+namespace Graph
 {
 	/// <summary>
 	/// A simple node class designed to hold any arbitrary element.
 	/// Code from https://msdn.microsoft.com/en-us/library/ms379574(v=vs.80).aspx.
 	/// </summary>
 	public class Node <T>{
+
+		//Variables to used when drawing the graph.
+		public Vector2 position { get; set; }
+		public Vector2 velocity { get; set; }
+		public bool inDome { get; set; }
+
 		// Private member-variables
 		private T data;
-		private NodeList<T> neighbors;
+		private NodeList<T> toNeighbors;
+		private NodeList<T> fromNeighbors;
 		private List<int> costs;
 
 		public Node() {}
-		public Node(T data) : this(data, new NodeList<T>()) {}
+		public Node(T data) : this(data, new NodeList<T>(),new NodeList<T>(),new List<int>()) {}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Graph.Node`1"/> class.
 		/// </summary>
 		/// <param name="data">Data.</param>
 		/// <param name="neighbors">Neighbors.</param>
-		public Node(T data, NodeList<T> neighbors)
+		public Node(T data, NodeList<T> toNeighbors, NodeList<T> fromNeighbors, List<int> costs)
 		{
 			this.data = data;
-			this.neighbors = neighbors;
+			this.toNeighbors = toNeighbors;
+			this.costs = costs;
+			this.fromNeighbors = fromNeighbors;
+			this.position = new Vector2 (0, 0);
+			this.velocity = new Vector2 (0, 0);
+			inDome = false;
 		}
 
 		/// <summary>
@@ -47,15 +60,27 @@ namespace GenericGraph
 		/// The Adjecent Nodes.
 		/// </summary>
 		/// <value>The neighbors.</value>
-		public NodeList<T> Neighbors
+		public NodeList<T> ToNeighbors
 		{
 			get
 			{
-				return neighbors;
+				return toNeighbors;
 			}
 			set
 			{
-				neighbors = value;
+				toNeighbors = value;
+			}
+		}
+
+		public NodeList<T> FromNeighbors
+		{
+			get
+			{
+				return fromNeighbors;
+			}
+			set
+			{
+				fromNeighbors = value;
 			}
 		}
 

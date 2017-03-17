@@ -53,9 +53,12 @@
      <Compile Include="Assets\Scripts\DontDestroyOnLoad.cs" />
      <Compile Include="Assets\Scripts\GameInfo\GameInfo.cs" />
      <Compile Include="Assets\Scripts\GameInfo\Server.cs" />
+     <Compile Include="Assets\Scripts\GameInfo\ServerDownException.cs" />
+     <Compile Include="Assets\Scripts\MapGraph\ForceDirectedLayout.cs" />
      <Compile Include="Assets\Scripts\MapGraph\Graph.cs" />
      <Compile Include="Assets\Scripts\MapGraph\Node.cs" />
      <Compile Include="Assets\Scripts\MapGraph\NodeList.cs" />
+     <Compile Include="Assets\Scripts\MapGraph\SubredditGraph.cs" />
      <Compile Include="Assets\Scripts\MapGraph\SubredditNode.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentActions.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentInfo.cs" />

@@ -25,12 +25,6 @@ class SubredditSceneState : SceneState<SubredditSceneState>
     public int firstThreadLoaded = 1;
 
 
-    /// <summary>
-    /// Should never be called.
-    /// </summary>
-    public SubredditSceneState() {
-        
-    }
 
     /// <summary>
     /// Stores the current Subreddit building gameObject.

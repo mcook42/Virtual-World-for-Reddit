@@ -14,6 +14,8 @@ using System;
 using UnityEngine.SceneManagement;
 using System.Net;
 using RedditSharp.Things;
+using Graph;
+using AssemblyCSharp;
 
 /// <summary>
 /// A Singleton that stores commonly used gameObjects and variables.
@@ -130,12 +132,21 @@ public class GameInfo : MonoBehaviour {
 
     public GameObject keyController;
 
+	public Graph<Subreddit> map=null;
+
+	public bool fatalError { get; set; }
+
     /// <summary>
     /// Initializes the Reddit Object and loads the main menu scene.
     /// </summary>
     public void Awake () 
 	{
+
 		backendReddit = getRedditObject ();
+
+		fatalError = false;
+
+		initializeMap ();
         
         if (instance == null) 
 		{
@@ -152,7 +163,23 @@ public class GameInfo : MonoBehaviour {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
     }
 
+	/// <summary>
+	/// Initializes the map.
+	/// </summary>
+	public void initializeMap()
+	{
+		try
+		{
+			map =server.getMap();
+		}
+		catch(ServerDownException e)
+		{
+			fatalError = true;
+		}
 
+
+	}
+		
 
     /// <summary>
     /// Enables or disables the cursor.
@@ -167,11 +194,6 @@ public class GameInfo : MonoBehaviour {
 
 
 
-	#region Server
-
-
-
-	#endregion
 
 }
 	

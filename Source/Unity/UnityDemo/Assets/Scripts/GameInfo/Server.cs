@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using RedditSharp.Things;
 using Newtonsoft.Json.Linq;
-using GenericGraph;
+using Graph;
 using UnityEngine;
 
 /// <summary>
 /// Handles communication with the server.
+/// All methods may throw a ServerDownExcpetion. The excpetion should be expected and handles appropriately.
 /// </summary>
 public class Server
 {
@@ -111,12 +112,36 @@ public class Server
 			buildingNames.Add ("/r/LifeProTips"); 
 			buildingNames.Add ("/r/space"); 
 
+			for (int i = 0; i < 100; i++) {
+				buildingNames.Add ("/r/space"); 
+			}
+
 			return getSubreddits (buildingNames, subredditFullName);
 		} else {
 
 			return null;
 		}
 
+	}
+
+	/// <summary>
+	/// Gets the maps with the optional parameter of the center node.
+	/// </summary>
+	/// <param name="centerNode"> The Node that should be in the approximate center of the map </param>
+	/// <returns>The map.</returns>
+	public Graph<Subreddit> getMap(String centerNode)
+	{
+		//TODO: do stuff
+		return new Graph<Subreddit>();
+	}
+
+	/// <summary>
+	/// Gets the map.
+	/// </summary>
+	/// <returns>The map.</returns>
+	public Graph<Subreddit> getMap()
+	{
+		return getMap (null);
 	}
 
 	private JObject askscienceJson = JObject.Parse (@"{

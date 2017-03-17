@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace GenericGraph{
+namespace Graph{
 	/// <summary>
 	/// A list of nodes.
 	/// Code from https://msdn.microsoft.com/en-us/library/ms379574(v=vs.80).aspx.

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RedditSharp.Things;
-using GenericGraph;
+using Graph;
 
 public class SubredditDomeSetup : SceneSetUp{
 
@@ -27,11 +27,8 @@ public class SubredditDomeSetup : SceneSetUp{
         instantiateBuilding(center.transform, centerSub);
 
 		int i = 0;
-		foreach(Node<Subreddit> node in SubredditDomeState.instance.buildings){
+		foreach(Node<Subreddit> node in SubredditDomeState.instance.center.ToNeighbors){
 
-			if (node.Value.FullName == SubredditDomeState.instance.center.Value.FullName)
-				continue;
-				
 
 			Transform placeHolder;
 			try{
