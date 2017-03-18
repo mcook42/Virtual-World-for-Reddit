@@ -37,31 +37,42 @@ def create_edges():
                         """, (subreddit1,))
         # res: tuple of (sub1, sub2, common_author, post_num1, post_num2, comm_num1, comm_num2)
 
-        # Initialize sub2 names and the common authors etc
-        common = cur.fetchone()
+        # Initialize storage of first 10,000 sub2 names and the common authors etc
+        common = cur.fetchmany(60)
+        # print (common)
         # print(common)
         # While there is something to fetch
-        while common is not None:
-            # Get name of first linked subreddit
-            sub2 = common[1]
+        for row in common:
+            # Check if the subreddit has any common authors
+            if row[1] is not []:
+                print("starting: ", row[0])
+                print("with: ", row[1])
+                # Get name of first linked subreddit
+                sub2 = row[1]
 
-            # Add to the weight of the edge
-            # TODO: Fix the arbitrary weighting of edges
-            # .5 * (post_num1 + post_num2) + (.5 * (comm_num1 + comm_num2))
-            weight = (.5 * (common[3] + common[4])) + (.5 * (common[5] + common[6]))
-            # print("The edge weight is: ", weight)
-            # Add weighted edge between sub1 and sub2
-            # print(subreddit1, "and 2: ", sub2)
-            # Hack for checking if there is already a weighted edge
-            try:
-                cur_weight = weight + B[subreddit1][sub2]
-            except KeyError:
-                cur_weight = 0
-            # Add/update edge with new weight
-            B.add_edge(common[0], common[1], weight=(cur_weight + weight))
+                # Add to the weight of the edge
+                # TODO: Fix the arbitrary weighting of edges
+                # .5 * (post_num1 + post_num2) + (.5 * (comm_num1 + comm_num2))
+                try:
+                    weight = (.5 * (row[3] + row[4])) + (.5 * (row[5] + row[6]))
+                except Exception as e:
+                    print(row[:-1])
+                # print("The edge weight is: ", weight)
+                # Add weighted edge between sub1 and sub2
+                # print(subreddit1, "and 2: ", sub2)
+                # Hack for checking if there is already a weighted edge
+                # B[subreddit1][sub2] refrences the node and its data at that index (fastest way)
+                try:
+                    # If cur_weight exists
+                    cur_weight = weight + B[subreddit1][sub2]
+                except KeyError:
+                    # Else
+                    cur_weight = weight
+                # Add/update edge with new weight
+                B.add_edge(common[0], common[1], weight=(cur_weight + weight))
 
-            # Get next row
-            common = cur.fetchone()
+            # Get next 10,000 rows
+            common = cur.fetchmany(10000)
 
 # Queries
 # TODO: Review this because we changed to intermediary
@@ -101,13 +112,14 @@ in both subreddits i and j.
 
 if __name__ == '__main__':
     sub_names = create_nodes()
-    # print(sub_names)
+    print(sub_names)
+    print("creating edges")
     create_edges()
     # Close cursor and connection to db
     cur.close()
     conn.close()
     print("writing")
-    # Write data to GML file
+    # Write data to CSV file
     nx.write_weighted_edgelist(B, "~/test/weighted_graph_list.csv",
                                delimiter=',', encoding='utf-8')
     print("written")
