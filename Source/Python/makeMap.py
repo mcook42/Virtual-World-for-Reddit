@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 import networkx as nx
 import dbInteractions
 
@@ -21,10 +21,11 @@ def create_edges():
     for subreddit1 in sub_names:
         # Query database for the common authors and their scores
         cur2.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
-                        table1.postnum, table2.postnum, table1.commentnum, table2.commentnum
+                        table1.postnum, table2.postnum, table1.commentnum, table2.commentnum, (table1.postnum+table2.postnum+table1.commentnum+table2.commentnum) AS sumOrder
                         FROM intermediary AS table1, intermediary AS table2
                         WHERE table1.author=table2.author AND
                          table1.subreddit != table2.subreddit AND table1.subreddit=%s
+                         ORDER BY sumOrder DESC LIMIT 25
                         """, (subreddit1,))
         # res: tuple of (sub1, sub2, common_author, post_num1, post_num2, comm_num1, comm_num2)
 
