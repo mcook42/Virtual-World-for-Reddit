@@ -1,35 +1,26 @@
-# imports
-from memory_profiler import profile
+# -*- coding: utf-8 -*-
 import networkx as nx
 import dbInteractions
 
-# GLOBAL VARIABLES
-# Create graph
-B = nx.Graph()
+__author__ = "Matt Cook"
+__version__ = "1.0.0"
+__email__ = "mattheworion.cook@gmail.com"
 
-# Get db connection and cursor
-conn = dbInteractions.open_conn()
-cur = conn.cursor()
-
-# Query DB for the subreddit names
-query = "SELECT subreddit FROM intermediary LIMIT 60;"
-cur.execute(query)
-sub_names = cur.fetchall()
+# CONSTANT
+LIMIT = 1000
 
 
-# @profile(precision=4)
 def create_nodes():
     # Add nodes
-    B.add_nodes_from(sub_names)  # Add the node attribute "bipartite"
-    # print(B.nodes())
-    return sub_names
+    print("creating nodes")
+    B.add_nodes_from(sub_names)  # Add the nodes
 
 
-# @profile(precision=4)
 def create_edges():
+    print("creating edges")
     for subreddit1 in sub_names:
-        # Add edges
-        cur.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
+        # Query database for the common authors and their scores
+        cur2.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
                         table1.postnum, table2.postnum, table1.commentnum, table2.commentnum
                         FROM intermediary AS table1, intermediary AS table2
                         WHERE table1.author=table2.author AND
@@ -37,16 +28,13 @@ def create_edges():
                         """, (subreddit1,))
         # res: tuple of (sub1, sub2, common_author, post_num1, post_num2, comm_num1, comm_num2)
 
-        # Initialize storage of first 10,000 sub2 names and the common authors etc
-        common = cur.fetchmany(60)
-        # print (common)
-        # print(common)
+        # Initialize storage of first sub2 names and the common authors etc
+        common = cur2.fetchmany(LIMIT)
+
         # While there is something to fetch
-        for row in common:
-            # Check if the subreddit has any common authors
-            if row[1] is not []:
-                print("starting: ", row[0])
-                print("with: ", row[1])
+        while not common == []:
+            for row in common:
+                # Check if the subreddit has any common authors
                 # Get name of first linked subreddit
                 sub2 = row[1]
 
@@ -55,11 +43,11 @@ def create_edges():
                 # .5 * (post_num1 + post_num2) + (.5 * (comm_num1 + comm_num2))
                 try:
                     weight = (.5 * (row[3] + row[4])) + (.5 * (row[5] + row[6]))
+                    # Round to thousandths
+                    weight = round(weight, 2)
                 except Exception as e:
-                    print(row[:-1])
-                # print("The edge weight is: ", weight)
+                    print(e, " ", row[:-1])
                 # Add weighted edge between sub1 and sub2
-                # print(subreddit1, "and 2: ", sub2)
                 # Hack for checking if there is already a weighted edge
                 # B[subreddit1][sub2] refrences the node and its data at that index (fastest way)
                 try:
@@ -69,17 +57,12 @@ def create_edges():
                     # Else
                     cur_weight = weight
                 # Add/update edge with new weight
-                B.add_edge(common[0], common[1], weight=(cur_weight + weight))
+                B.add_edge(row[0], row[1], weight=(cur_weight + weight))
 
-            # Get next 10,000 rows
-            common = cur.fetchmany(10000)
+            # Get next 10,000 rows, then check at top if we ran out (will return [] if no more rows)
+            common = cur2.fetchmany(LIMIT)
 
-# Queries
-# TODO: Review this because we changed to intermediary
-# Post Res: list of (sub1_id, sub2_id, author, num_p1, num_p2)
-# Comment Res: list of (sub1_id, sub2_id, author, num_c1, num_c2)
-
-# TODO: Filter
+# TODO: Implement the edge filtering
 
 """
 This algorithm begins by replacing symmetric valued edges (Sij) with asymmetric weighted edges (Aij and Aji),
@@ -100,27 +83,39 @@ in both subreddits i and j.
 
 # TODO: We want to change this weighting to account for the "importance" of the subredditors
 
-# Get list of subredditors in common
-
-# Find post weights
-
-# Find comment weights
-
-# TODO: Combine the results
-
 # TODO: Submit results to new database table
 
-if __name__ == '__main__':
-    sub_names = create_nodes()
-    print(sub_names)
-    print("creating edges")
+
+def main():
+    # GLOBAL VARIABLES
+    global B, cur, cur2, sub_names
+
+    # Create the graph
+    B = nx.Graph()
+
+    # Get db connection and cursors
+    conn = dbInteractions.open_conn()
+    cur = conn.cursor()
+    cur2 = conn.cursor()
+
+    cur.execute("SELECT subreddit FROM intermediary;")  # LIMIT %s;", (LIMIT,))
+    sub_names = cur.fetchall()
+
+    # Create the nodes and edges
+    create_nodes()
     create_edges()
-    # Close cursor and connection to db
+
+    # Close cursors and connection to db
     cur.close()
+    cur2.close()
     conn.close()
+
     print("writing")
     # Write data to CSV file
     nx.write_weighted_edgelist(B, "~/test/weighted_graph_list.csv",
                                delimiter=',', encoding='utf-8')
     print("written")
+
+if __name__ == '__main__':
+    main()
 
