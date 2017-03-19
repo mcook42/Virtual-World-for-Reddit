@@ -1,7 +1,10 @@
  # -*- coding: utf-8 -*-
 import networkx as nx
 import dbInteractions
+<<<<<<< HEAD
 import timeit
+=======
+>>>>>>> 8a91b876a701559438336dd5c8d37b398d8fa7a0
 import time
 
 __author__ = "Matt Cook"
@@ -18,9 +21,24 @@ def create_nodes():
     B.add_nodes_from(sub_names)  # Add the nodes
 
 
+def auth_create_edges():
+    cur.execute("SELECT author FROM intermediary;")
+    authors = cur.fetchall()
+    for author in authors:
+        start = time.time()
+        # Query database for the subreddits an author is connected to
+        cur2.execute("SELECT subreddit FROM intermediary WHERE author = %s;", (author,))
+        print("query time: ", time.time() - start)
+
+        # Get all the subs the author is an active member of (active defined in documentation)
+        sub_names = cur2.fetchall()
+        B.add_edges_from(sub_names)
+
+
 def create_edges():
     print("creating edges")
     for subreddit1 in sub_names:
+<<<<<<< HEAD
         strt_time = time.time()
         # Query database for the common authors and their scores
         cur2.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
@@ -32,9 +50,23 @@ def create_edges():
                         """, (subreddit1,))
         print("stmt")
         print(strt_time - time.time())
+=======
+        start = time.time()
+        # Query database for the common authors and their scores
+        # cur2.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
+        #                 table1.postnum, table2.postnum,(table1.postnum+table2.postnum) AS sumOrder
+        #                 FROM intermediary AS table1, intermediary AS table2
+        #                 WHERE table1.author=table2.author AND
+        #                  table1.subreddit != table2.subreddit AND table1.subreddit=%s
+        #                  ORDER BY sumOrder DESC LIMIT 25
+        #                 """, (subreddit1,))
+>>>>>>> 8a91b876a701559438336dd5c8d37b398d8fa7a0
         # res: tuple of (sub1, sub2, common_author, post_num1, post_num2, comm_num1, comm_num2)
 
+
+        print("time to complete query: ", time.time() - start)
         # Initialize storage of first sub2 names and the common authors etc
+<<<<<<< HEAD
         common = cur2.fetchall()
 
         for row in common:
@@ -61,6 +93,37 @@ def create_edges():
                 cur_weight = weight
             # Add/update edge with new weight
             B.add_edge(row[0], row[1], weight=(cur_weight + weight))
+=======
+        common = cur2.fetchmany(LIMIT)
+
+        # While there is something to fetch
+        while not common == []:
+            for row in common:
+                # Check if the subreddit has any common authors
+                # Get name of first linked subreddit
+                sub2 = row[1]
+
+                # Add to the weight of the edge
+                # TODO: Fix the arbitrary weighting of edges
+                # .5 * (post_num1 + post_num2) + (.5 * (comm_num1 + comm_num2))
+                try:
+                    weight = (.5 * (row[3] + row[4]))  # + (.5 * (row[5] + row[6]))
+                    # Round to thousandths
+                    weight = round(weight, 2)
+                except Exception as e:
+                    print(e, " ", row[:-1])
+                # Add weighted edge between sub1 and sub2
+                # Hack for checking if there is already a weighted edge
+                # B[subreddit1][sub2] refrences the node and its data at that index (fastest way)
+                try:
+                    # If cur_weight exists
+                    cur_weight = weight + B[subreddit1][sub2]
+                except KeyError:
+                    # Else
+                    cur_weight = weight
+                # Add/update edge with new weight
+                B.add_edge(row[0], row[1], weight=(cur_weight + weight))
+>>>>>>> 8a91b876a701559438336dd5c8d37b398d8fa7a0
 
             # Get next 10,000 rows, then check at top if we ran out (will return [] if no more rows)
             # common = cur2.fetchmany(LIMIT)
@@ -107,7 +170,8 @@ def main():
 
     # Create the nodes and edges
     create_nodes()
-    create_edges()
+    #create_edges()
+    auth_create_edges()
 
     # Close cursors and connection to db
     #cur.close()
