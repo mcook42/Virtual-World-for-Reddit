@@ -9,8 +9,12 @@ using Graph;
 public class MapMenu : Menu<MapMenu> {
 
     public GameObject nodePrefab;
+	public GameObject linePrefab;
 
 	public InputField inputField;
+
+	private List<GameObject> lines = new List<GameObject> ();
+	private Transform content;
 
 	public float maxNodeSize{ get { return 3; } }
 
@@ -18,6 +22,7 @@ public class MapMenu : Menu<MapMenu> {
 	void Start () {
         DrawGraph();
 		GameInfo.instance.keyController.SetActive (false);
+		Debug.Log ("here");
 		
 	}
 	
@@ -27,7 +32,7 @@ public class MapMenu : Menu<MapMenu> {
 	void DrawGraph()
     {
 
-        Transform content = instance.transform.FindChild("Scroll View/Viewport/Content/");
+         content = instance.transform.FindChild("Scroll View/Viewport/Content/");
 
         if(content==null)
         {
@@ -95,31 +100,25 @@ public class MapMenu : Menu<MapMenu> {
 	/// Makes lines appear to the the neighbors. 
 	/// </summary>
 	/// <param name="node">Node.</param>
-	public void clickOnNode<T>(Node<T> node)
+	public void clickOnNode(Node<Subreddit> node)
 	{
 		Debug.Log (node.Value);
 
+		foreach (GameObject line in lines) {
+			Destroy (line);
+		}
+		lines.Clear ();
+
+		foreach (Node<Subreddit> neighbor in node.ToNeighbors) {
+			var line = Instantiate (linePrefab);
+			line.transform.SetParent (content,false);
+			line.GetComponent<Line> ().Init (node,neighbor);
+			lines.Add (line);
+
+		}
 
 	}
-
-	struct GUILine{
-
-		public Vector2 startPt;
-		public Vector2 endPt;
-	}
-
-	void DrawLine(Vector2 pointA, Vector2 pointB)
-	{
-		Texture2D lineTex = new Texture2D (1, 1);
-		Matrix4x4 matrixBackup = GUI.matrix;
-		float width = 8.0f;
-		GUI.color = Color.black;
-		float angle = Mathf.Atan2 (pointB.y - pointA.y, pointB.x - pointA.x) * 180f / Mathf.PI;
-
-		GUIUtility.RotateAroundPivot (angle, pointA);
-		GUI.DrawTexture (new Rect (pointA.x, pointA.y, (pointB-pointA).magnitude, width), lineTex);
-
-	}
+		
 
     public void goToSubreddit(string sub)
     {

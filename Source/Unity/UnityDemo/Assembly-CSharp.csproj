@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\GameInfo\ServerDownException.cs" />
      <Compile Include="Assets\Scripts\MapGraph\ForceDirectedLayout.cs" />
      <Compile Include="Assets\Scripts\MapGraph\Graph.cs" />
+     <Compile Include="Assets\Scripts\MapGraph\Line.cs" />
      <Compile Include="Assets\Scripts\MapGraph\Node.cs" />
      <Compile Include="Assets\Scripts\MapGraph\NodeList.cs" />
      <Compile Include="Assets\Scripts\MapGraph\SubredditGraph.cs" />
@@ -63,7 +64,7 @@
      <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentActions.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentInfo.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentMenu.cs" />
-     <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentSetup.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentMenuManager.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\ErrorMenu.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\FatalErrorMenu.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\LoadingPanel.cs" />

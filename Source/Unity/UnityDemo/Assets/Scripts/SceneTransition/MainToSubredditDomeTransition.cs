@@ -25,7 +25,7 @@ class MainToSubredditDomeTransition : SceneTransition
         activateLoadingScreen();
         SceneManager.LoadScene("SubredditDome");
 
-		SubredditDomeState.instance.init("/r/front");
+		SubredditDomeState.instance.init("/r/askscience");
 
         GameInfo.instance.player.SetActive(true);
         GameInfo.instance.menuController.SetActive(true);

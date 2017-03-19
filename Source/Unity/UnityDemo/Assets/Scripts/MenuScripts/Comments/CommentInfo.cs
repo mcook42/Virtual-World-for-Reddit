@@ -11,7 +11,6 @@ public class CommentInfo : MonoBehaviour {
 	
 	public Comment comment { get; set;}
 	public int childDepth { get; set;}
-	public int childrenLoaded { get; set; }
 
 	//children
 	public GameObject childPanel;
@@ -24,6 +23,7 @@ public class CommentInfo : MonoBehaviour {
 
 	//buttons
 	public GameObject actionPanel;
+	public GameObject loadMorePanel;
 	public GameObject replyButton;
 	public GameObject saveButton;
 	public GameObject upvoteButton;
@@ -35,16 +35,13 @@ public class CommentInfo : MonoBehaviour {
 	/// </summary>
 	/// <param name="childDepth">Child depth.</param>
 	/// <param name="comment">Comment.</param>
-	public void Init(int childDepth,Comment comment, int childrenLoaded)
+	public void Init(int childDepth,Comment comment)
 	{
 		this.comment = comment;
 		this.childDepth = childDepth;
-		this.childrenLoaded = childrenLoaded;
-
-
 
 		string dotPadding = "";
-		int childDepthLimit = 1;
+		int childDepthLimit = 2;
 		if (childDepth <= childDepthLimit) {
 			GetComponent<VerticalLayoutGroup> ().padding.left = (childDepth ==0) ? 10 : 60;
 		}
@@ -77,7 +74,11 @@ public class CommentInfo : MonoBehaviour {
 		//no need for these buttons if the user isn't logged in.
 		if (GameInfo.instance.reddit.User == null) {
 			actionPanel.SetActive (false);
+		}
 
+		//Only need More button is there are more comments to load.
+		if (comment.More == null) {
+			loadMorePanel.SetActive (false);
 		}
 
 	}
@@ -88,17 +89,29 @@ public class CommentInfo : MonoBehaviour {
 
 	public void save()
 	{
-		Debug.Log ("Save");
+		if (GameInfo.instance.reddit.User != null) {
+			comment.Save ();
+		} else {
+			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Log in to save.");
+		}
 	}
 
 	public void upvote()
 	{
-		Debug.Log ("Upvote");
+		if (GameInfo.instance.reddit.User != null) {
+			comment.Upvote();
+		} else {
+			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Log in to upvote.");
+		}
 	}
 
 	public void downvote()
 	{
-		Debug.Log ("Downvote");
+		if (GameInfo.instance.reddit.User != null) {
+			comment.Downvote ();
+		} else {
+			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Log in to downvote.");
+		}
 	}
 
 	/// <summary>
@@ -106,8 +119,16 @@ public class CommentInfo : MonoBehaviour {
 	/// </summary>
 	public void loadMore()
 	{
+		var more = comment.More;
+		List<Comment> comments = new List<Comment> ();
+		CommentMenuManager post = GetComponentInParent<CommentMenuManager> ();
+		more.ParentId = post.post.FullName;
+		foreach (Thing thing in more.Things()) {
+			comments.Add ((Comment)thing);
+		}
+		loadMorePanel.SetActive (false);
 		childPanel.SetActive (true);
-		childrenLoaded+=GetComponentInParent<CommentSetup>().initializeComments (childPanel,comment, childDepth + 1, childrenLoaded);
+		post.initializeComments (childPanel,comments.ToArray(), childDepth + 1);
 	}
 
 

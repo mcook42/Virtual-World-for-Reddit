@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// The Menu for viewing and interacting with comments.
+/// Creates the Comment Menu. Attached to the menuController object. Once created, control of the content of the menu is handled by CommentMenuManager.
 /// </summary>
 public class CommentMenu :Menu<CommentMenu> {
 
@@ -18,7 +18,7 @@ public class CommentMenu :Menu<CommentMenu> {
 	public void loadMenu(Post post)
 	{
 		base.loadMenu (true);
-		CommentSetup setup= instance.GetComponentInChildren<CommentSetup> ();
+		CommentMenuManager setup= instance.GetComponentInChildren<CommentMenuManager> ();
 		setup.post = post;
 		setup.title.GetComponent<Text> ().text = post.Title;
 	}

@@ -65,7 +65,7 @@ public class SubredditDomeState : SceneState<SubredditDomeState> {
 	public bool loadFront()
 	{
 
-		int maxIterations = 50;
+		int maxIterations = 1;
 		Graph<Subreddit> temp =new Graph<Subreddit>();
 
 		Subreddit centerSub;
