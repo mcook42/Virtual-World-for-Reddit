@@ -18,10 +18,15 @@ def create_nodes():
     B.add_nodes_from(sub_names)  # Add the nodes
 
 
-def auth_create_edges():
-    cur.execute("SELECT DISTINCT author FROM intermediary LIMIT %s;", (LIMIT,))
+def create_edges():
+    print("fetching authors")
+    cur.execute("SELECT DISTINCT author FROM intermediary;")
     authors = cur.fetchall()
+    print("creating edges")
     for author in authors:
+        # Extract name from (name,)
+        author = author[0]
+
         # start = time.time()
         # Query database for the subreddits an author is connected to
         cur2.execute("SELECT subreddit FROM intermediary WHERE author = %s;", (author,))
@@ -29,66 +34,68 @@ def auth_create_edges():
 
         # Get all the subs the author is an active member of (active defined in documentation)
         subs = cur2.fetchall()
+
+        # Add all edges
+        # Hack for checking if there is already a weighted edge
+        # B[author][sub2] refrences the node and its data at that index (fastest way)
         for sub in subs:
-            # Need to extract name from (name,)
+            # Need to extract names from (name,)
             sub = sub[0]
-            # print(sub)
             try:
                 B[author][sub]['weight'] += 1
             except:
                 B.add_edge(u=author, v=sub, weight=1)
-        # Add all edges
-
-        #B.add_edge(sub_names)
 
 
-def create_edges():
-    print("creating edges")
-    for subreddit1 in sub_names:
-        # start = time.time()
-        # Query database for the common authors and their scores
-        # cur2.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
-        #                 table1.postnum, table2.postnum,(table1.postnum+table2.postnum) AS sumOrder
-        #                 FROM intermediary AS table1, intermediary AS table2
-        #                 WHERE table1.author=table2.author AND
-        #                  table1.subreddit != table2.subreddit AND table1.subreddit=%s
-        #                  ORDER BY sumOrder DESC LIMIT 25
-        #                 """, (subreddit1,))
-        # res: tuple of (sub1, sub2, common_author, post_num1, post_num2, comm_num1, comm_num2)
-
-
-        print("time to complete query: ", time.time() - start)
-        # Initialize storage of first sub2 names and the common authors etc
-        common = cur2.fetchall()
-
-        for row in common:
-            # Check if the subreddit has any common authors
-            # Get name of first linked subreddit
-            sub2 = row[1]
-            # Add to the weight of the edge
-            # TODO: Fix the arbitrary weighting of edges
-            # .5 * (post_num1 + post_num2) + (.5 * (comm_num1 + comm_num2))
-            try:
-                weight = (.5 * (row[3] + row[4])) + (.5 * (row[5] + row[6]))
-                # Round to thousandths
-                weight = round(weight, 2)
-            except Exception as e:
-                print(e, " ", row[:-1])
-            # Add weighted edge between sub1 and sub2
-            # Hack for checking if there is already a weighted edge
-            # B[subreddit1][sub2] refrences the node and its data at that index (fastest way)
-            try:
-                # If cur_weight exists
-                cur_weight = weight + B[subreddit1][sub2]
-            except KeyError:
-                # Else
-                cur_weight = weight
-            # Add/update edge with new weight
-            B.add_edge(row[0], row[1], weight=(cur_weight + weight))
-        common = cur2.fetchmany(LIMIT)
-
-            # Get next 10,000 rows, then check at top if we ran out (will return [] if no more rows)
-            # common = cur2.fetchmany(LIMIT)
+# WE MAY NEED THIS LATER, BUT FOR NOW IT'S NOT IN USE
+#
+# def create_edges():
+#     print("creating edges")
+#     for subreddit1 in sub_names:
+#         # start = time.time()
+#         # Query database for the common authors and their scores
+#         # cur2.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
+#         #                 table1.postnum, table2.postnum,(table1.postnum+table2.postnum) AS sumOrder
+#         #                 FROM intermediary AS table1, intermediary AS table2
+#         #                 WHERE table1.author=table2.author AND
+#         #                  table1.subreddit != table2.subreddit AND table1.subreddit=%s
+#         #                  ORDER BY sumOrder DESC LIMIT 25
+#         #                 """, (subreddit1,))
+#         # res: tuple of (sub1, sub2, common_author, post_num1, post_num2, comm_num1, comm_num2)
+#
+#
+#         print("time to complete query: ", time.time() - start)
+#         # Initialize storage of first sub2 names and the common authors etc
+#         common = cur2.fetchall()
+#
+#         for row in common:
+#             # Check if the subreddit has any common authors
+#             # Get name of first linked subreddit
+#             sub2 = row[1]
+#             # Add to the weight of the edge
+#             # TODO: Fix the arbitrary weighting of edges
+#             # .5 * (post_num1 + post_num2) + (.5 * (comm_num1 + comm_num2))
+#             try:
+#                 weight = (.5 * (row[3] + row[4])) + (.5 * (row[5] + row[6]))
+#                 # Round to thousandths
+#                 weight = round(weight, 2)
+#             except Exception as e:
+#                 print(e, " ", row[:-1])
+#             # Add weighted edge between sub1 and sub2
+#             # Hack for checking if there is already a weighted edge
+#             # B[subreddit1][sub2] refrences the node and its data at that index (fastest way)
+#             try:
+#                 # If cur_weight exists
+#                 cur_weight = weight + B[subreddit1][sub2]
+#             except KeyError:
+#                 # Else
+#                 cur_weight = weight
+#             # Add/update edge with new weight
+#             B.add_edge(row[0], row[1], weight=(cur_weight + weight))
+#         common = cur2.fetchmany(LIMIT)
+#
+#             # Get next 10,000 rows, then check at top if we ran out (will return [] if no more rows)
+#             # common = cur2.fetchmany(LIMIT)
 
 # TODO: Implement the edge filtering
 
@@ -116,29 +123,29 @@ in both subreddits i and j.
 
 def main():
     # GLOBAL VARIABLES
-    global B #, cur, cur2, sub_names
+    global B, cur, cur2, sub_names
 
     # Create the graph
     B = nx.Graph()
 
     # Get db connection and cursors
-    #conn = dbInteractions.open_conn()
-    #cur = conn.cursor()
-    #cur2 = conn.cursor()
+    conn = dbInteractions.open_conn()
+    cur = conn.cursor()
+    cur2 = conn.cursor()
 
     print("fetching names")
-    # cur.execute("SELECT subreddit FROM intermediary;")  # LIMIT %s;", (LIMIT,))
-    # sub_names = cur.fetchall()
+    cur.execute("SELECT subreddit FROM intermediary;")  # LIMIT %s;", (LIMIT,))
+    sub_names = cur.fetchall()
 
     # Create the nodes and edges
     create_nodes()
-    #create_edges()
     auth_create_edges()
 
     # Close cursors and connection to db
-    #cur.close()
-    #cur2.close()
-    #conn.close()
+    print("cleaning up db connections")
+    cur.close()
+    cur2.close()
+    conn.close()
 
     print("writing")
     # Write data to CSV file
@@ -147,24 +154,6 @@ def main():
     print("written")
 
 if __name__ == '__main__':
-    global LIMIT, sub_names, conn, cur, cur2
-    LIMIT = 10
-    conn = dbInteractions.open_conn()
-    cur = conn.cursor()
-    cur2 = conn.cursor()
-    cur.execute("SELECT subreddit FROM intermediary LIMIT %s;", (LIMIT,))
-    sub_names = cur.fetchall()
-    print(timeit.timeit("main()", setup="from __main__ import main", number=1))
-    LIMIT = 100
-    cur.execute("SELECT subreddit FROM intermediary LIMIT %s;", (LIMIT,))
-    sub_names = cur.fetchall()
-    print(timeit.timeit("main()", setup="from __main__ import main", number=1))
-    LIMIT = 1000
-    cur.execute("SELECT subreddit FROM intermediary LIMIT %s;", (LIMIT,))
-    sub_names = cur.fetchall()
-    print(timeit.timeit("main()", setup="from __main__ import main", number=1))
-    LIMIT = 2000
-    cur.execute("SELECT subreddit FROM intermediary LIMIT %s;", (LIMIT,))
-    print(timeit.timeit("main()", setup="from __main__ import main", number=1))
+    main()
 
 
