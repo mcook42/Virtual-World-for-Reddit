@@ -2,7 +2,10 @@
 import networkx as nx
 import dbInteractions
 <<<<<<< HEAD
+<<<<<<< HEAD
 import timeit
+=======
+>>>>>>> 8a91b876a701559438336dd5c8d37b398d8fa7a0
 =======
 >>>>>>> 8a91b876a701559438336dd5c8d37b398d8fa7a0
 import time
@@ -39,6 +42,7 @@ def create_edges():
     print("creating edges")
     for subreddit1 in sub_names:
 <<<<<<< HEAD
+<<<<<<< HEAD
         strt_time = time.time()
         # Query database for the common authors and their scores
         cur2.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
@@ -53,6 +57,10 @@ def create_edges():
 =======
         start = time.time()
         # Query database for the common authors and their scores
+=======
+        start = time.time()
+        # Query database for the common authors and their scores
+>>>>>>> 8a91b876a701559438336dd5c8d37b398d8fa7a0
         # cur2.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
         #                 table1.postnum, table2.postnum,(table1.postnum+table2.postnum) AS sumOrder
         #                 FROM intermediary AS table1, intermediary AS table2
@@ -60,6 +68,9 @@ def create_edges():
         #                  table1.subreddit != table2.subreddit AND table1.subreddit=%s
         #                  ORDER BY sumOrder DESC LIMIT 25
         #                 """, (subreddit1,))
+<<<<<<< HEAD
+>>>>>>> 8a91b876a701559438336dd5c8d37b398d8fa7a0
+=======
 >>>>>>> 8a91b876a701559438336dd5c8d37b398d8fa7a0
         # res: tuple of (sub1, sub2, common_author, post_num1, post_num2, comm_num1, comm_num2)
 
