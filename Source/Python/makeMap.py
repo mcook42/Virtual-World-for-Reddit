@@ -1,8 +1,7 @@
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import networkx as nx
 import dbInteractions
-import time
-import timeit
+
 
 __author__ = "Matt Cook"
 __version__ = "1.0.0"
@@ -139,7 +138,7 @@ def main():
 
     # Create the nodes and edges
     create_nodes()
-    auth_create_edges()
+    create_edges()
 
     # Close cursors and connection to db
     print("cleaning up db connections")

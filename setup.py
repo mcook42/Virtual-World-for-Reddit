@@ -8,5 +8,5 @@ setup(
     license='GPL 3.0',
     author='Matthew Cook',
     author_email='mattheworion.cook@gmail.com',
-    description='', requires=['prawcore', 'praw', 'psycopg2']
+    description='', requires=['prawcore', 'praw', 'psycopg2', 'networkx']
 )
