@@ -1,6 +1,7 @@
  # -*- coding: utf-8 -*-
 import networkx as nx
 import dbInteractions
+import time
 
 __author__ = "Matt Cook"
 __version__ = "1.0.0"
@@ -16,19 +17,36 @@ def create_nodes():
     B.add_nodes_from(sub_names)  # Add the nodes
 
 
+def auth_create_edges():
+    cur.execute("SELECT author FROM intermediary;")
+    authors = cur.fetchall()
+    for author in authors:
+        start = time.time()
+        # Query database for the subreddits an author is connected to
+        cur2.execute("SELECT subreddit FROM intermediary WHERE author = %s;", (author,))
+        print("query time: ", time.time() - start)
+
+        # Get all the subs the author is an active member of (active defined in documentation)
+        sub_names = cur2.fetchall()
+        B.add_edges_from(sub_names)
+
+
 def create_edges():
     print("creating edges")
     for subreddit1 in sub_names:
+        start = time.time()
         # Query database for the common authors and their scores
-        cur2.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
-                        table1.postnum, table2.postnum, table1.commentnum, table2.commentnum, (table1.postnum+table2.postnum+table1.commentnum+table2.commentnum) AS sumOrder
-                        FROM intermediary AS table1, intermediary AS table2
-                        WHERE table1.author=table2.author AND
-                         table1.subreddit != table2.subreddit AND table1.subreddit=%s
-                         ORDER BY sumOrder DESC LIMIT 25
-                        """, (subreddit1,))
+        # cur2.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
+        #                 table1.postnum, table2.postnum,(table1.postnum+table2.postnum) AS sumOrder
+        #                 FROM intermediary AS table1, intermediary AS table2
+        #                 WHERE table1.author=table2.author AND
+        #                  table1.subreddit != table2.subreddit AND table1.subreddit=%s
+        #                  ORDER BY sumOrder DESC LIMIT 25
+        #                 """, (subreddit1,))
         # res: tuple of (sub1, sub2, common_author, post_num1, post_num2, comm_num1, comm_num2)
 
+
+        print("time to complete query: ", time.time() - start)
         # Initialize storage of first sub2 names and the common authors etc
         common = cur2.fetchmany(LIMIT)
 
@@ -43,7 +61,7 @@ def create_edges():
                 # TODO: Fix the arbitrary weighting of edges
                 # .5 * (post_num1 + post_num2) + (.5 * (comm_num1 + comm_num2))
                 try:
-                    weight = (.5 * (row[3] + row[4])) + (.5 * (row[5] + row[6]))
+                    weight = (.5 * (row[3] + row[4]))  # + (.5 * (row[5] + row[6]))
                     # Round to thousandths
                     weight = round(weight, 2)
                 except Exception as e:
@@ -104,7 +122,8 @@ def main():
 
     # Create the nodes and edges
     create_nodes()
-    create_edges()
+    #create_edges()
+    auth_create_edges()
 
     # Close cursors and connection to db
     cur.close()
