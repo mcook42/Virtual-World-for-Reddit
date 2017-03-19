@@ -2,6 +2,7 @@
 import networkx as nx
 import dbInteractions
 import time
+import timeit
 
 __author__ = "Matt Cook"
 __version__ = "1.0.0"
@@ -18,17 +19,27 @@ def create_nodes():
 
 
 def auth_create_edges():
-    cur.execute("SELECT author FROM intermediary;")
+    cur.execute("SELECT DISTINCT author FROM intermediary LIMIT %s;", (LIMIT,))
     authors = cur.fetchall()
     for author in authors:
-        start = time.time()
+        # start = time.time()
         # Query database for the subreddits an author is connected to
         cur2.execute("SELECT subreddit FROM intermediary WHERE author = %s;", (author,))
-        print("query time: ", time.time() - start)
+        # print("query time: ", time.time() - start)
 
         # Get all the subs the author is an active member of (active defined in documentation)
-        sub_names = cur2.fetchall()
-        B.add_edges_from(sub_names)
+        subs = cur2.fetchall()
+        for sub in subs:
+            # Need to extract name from (name,)
+            sub = sub[0]
+            # print(sub)
+            try:
+                B[author][sub]['weight'] += 1
+            except:
+                B.add_edge(u=author, v=sub, weight=1)
+        # Add all edges
+
+        #B.add_edge(sub_names)
 
 
 def create_edges():
@@ -132,8 +143,8 @@ def main():
 
     print("writing")
     # Write data to CSV file
-    nx.write_weighted_edgelist(B, "~/test/weighted_graph_list.csv",
-                               delimiter=',', encoding='utf-8')
+    # nx.write_weighted_edgelist(B, "~/test/weighted_graph_list.csv",
+    #                            delimiter=',', encoding='utf-8')
     print("written")
 
 if __name__ == '__main__':
