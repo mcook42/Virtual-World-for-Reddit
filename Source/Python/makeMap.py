@@ -1,13 +1,15 @@
  # -*- coding: utf-8 -*-
 import networkx as nx
 import dbInteractions
+import timeit
+import time
 
 __author__ = "Matt Cook"
 __version__ = "1.0.0"
 __email__ = "mattheworion.cook@gmail.com"
 
 # CONSTANT
-LIMIT = 1000
+# LIMIT = 10
 
 
 def create_nodes():
@@ -19,6 +21,7 @@ def create_nodes():
 def create_edges():
     print("creating edges")
     for subreddit1 in sub_names:
+        strt_time = time.time()
         # Query database for the common authors and their scores
         cur2.execute("""SELECT table1.subreddit, table2.subreddit, table2.author,
                         table1.postnum, table2.postnum, table1.commentnum, table2.commentnum, (table1.postnum+table2.postnum+table1.commentnum+table2.commentnum) AS sumOrder
@@ -27,41 +30,40 @@ def create_edges():
                          table1.subreddit != table2.subreddit AND table1.subreddit=%s
                          ORDER BY sumOrder DESC LIMIT 25
                         """, (subreddit1,))
+        print("stmt")
+        print(strt_time - time.time())
         # res: tuple of (sub1, sub2, common_author, post_num1, post_num2, comm_num1, comm_num2)
 
         # Initialize storage of first sub2 names and the common authors etc
-        common = cur2.fetchmany(LIMIT)
+        common = cur2.fetchall()
 
-        # While there is something to fetch
-        while not common == []:
-            for row in common:
-                # Check if the subreddit has any common authors
-                # Get name of first linked subreddit
-                sub2 = row[1]
-
-                # Add to the weight of the edge
-                # TODO: Fix the arbitrary weighting of edges
-                # .5 * (post_num1 + post_num2) + (.5 * (comm_num1 + comm_num2))
-                try:
-                    weight = (.5 * (row[3] + row[4])) + (.5 * (row[5] + row[6]))
-                    # Round to thousandths
-                    weight = round(weight, 2)
-                except Exception as e:
-                    print(e, " ", row[:-1])
-                # Add weighted edge between sub1 and sub2
-                # Hack for checking if there is already a weighted edge
-                # B[subreddit1][sub2] refrences the node and its data at that index (fastest way)
-                try:
-                    # If cur_weight exists
-                    cur_weight = weight + B[subreddit1][sub2]
-                except KeyError:
-                    # Else
-                    cur_weight = weight
-                # Add/update edge with new weight
-                B.add_edge(row[0], row[1], weight=(cur_weight + weight))
+        for row in common:
+            # Check if the subreddit has any common authors
+            # Get name of first linked subreddit
+            sub2 = row[1]
+            # Add to the weight of the edge
+            # TODO: Fix the arbitrary weighting of edges
+            # .5 * (post_num1 + post_num2) + (.5 * (comm_num1 + comm_num2))
+            try:
+                weight = (.5 * (row[3] + row[4])) + (.5 * (row[5] + row[6]))
+                # Round to thousandths
+                weight = round(weight, 2)
+            except Exception as e:
+                print(e, " ", row[:-1])
+            # Add weighted edge between sub1 and sub2
+            # Hack for checking if there is already a weighted edge
+            # B[subreddit1][sub2] refrences the node and its data at that index (fastest way)
+            try:
+                # If cur_weight exists
+                cur_weight = weight + B[subreddit1][sub2]
+            except KeyError:
+                # Else
+                cur_weight = weight
+            # Add/update edge with new weight
+            B.add_edge(row[0], row[1], weight=(cur_weight + weight))
 
             # Get next 10,000 rows, then check at top if we ran out (will return [] if no more rows)
-            common = cur2.fetchmany(LIMIT)
+            # common = cur2.fetchmany(LIMIT)
 
 # TODO: Implement the edge filtering
 
@@ -89,34 +91,54 @@ in both subreddits i and j.
 
 def main():
     # GLOBAL VARIABLES
-    global B, cur, cur2, sub_names
+    global B #, cur, cur2, sub_names
 
     # Create the graph
     B = nx.Graph()
 
     # Get db connection and cursors
-    conn = dbInteractions.open_conn()
-    cur = conn.cursor()
-    cur2 = conn.cursor()
+    #conn = dbInteractions.open_conn()
+    #cur = conn.cursor()
+    #cur2 = conn.cursor()
 
-    cur.execute("SELECT subreddit FROM intermediary;")  # LIMIT %s;", (LIMIT,))
-    sub_names = cur.fetchall()
+    print("fetching names")
+    # cur.execute("SELECT subreddit FROM intermediary;")  # LIMIT %s;", (LIMIT,))
+    # sub_names = cur.fetchall()
 
     # Create the nodes and edges
     create_nodes()
     create_edges()
 
     # Close cursors and connection to db
-    cur.close()
-    cur2.close()
-    conn.close()
+    #cur.close()
+    #cur2.close()
+    #conn.close()
 
     print("writing")
     # Write data to CSV file
-    nx.write_weighted_edgelist(B, "~/test/weighted_graph_list.csv",
+    nx.write_weighted_edgelist(B, "weighted_graph_list.csv",
                                delimiter=',', encoding='utf-8')
     print("written")
 
 if __name__ == '__main__':
-    main()
+    global LIMIT, sub_names, conn, cur, cur2
+    LIMIT = 10
+    conn = dbInteractions.open_conn()
+    cur = conn.cursor()
+    cur2 = conn.cursor()
+    cur.execute("SELECT subreddit FROM intermediary LIMIT %s;", (LIMIT,))
+    sub_names = cur.fetchall()
+    print(timeit.timeit("main()", setup="from __main__ import main", number=1))
+    LIMIT = 100
+    cur.execute("SELECT subreddit FROM intermediary LIMIT %s;", (LIMIT,))
+    sub_names = cur.fetchall()
+    print(timeit.timeit("main()", setup="from __main__ import main", number=1))
+    LIMIT = 1000
+    cur.execute("SELECT subreddit FROM intermediary LIMIT %s;", (LIMIT,))
+    sub_names = cur.fetchall()
+    print(timeit.timeit("main()", setup="from __main__ import main", number=1))
+    LIMIT = 2000
+    cur.execute("SELECT subreddit FROM intermediary LIMIT %s;", (LIMIT,))
+    print(timeit.timeit("main()", setup="from __main__ import main", number=1))
+
 
