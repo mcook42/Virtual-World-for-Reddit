@@ -27,36 +27,36 @@ def create_edges(chunk):
     # cur.close()
 
     if chunk is 1:
-        chunk = round(len(authors) / 6)
+        chunk = round(len(authors) / 8)
         # print(chunk)
         temp_authors = authors[0:chunk]
 
     elif chunk is 2:
         # Minus one because round rounds up
-        chunk = round(len(authors) / 6) - 1
+        chunk = round(len(authors) / 8) - 1
         temp = chunk * 2
         temp_authors = authors[chunk:temp]
 
     elif chunk is 3:
-        chunk = round(len(authors) / 6) - 1
+        chunk = round(len(authors) / 8) - 1
         temp = chunk * 3
         chunk *= 2
         temp_authors = authors[chunk:temp]
 
     elif chunk is 4:
-        chunk = round(len(authors) / 6) - 1
+        chunk = round(len(authors) / 8) - 1
         temp = chunk * 4
         chunk *= 3
         temp_authors = authors[chunk:temp]
 
     elif chunk is 5:
-        chunk = round(len(authors) / 6) - 1
+        chunk = round(len(authors) / 8) - 1
         temp = chunk * 5
         chunk *= 4
         temp_authors = authors[chunk:temp]
 
     elif chunk is 6:
-        chunk = round(len(authors) / 6) - 1
+        chunk = round(len(authors) / 8) - 1
         chunk *= 5
         temp_authors = authors[chunk:-1]
 
