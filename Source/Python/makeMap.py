@@ -70,14 +70,14 @@ def create_edges(chunk):
 
         # Get all the subs the author is an active member of (active defined in documentation)
         subs = cur2.fetchall()
-        print(subs)
+        #print(subs)
 
         # Add all edges
         # NOTE: Removed try/except due to nature of edge addition
         for sub in subs:
             # Need to extract names from (name,)
             sub = sub[0]
-            print(author, " ", sub)
+            # print(author, " ", sub)
             B.add_edge(u=author, v=sub, weight=1)
 
 
@@ -176,23 +176,26 @@ def main():
 
     # Create the nodes and edges
     create_nodes()
+
+    # Deallocate sub_names memory
+    sub_names = None
+
     # Store basic graph for reuse
-    T = B
+   # T = B
 
     i = 1
-    while i < 7:
-        create_edges(i)
+   # while i < 7:
+    create_edges(i)
+    print("writing: ", i)
+    # Write data to CSV file
+    fname = "weighted_graph_list-" + str(i) + ".csv"
+    nx.write_weighted_edgelist(B, fname,
+                               delimiter=',', encoding='utf-8')
+    print("written")
 
-        print("writing: ", i)
-        # Write data to CSV file
-        fname = "weighted_graph_list-" + str(i) + ".csv"
-        nx.write_weighted_edgelist(B, fname,
-                                   delimiter=',', encoding='utf-8')
-        print("written")
-
-        # Reset graph
-        B = T
-        i += 1
+    # Reset graph
+    #  B = T
+    #     i += 1
 
     # Close cursors and connection to db
     print("cleaning up db connections")
