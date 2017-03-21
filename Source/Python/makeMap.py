@@ -53,15 +53,11 @@ def create_edges(chunk):
         subs = cur2.fetchall()
 
         # Add all edges
-        # Hack for checking if there is already a weighted edge
-        # B[author][sub2] refrences the node and its data at that index (fastest way)
+        # NOTE: Removed try/except due to nature of edge addition
         for sub in subs:
             # Need to extract names from (name,)
             sub = sub[0]
-            try:
-                B[author][sub]['weight'] += 1
-            except:
-                B.add_edge(u=author, v=sub, weight=1)
+            B.add_edge(u=author, v=sub, weight=1)
 
 
 # WE MAY NEED THIS LATER, BUT FOR NOW IT'S NOT IN USE
