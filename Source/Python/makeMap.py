@@ -2,61 +2,82 @@
 import networkx as nx
 import dbInteractions
 from sys import argv
+from networkx.algorithms import bipartite
 
 __author__ = "Matt Cook"
 __version__ = "1.0.0"
 __email__ = "mattheworion.cook@gmail.com"
 
 # CONSTANT
-# LIMIT = 10
+# LIMIT = 100
 
 
 def create_nodes():
     # Add nodes
     print("creating nodes")
-    B.add_nodes_from(sub_names)  # Add the nodes
+    B.add_nodes_from(authors, bipartite=0)
+    B.add_nodes_from(sub_names, bipartite=1)  # Add the nodes
 
 
 def create_edges(chunk):
     print("fetching authors")
     print(chunk)
-    cur.execute("SELECT DISTINCT author FROM intermediary;")
-    authors = cur.fetchall()
+
     # To save memory try
-    cur.close()
-    # if chunk is 1:
-    chunk = round(len(authors) / 6)
-    print(chunk)
-    exit(0)
-    authors = authors[0:chunk]
-   # elif chunk is 2:
-    #   chunk = round(len(authors) / 3)
-     #  temp = chunk * 2
-      # authors = authors[chunk:temp]
-   # else:
-    #   chunk = len(authors)
-     #  temp = round(chunk / 3) * 2
-      # #print(temp)
-       #authors = authors[temp:-1]
+    # cur.close()
+
+    if chunk is 1:
+        chunk = round(len(authors) / 6)
+        # print(chunk)
+        temp_authors = authors[0:chunk]
+
+    elif chunk is 2:
+        # Minus one because round rounds up
+        chunk = round(len(authors) / 6) - 1
+        temp = chunk * 2
+        temp_authors = authors[chunk:temp]
+
+    elif chunk is 3:
+        chunk = round(len(authors) / 6) - 1
+        temp = chunk * 3
+        chunk *= 2
+        temp_authors = authors[chunk:temp]
+
+    elif chunk is 4:
+        chunk = round(len(authors) / 6) - 1
+        temp = chunk * 4
+        chunk *= 3
+        temp_authors = authors[chunk:temp]
+
+    elif chunk is 5:
+        chunk = round(len(authors) / 6) - 1
+        temp = chunk * 5
+        chunk *= 4
+        temp_authors = authors[chunk:temp]
+
+    elif chunk is 6:
+        chunk = round(len(authors) / 6) - 1
+        chunk *= 5
+        temp_authors = authors[chunk:-1]
 
     print("creating edges")
-    for author in authors:
+    for author in temp_authors:
         # Extract name from (name,)
         author = author[0]
 
-        # start = time.time()
         # Query database for the subreddits an author is connected to
         cur2.execute("SELECT subreddit FROM intermediary WHERE author = %s;", (author,))
-        # print("query time: ", time.time() - start)
 
         # Get all the subs the author is an active member of (active defined in documentation)
         subs = cur2.fetchall()
+        print(subs)
 
         # Add all edges
         # NOTE: Removed try/except due to nature of edge addition
         for sub in subs:
             # Need to extract names from (name,)
             sub = sub[0]
+            print(author, " ", sub)
             B.add_edge(u=author, v=sub, weight=1)
 
 
@@ -134,11 +155,9 @@ in both subreddits i and j.
 # TODO: Submit results to new database table
 
 
-def main(argv):
+def main():
     # GLOBAL VARIABLES
-    global B, cur, cur2, sub_names
-
-    chunk = argv[1]
+    global B, cur, cur2, sub_names, authors
 
     # Create the graph
     B = nx.Graph()
@@ -149,27 +168,39 @@ def main(argv):
     cur2 = conn.cursor()
 
     print("fetching names")
-    #cur.execute("SELECT subreddit FROM intermediary;")  # LIMIT %s;", (LIMIT,))
-    #sub_names = cur.fetchall()
+    cur.execute("SELECT subreddit FROM intermediary;")
+    sub_names = cur.fetchall()
+
+    cur.execute("SELECT DISTINCT author FROM intermediary;")
+    authors = cur.fetchall()
 
     # Create the nodes and edges
-   # create_nodes()
-    create_edges(chunk)
+    create_nodes()
+    # Store basic graph for reuse
+    T = B
+
+    i = 1
+    while i < 7:
+        create_edges(i)
+
+        print("writing: ", i)
+        # Write data to CSV file
+        fname = "weighted_graph_list-" + str(i) + ".csv"
+        nx.write_weighted_edgelist(B, fname,
+                                   delimiter=',', encoding='utf-8')
+        print("written")
+
+        # Reset graph
+        B = T
+        i += 1
 
     # Close cursors and connection to db
     print("cleaning up db connections")
-    #cur.close()
+    cur.close()
     cur2.close()
     conn.close()
 
-    print("writing")
-    # Write data to CSV file
-    fname = "weighted_graph_list.csv-" + chunk
-    nx.write_weighted_edgelist(B, fname,
-                               delimiter=',', encoding='utf-8')
-    print("written")
-
 if __name__ == '__main__':
-    main(argv)
+    main()
 
 
