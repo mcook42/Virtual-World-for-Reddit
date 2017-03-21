@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import networkx as nx
 import dbInteractions
-
+from sys import argv
 
 __author__ = "Matt Cook"
 __version__ = "1.0.0"
@@ -17,10 +17,28 @@ def create_nodes():
     B.add_nodes_from(sub_names)  # Add the nodes
 
 
-def create_edges():
+def create_edges(chunk):
     print("fetching authors")
+    print(chunk)
     cur.execute("SELECT DISTINCT author FROM intermediary;")
     authors = cur.fetchall()
+    # To save memory try
+    cur.close()
+    # if chunk is 1:
+    chunk = round(len(authors) / 6)
+    print(chunk)
+    exit(0)
+    authors = authors[0:chunk]
+   # elif chunk is 2:
+    #   chunk = round(len(authors) / 3)
+     #  temp = chunk * 2
+      # authors = authors[chunk:temp]
+   # else:
+    #   chunk = len(authors)
+     #  temp = round(chunk / 3) * 2
+      # #print(temp)
+       #authors = authors[temp:-1]
+
     print("creating edges")
     for author in authors:
         # Extract name from (name,)
@@ -120,9 +138,11 @@ in both subreddits i and j.
 # TODO: Submit results to new database table
 
 
-def main():
+def main(argv):
     # GLOBAL VARIABLES
     global B, cur, cur2, sub_names
+
+    chunk = argv[1]
 
     # Create the graph
     B = nx.Graph()
@@ -133,26 +153,27 @@ def main():
     cur2 = conn.cursor()
 
     print("fetching names")
-    cur.execute("SELECT subreddit FROM intermediary;")  # LIMIT %s;", (LIMIT,))
-    sub_names = cur.fetchall()
+    #cur.execute("SELECT subreddit FROM intermediary;")  # LIMIT %s;", (LIMIT,))
+    #sub_names = cur.fetchall()
 
     # Create the nodes and edges
-    create_nodes()
-    create_edges()
+   # create_nodes()
+    create_edges(chunk)
 
     # Close cursors and connection to db
     print("cleaning up db connections")
-    cur.close()
+    #cur.close()
     cur2.close()
     conn.close()
 
     print("writing")
     # Write data to CSV file
-    nx.write_weighted_edgelist(B, "weighted_graph_list.csv",
+    fname = "weighted_graph_list.csv-" + chunk
+    nx.write_weighted_edgelist(B, fname,
                                delimiter=',', encoding='utf-8')
     print("written")
 
 if __name__ == '__main__':
-    main()
+    main(argv)
 
 
