@@ -59,8 +59,10 @@ def main():
             print("finished ", i, " iterations")
             print("writing")
             # Append data to CSV file without indexes or headers
-            B.to_csv(fname, delimiter=',', mode='a', encoding='utf-8', header=False, index=False)
+            B.to_csv(fname, sep=',', mode='a', encoding='utf-8', header=False, index=False)
             print("written")
+            # Reduce memory load by resetting B
+            B = pd.DataFrame(columns=headers)
 
         i += 1
 
