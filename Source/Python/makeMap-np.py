@@ -2,7 +2,7 @@
 import pandas as pd
 import dbInteractions
 from sys import argv
-from memory_profiler import profile
+# from memory_profiler import profile
 from timeit import timeit
 
 __author__ = "Matt Cook"
@@ -10,48 +10,61 @@ __version__ = "1.0.0"
 __email__ = "mattheworion.cook@gmail.com"
 
 # CONSTANTS
-LIMIT = 10000
+# LIMIT = 100000
 headers = ['subreddit', 'author', 'weight']
 
 
-@profile()
+#@profile()
 def main():
     # Get db connection and cursors
     conn = dbInteractions.open_conn()
     cur = conn.cursor()
     cur2 = conn.cursor()
 
+    # The filename
+    fname = "weighted_graph_list.csv"
+
     # Create the matrix
     B = pd.DataFrame(columns=headers)
 
     print("fetching authors")
-    cur.execute("SELECT DISTINCT author FROM intermediary LIMIT %s;", (LIMIT,))
+    cur.execute("SELECT (author, subreddit) FROM intermediary;")
     authors = cur.fetchall()
 
+    i = 1
     print("adding rows")
-    for author in authors:
+    for row in authors:
         # Extract name from (name,)
-        author = author[0]
+        row = row[0]
 
-        # Query database for the subreddits an author is connected to
-        cur2.execute("SELECT subreddit FROM intermediary WHERE author = %s;", (author,))
+        # row will be a string '(sub, author)'
+        # split on ','
+        split = row.split(sep=',', maxsplit=1)
 
-        # Get all the subs the author is an active member of (TODO: active defined in documentation)
-        subs = cur2.fetchall()
+        # remove leading '(' from 0
+        author = split[0]
+        author = author.lstrip('(')
+        author = author.strip("'")
 
-        # Add all edges
-        for sub in subs:
-            # Need to extract names from (name,)
-            sub = sub[0]
-            # Append a row
-            temp = pd.DataFrame([[sub, author, 1]], columns=headers)
-            B = B.append(temp, ignore_index=True)
+        # remove trailing ')' from 1
+        sub = split[1]
+        sub = sub.rstrip(')')
 
-    print("writing")
-    # Write data to CSV file without indexes
-    fname = "weighted_graph_list.csv"
-    B.to_csv(fname, delimiter=',', encoding='utf-8', index=False)
-    print("written")
+        # Add edges with weight 1
+        temp = pd.DataFrame([[sub, author, 1]], columns=headers)
+        B = B.append(temp, ignore_index=True)
+
+        # Provide status updates
+        if (i % 10000) == 0:
+            print("finished ", i, " iterations")
+            print("writing")
+            # Append data to CSV file without indexes or headers
+            B.to_csv(fname, delimiter=',', mode='a', encoding='utf-8', header=False, index=False)
+            print("written")
+
+        i += 1
+
+
 
     # Close cursors and connection to db
     print("cleaning up db connections")
