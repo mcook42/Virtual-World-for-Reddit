@@ -51,5 +51,9 @@ public class KeyController : MonoBehaviour {
         {
             GameInfo.instance.menuController.GetComponent<MapMenu>().loadMenu(true);
         }
+
+		if (Input.GetKeyDown ("l")) {
+			GameInfo.instance.menuController.GetComponent<LogInMenu>().loadMenu(true);
+		}
 	}
 }

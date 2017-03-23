@@ -26,11 +26,11 @@ class MainMenu : Menu<MainMenu>
     }
 
     /// <summary>
-    /// TODO
+    /// Opens up the login menu
     /// </summary>
     public void login()
     {
-
+		GameInfo.instance.menuController.GetComponent<LogInMenu> ().loadMenu (true);
     }
 }
 

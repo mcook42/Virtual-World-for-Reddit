@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RedditSharp.Things;
 using UnityEngine.UI;
+using System.Net;
 
 /// <summary>
 /// Holds the information related to the comment.
@@ -66,9 +67,12 @@ public class CommentInfo : MonoBehaviour {
 	public void initializeButtons()
 	{
 		replyButton.GetComponent<Button> ().onClick.AddListener (() => reply ());
-		saveButton.GetComponent<Button> ().onClick.AddListener (() => save());
+		saveButton.GetComponent<Button> ().onClick.AddListener (() => toggleSave());
+		saveButton.GetComponentInChildren<Text> ().text = comment.Saved ? "Unsave" : "Save";
 		downvoteButton.GetComponent<Button> ().onClick.AddListener (() => downvote ());
+		downvoteButton.GetComponentInChildren<Text> ().text = (comment.Vote == VotableThing.VoteType.Downvote) ? "Downvoted!" : "Downvote";
 		upvoteButton.GetComponent<Button> ().onClick.AddListener (() => upvote ());
+		upvoteButton.GetComponentInChildren<Text> ().text = (comment.Vote == VotableThing.VoteType.Upvote) ? "Upvoted!" : "Upvote";
 		loadMoreButton.GetComponent<Button> ().onClick.AddListener (() => loadMore ());
 
 		//no need for these buttons if the user isn't logged in.
@@ -83,32 +87,88 @@ public class CommentInfo : MonoBehaviour {
 
 	}
 
+	/// <summary>
+	/// Brings up the reply menu.
+	/// </summary>
 	public void reply(){
-		Debug.Log ("Reply");
+		GameInfo.instance.menuController.GetComponent<ReplyMenu> ().loadMenu (comment);
 	}
 
-	public void save()
+	/// <summary>
+	/// Saves the comment if it is saved. Unsaves it if it isn't.
+	/// </summary>
+	public void toggleSave()
 	{
 		if (GameInfo.instance.reddit.User != null) {
-			comment.Save ();
+			try{
+				if(comment.Saved)
+				{
+					comment.Unsave();
+					saveButton.GetComponentInChildren<Text>().text="Save";
+				}
+				else
+				{
+					comment.Save ();
+					saveButton.GetComponentInChildren<Text>().text="Unsave";
+				}
+			}
+			catch(WebException w) {
+				GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Web Error: "+w.Message);
+			}
 		} else {
 			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Log in to save.");
 		}
 	}
 
+	/// <summary>
+	/// Upvotes the comment.
+	/// </summary>
 	public void upvote()
 	{
 		if (GameInfo.instance.reddit.User != null) {
-			comment.Upvote();
+			try{
+				if(comment.Vote==VotableThing.VoteType.Upvote)
+				{
+					comment.SetVote(VotableThing.VoteType.None);
+				}
+				else
+				{
+					comment.Upvote();
+				}
+
+				upvoteButton.GetComponentInChildren<Text> ().text = (comment.Vote == VotableThing.VoteType.Upvote) ? "Upvoted!" : "Upvote";
+
+			}
+			catch(WebException w) {
+				GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Web Error: "+w.Message);
+			}
 		} else {
 			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Log in to upvote.");
 		}
 	}
 
+	/// <summary>
+	/// Downvotes the comment.
+	/// </summary>
 	public void downvote()
 	{
 		if (GameInfo.instance.reddit.User != null) {
-			comment.Downvote ();
+			try{
+				if(comment.Vote==VotableThing.VoteType.Downvote)
+				{
+					comment.SetVote(VotableThing.VoteType.None);
+				}
+				else
+				{
+					comment.Downvote();
+				}
+
+				downvoteButton.GetComponentInChildren<Text> ().text = (comment.Vote == VotableThing.VoteType.Downvote) ? "Downvoted!" : "Downvote";
+
+			}
+			catch(WebException w) {
+				GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Web Error: "+w.Message);
+			}
 		} else {
 			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Log in to downvote.");
 		}

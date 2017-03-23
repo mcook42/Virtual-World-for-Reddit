@@ -21,7 +21,6 @@ public class MapMenu : Menu<MapMenu> {
 	// Use this for initialization
 	void Start () {
         DrawGraph();
-		GameInfo.instance.keyController.SetActive (false);
 		Debug.Log ("here");
 		
 	}
@@ -133,7 +132,6 @@ public class MapMenu : Menu<MapMenu> {
 
 	void unLoadMenu()
 	{
-		GameInfo.instance.keyController.SetActive (true);
 		base.unLoadMenu ();
 
 

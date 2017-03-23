@@ -16,13 +16,8 @@ public class MenuController : MonoBehaviour {
 
     public GameObject canvas;
 
-    /** TODO: A reminder of needed menus.
-    public GameObject commentsPrefab;
-    public GameObject threadPrefab;
-    public GameObject elevatorPrefab;
-    public GameObject mapPrefab;
-    public GameObject SubredditPrefab;
-    */
+	//number of menus currently loaded. This is used to tell if the player is still in the menu screen.
+	public int menusLoaded = 0;
 
 
     /// <summary>
