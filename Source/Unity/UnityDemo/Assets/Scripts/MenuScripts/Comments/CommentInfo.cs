@@ -4,11 +4,12 @@ using UnityEngine;
 using RedditSharp.Things;
 using UnityEngine.UI;
 using System.Net;
+using RedditSharp;
 
 /// <summary>
 /// Holds the information related to the comment.
 /// </summary>
-public class CommentInfo : MonoBehaviour {
+public class CommentInfo : MonoBehaviour, LoginObserver {
 	
 	public Comment comment { get; set;}
 	public int childDepth { get; set;}
@@ -41,6 +42,7 @@ public class CommentInfo : MonoBehaviour {
 		this.comment = comment;
 		this.childDepth = childDepth;
 
+
 		string dotPadding = "";
 		int childDepthLimit = 2;
 		if (childDepth <= childDepthLimit) {
@@ -58,6 +60,7 @@ public class CommentInfo : MonoBehaviour {
 
 		initializeButtons ();
 
+		GameInfo.instance.redditRetriever.register (this);
 
 	}
 
@@ -191,5 +194,22 @@ public class CommentInfo : MonoBehaviour {
 		post.initializeComments (childPanel,comments.ToArray(), childDepth + 1);
 	}
 
+	/// <summary>
+	/// Sets or deactivates the action panel.
+	/// </summary>
+	/// <param name="login">If set to <c>true</c> login.</param>
+	public void notify(bool login)
+	{
+		if (login)
+			actionPanel.SetActive (true);
+		else
+			actionPanel.SetActive (false);
 
+	}
+
+	public void OnDestroy()
+	{
+		GameInfo.instance.redditRetriever.unRegister (this);
+
+	}
 }

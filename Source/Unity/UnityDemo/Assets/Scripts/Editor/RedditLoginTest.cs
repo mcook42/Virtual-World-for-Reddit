@@ -24,7 +24,7 @@ public class RedditLoginTest : MonoBehaviour {
 
 		var loginURL = r.getLoginURL();
 		var postParams = r.getPostParams (loginURL);
-		var loginToken = r.getUserToken ("testUser34", "testUser34", postParams);
+		var loginToken = r.getUserJToken ("testUser34", "testUser34", postParams);
 		Debug.Log (loginToken);
 		var code = r.getCode (loginToken, postParams);
 		Debug.Log (r.getCode(loginToken,postParams));

@@ -33,7 +33,7 @@ public class LogInMenu : Menu<LogInMenu> {
 		try{
 			var loginURL = r.getLoginURL();
 			postParams = r.getPostParams (loginURL);
-			token = r.getUserToken (user, pass, postParams);
+			token = r.getUserJToken (user, pass, postParams);
 
 			if(token==null)
 				throw new System.Security.Authentication.AuthenticationException("Username/Password not reconized.");

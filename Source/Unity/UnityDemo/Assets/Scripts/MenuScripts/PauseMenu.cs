@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 public class PauseMenu : Menu<PauseMenu> {
 
-
+	public GameObject loginButton;
 
     /// <summary>
     /// Resumes the applicaton.

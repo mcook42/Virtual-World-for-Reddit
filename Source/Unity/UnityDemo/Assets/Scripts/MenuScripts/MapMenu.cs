@@ -5,11 +5,16 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using RedditSharp.Things;
 using Graph;
+using System.Net;
 
 public class MapMenu : Menu<MapMenu> {
 
     public GameObject nodePrefab;
 	public GameObject linePrefab;
+
+	public GameObject subscriptionPanel;
+	public GameObject subscriptionContent;
+	public GameObject subscriptionButtonPrefab;
 
 	public InputField inputField;
 
@@ -20,11 +25,61 @@ public class MapMenu : Menu<MapMenu> {
 
 	// Use this for initialization
 	void Start () {
+		if (GameInfo.instance.reddit.User != null) {
+			initializeSubscriptions ();
+		}
         DrawGraph();
-		Debug.Log ("here");
 		
 	}
+
+	/// <summary>
+	/// Initializes the subscriptions.
+	/// </summary>
+	void initializeSubscriptions()
+	{
+
+		subscriptionPanel.SetActive (true);
+
+		try{
+
 	
+			bool noSubs = true;
+			foreach(Subreddit subscription in GameInfo.instance.reddit.User.SubscribedSubreddits)
+			{
+				noSubs = false;
+				initializeSubreddit(subscription);
+
+			}
+
+			if(noSubs)
+			{
+				var subs = GameInfo.instance.reddit.GetDefaultSubreddits();
+				foreach(var subscription in subs)
+				{
+					initializeSubreddit(subscription);
+				}
+			}
+
+
+		}
+		catch(WebException w) {
+			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Web Error: " + w.Message);
+		}
+
+	}
+
+	/// <summary>
+	/// Initializes the subreddit and adds it to the subsciption list. 
+	/// </summary>
+	/// <param name="subscription">Subreddit</param>
+	private void initializeSubreddit(Subreddit subscription)
+	{
+		GameObject button = Instantiate(subscriptionButtonPrefab);
+		button.transform.SetParent(subscriptionContent.transform,true);
+		var name = button.GetComponent<Button>().transform.Find("Text").GetComponent<Text>().text = subscription.DisplayName;
+		button.GetComponent<Button>().onClick.AddListener(()=>goToSubreddit(name));
+
+	}
     /// <summary>
     /// TODO: Given the data located in MapInfo, draws the graph using somesort of force directed graph algorithm.
     /// </summary>
@@ -56,7 +111,11 @@ public class MapMenu : Menu<MapMenu> {
             var name = button.transform.Find("Name").GetComponent<Text>();
 			name.text = node.Value.DisplayName;
 
-			float size = 1+((float)node.Value.Subscribers) / 10000000;
+			float size = maxNodeSize;
+
+			//The front page has no full name.
+			if(node.Value.FullName!=null)
+				size = 1+((float)node.Value.Subscribers) / 10000000;
 			size = (size > maxNodeSize) ? maxNodeSize : size;
             button.transform.localScale = new Vector3(size, size, 1);
 
@@ -122,7 +181,6 @@ public class MapMenu : Menu<MapMenu> {
     public void goToSubreddit(string sub)
     {
         //activateLoadingScreen();SceneManager.LoadScene("SubredditDome");
-		Debug.Log (sub);
         SubredditDometoSubredditDomeTransition transition = GetComponent<SubredditDometoSubredditDomeTransition>();
  
         unLoadMenu();
@@ -130,10 +188,4 @@ public class MapMenu : Menu<MapMenu> {
     }
 
 
-	void unLoadMenu()
-	{
-		base.unLoadMenu ();
-
-
-	}
 }

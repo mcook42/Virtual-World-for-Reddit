@@ -6,6 +6,7 @@ using RedditSharp.Things;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using Graph;
+using RedditSharp;
 
 public class SubredditDomeState : SceneState<SubredditDomeState> {
 
@@ -65,33 +66,42 @@ public class SubredditDomeState : SceneState<SubredditDomeState> {
 	public bool loadFront()
 	{
 
-		int maxIterations = 1;
 		Graph<Subreddit> temp =new Graph<Subreddit>();
+
 
 		Subreddit centerSub;
 		Node<Subreddit> centerNode;
 		try{
 			centerSub = GameInfo.instance.reddit.FrontPage;
 
+			//If front already exists we have to get rid of it.
+			GameInfo.instance.map.Remove(centerSub);
+
 			centerNode = new Node<Subreddit>(centerSub);
 			temp.AddNode (centerNode);
-			List<string> seenSubreddits = new List<string> ();
-			int i=0;
-			foreach (Post post in centerSub.Hot) {
-				if (seenSubreddits.Count >= ForceDirectedLayout.innerBuildingNum + ForceDirectedLayout.outerBuildingNum)
-					break;
-				
-				if (!seenSubreddits.Contains (post.SubredditName)) {
-					Node<Subreddit> neighbor = new Node<Subreddit>(post.Subreddit);
-					temp.AddNode(neighbor);
-					temp.AddDirectedEdge(centerNode,neighbor,1);
-				}
 
-
-				if(i>maxIterations)
-					break;
-				i++;
+			//If their is a user, get their subscriptions
+			Listing<Subreddit> subs=null;
+			if(GameInfo.instance.reddit.User!=null)
+			{
+				subs = GameInfo.instance.reddit.User.SubscribedSubreddits;
 			}
+
+			//If there is not a user, then just get the defualt subreddits.
+			if((subs==null) || (subs.Count() == 0)){
+				 
+				subs = GameInfo.instance.reddit.GetDefaultSubreddits();
+			}
+
+			//Add the nodes to the graph.
+			foreach(var sub in subs)
+			{
+				Node<Subreddit> node = new Node<Subreddit>(sub);
+				temp.AddNode(node);
+				temp.AddDirectedEdge(centerNode,node,1);
+			}
+
+
 
 		}
 		catch(System.Net.WebException we) {

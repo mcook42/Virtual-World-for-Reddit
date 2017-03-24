@@ -82,7 +82,6 @@ public class ForceDirectedLayout
 			if(node.inDome == false)
 				node.position = new Vector2 (randomX, randomY);
 		}
-
 		return graph;
 	}
 

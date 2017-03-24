@@ -9,14 +9,16 @@ using UnityEngine;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 
 /// <summary>
 /// A class with a bunch of methods and fields to get the needed Reddit Object.
 /// Can return a non-logged in Reddit object and also provides the methods to log a user in.
 /// A Non-logged in reddit is created on start up, just access the reddit Field.
 /// Most of the methods in this class have the possibility to return somesort of web excpetion.
+/// Updates LoginObservers whenever the user logs in.
 /// </summary>
-public class RedditRetriever
+public class RedditRetriever:LoginObservable
 {
 
 	//For installed applications, the app_secret must always be an empty string.
@@ -51,24 +53,18 @@ public class RedditRetriever
 		//Most of the parameters are static and not set in the contructor. 
 		//This means that a new WebAgent object is unstable until is is passed into AuthProvider.
 		webAgent = new WebAgent();
+		WebAgent.EnableRateLimit = true;
+		//Allows many objects to be loaded in bursts. Draw back is that we have to wait longer between requests.
+		WebAgent.RateLimit = WebAgent.RateLimitMode.Burst;
 
 
-		//backendReddit = getRedditObject ();
+		reddit = getRedditObject ();
 
 	}
 
 
-	private Reddit backendReddit = null;
+	public Reddit reddit = null;
 
-	public Reddit reddit {
-
-		get {
-			if (backendReddit == null)
-				return backendReddit=getRedditObject();
-			else
-				return backendReddit;
-		}
-	}
 		
 
 	/// <summary>
@@ -183,7 +179,7 @@ public class RedditRetriever
 	/// <param name="username">Username.</param>
 	/// <param name="password">Password.</param>
 	/// <param name="postParams">Post parameters.</param>
-	public JToken getUserToken(string username, string password,string postParams)
+	public JToken getUserJToken(string username, string password,string postParams)
 	{
 
 		string returnData = string.Empty;
@@ -307,9 +303,18 @@ public class RedditRetriever
 	public void authenticateUser(string code)
 	{
 		var authToken = authProvider.GetOAuthToken (code);
-		backendReddit = new Reddit (authToken);
+		reddit = new Reddit (authToken);
+		notifyOvservers (true);
 
+	}
 
+	/// <summary>
+	/// Logout the user.
+	/// </summary>
+	public void logout()
+	{
+		reddit = getRedditObject ();
+		notifyOvservers (false);
 	}
 
 	/// <summary>
@@ -339,6 +344,30 @@ public class RedditRetriever
 		return nvc;
 	}
 
+	#region LoginObserverable
+
+	List<LoginObserver> observers = new List<LoginObserver> ();
+
+	public void register (LoginObserver anObserver)
+	{
+		observers.Add (anObserver);
+	}
+
+	public void unRegister (LoginObserver anObserver)
+	{
+		observers.Remove (anObserver);
+
+	}
+
+	private void notifyOvservers(bool login)
+	{
+		foreach (var observer in observers) {
+
+			observer.notify (login);
+		}
+	}
+
+	#endregion
 
 
 }

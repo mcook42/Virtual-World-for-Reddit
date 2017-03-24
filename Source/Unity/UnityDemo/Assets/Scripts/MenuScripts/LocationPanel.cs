@@ -19,6 +19,7 @@ public class LocationPanel : Menu<LocationPanel> {
     public void loadPanel(string location)
     {
         base.loadPanel();
+		GameInfo.instance.menuController.GetComponent<MenuController> ().menusLoaded--;
         instance.transform.Find("Text").GetComponent<Text>().text = location;
     }
 
@@ -30,4 +31,5 @@ public class LocationPanel : Menu<LocationPanel> {
     {
         instance.transform.Find("Text").GetComponent<Text>().text = location;
     }
+		
 }

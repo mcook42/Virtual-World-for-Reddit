@@ -13,6 +13,7 @@ using UnityEngine;
 /// </summary>
 class MainMenu : Menu<MainMenu>
 {
+
   
     /// <summary>
     /// Starts the game.
@@ -32,5 +33,11 @@ class MainMenu : Menu<MainMenu>
     {
 		GameInfo.instance.menuController.GetComponent<LogInMenu> ().loadMenu (true);
     }
+
+	public void logout()
+	{
+		GameInfo.instance.redditRetriever.logout ();
+
+	}
 }
 
