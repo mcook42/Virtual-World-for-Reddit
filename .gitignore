@@ -60,3 +60,4 @@ Source/PRAW/dbInteractions.py
 *.xml
 *.xml
 Documents/~$MapAlgorithmAnalysis.xlsx
+Source/Python/cleanDuplicates.py
