@@ -35,12 +35,19 @@ public abstract class SceneTransition : MonoBehaviour
         GameInfo.instance.menuController.GetComponent<LoadingPanel>().loadPanel();
     }
 
-    
+	/// <summary>
+	/// Calls the clear method on the SceneState in gameInfo.
+	/// </summary>
+	protected void clearCurrentState()
+	{
+		if (GameInfo.instance.currentState != null)
+			GameInfo.instance.currentState.clear ();
+	}
 
     /// <summary>
     /// Transfers information from one scene to the next.
     /// </summary>
-    protected abstract void transferInfo();
+	protected abstract void transferInfo();
 
     
    

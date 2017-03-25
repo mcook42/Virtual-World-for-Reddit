@@ -31,8 +31,6 @@ public class RedditRetriever:LoginObservable
 	private Scope app_scopes = Scope.edit | Scope.flair | Scope.history | Scope.identity | Scope.modconfig | Scope.modflair | Scope.modlog | Scope.modposts | Scope.modwiki | Scope.mysubreddits | Scope.privatemessages | Scope.read | Scope.report | Scope.save | Scope.submit | Scope.subscribe | Scope.vote | Scope.wikiedit | Scope.wikiread;
 
 	//These values will be retrieved from the code as needed.
-	private static string app_code = "";
-	private static string app_refresh = "";
 	private static string app_state = "";
 
 	//RedditSharpStuff
@@ -228,7 +226,7 @@ public class RedditRetriever:LoginObservable
 	{
 		string returnData = string.Empty;
 
-		var postParamDic =  ParseQueryString (postParams);
+		//var postParamDic =  ParseQueryString (postParams);
 
 		//Make the Request to log the user in.
 		request = (HttpWebRequest)WebRequest.Create(new Uri(authorizeUrl));

@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\LoadMapMenuOnClick.cs" />
      <Compile Include="Assets\Scripts\BuildingScripts\BuildingInfo.cs" />
      <Compile Include="Assets\Scripts\BuildingScripts\DoorPopUp.cs" />
      <Compile Include="Assets\Scripts\BuildingScripts\Point.cs" />
@@ -91,11 +92,14 @@
      <Compile Include="Assets\Scripts\PlayerScripts\MyMouseLook.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\MyRigidbodyFirstPersonController.cs" />
      <Compile Include="Assets\Scripts\SceneInfo\BuildingThread.cs" />
+     <Compile Include="Assets\Scripts\SceneInfo\HouseState.cs" />
      <Compile Include="Assets\Scripts\SceneInfo\MapInfo.cs" />
      <Compile Include="Assets\Scripts\SceneInfo\OutsideState.cs" />
      <Compile Include="Assets\Scripts\SceneInfo\SceneState.cs" />
+     <Compile Include="Assets\Scripts\SceneInfo\SceneStateSingleton.cs" />
      <Compile Include="Assets\Scripts\SceneInfo\SubredditDomeState.cs" />
      <Compile Include="Assets\Scripts\SceneInfo\SubredditSceneState.cs" />
+     <Compile Include="Assets\Scripts\SceneSetup\HouseSetup.cs" />
      <Compile Include="Assets\Scripts\SceneSetup\MainMenuSetup.cs" />
      <Compile Include="Assets\Scripts\SceneSetup\SceneSetup.cs" />
      <Compile Include="Assets\Scripts\SceneSetup\SubredditDomeSetup.cs" />
@@ -103,6 +107,7 @@
      <Compile Include="Assets\Scripts\SceneTransition\AllToMainTransition.cs" />
      <Compile Include="Assets\Scripts\SceneTransition\MainToSubredditDomeTransition.cs" />
      <Compile Include="Assets\Scripts\SceneTransition\SceneTransition.cs" />
+     <Compile Include="Assets\Scripts\SceneTransition\SubredditDomeToHouseTransition.cs" />
      <Compile Include="Assets\Scripts\SceneTransition\SubredditDomeToSubredditTransition.cs" />
      <Compile Include="Assets\Scripts\SceneTransition\SubredditDometoSubredditDomeTransition.cs" />
      <Compile Include="Assets\Scripts\SceneTransition\SubredditToOutsideTransition.cs" />
@@ -172,9 +177,6 @@
      <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
      <None Include="Assets\Plugins\Resources\System.Threading.xml" />
      <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleBlend.shader" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -189,9 +191,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>

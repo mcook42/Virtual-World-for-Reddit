@@ -15,16 +15,26 @@ public class SubredditDomeSetup : SceneSetUp{
     public GameObject buildingPrefabMedium;
     public GameObject buildingPrefabLarge;
 
+	public GameObject housePrefab;
+
     public Material lowReadingMaterial;
     public Material mediumReadingMaterial;
     public Material highReadingMaterial;
 
+	protected override void setCurrentState ()
+	{
+		GameInfo.instance.currentState = SubredditDomeState.instance;
+	}
 
     protected override void setUpScene()
     {
 
-		Subreddit centerSub = SubredditDomeState.instance.center.Value;
-        instantiateBuilding(center.transform, centerSub);
+		if (SubredditDomeState.instance.house) {
+			instantiateHouse (center.transform);
+		} else {
+			Subreddit centerSub = SubredditDomeState.instance.center.Value;
+			instantiateBuilding (center.transform, centerSub);
+		}
 
 		int i = 0;
 		foreach(Node<Subreddit> node in SubredditDomeState.instance.center.ToNeighbors){
@@ -34,7 +44,7 @@ public class SubredditDomeSetup : SceneSetUp{
 			try{
 				placeHolder = buildingParent.transform.GetChild (i);
 			}
-			catch(UnityException e) {
+			catch(UnityException) {
 				break;
 			}
 			Subreddit sub = node.Value;
@@ -103,6 +113,15 @@ public class SubredditDomeSetup : SceneSetUp{
         var name = building.transform.Find("Name").GetComponent<TextMesh>();
 		name.text = sub.DisplayName;
     }
+
+	/// <summary>
+	/// Instantiates the house.
+	/// </summary>
+	/// <param name="placeholder">The placeholder holding where the house will be located.</param>
+	public void instantiateHouse(Transform placeholder)
+	{
+		Instantiate (housePrefab);
+	}
 
 	/// <summary>
 	/// Instantiates the path.

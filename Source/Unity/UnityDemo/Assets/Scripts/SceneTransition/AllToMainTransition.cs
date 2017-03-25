@@ -26,7 +26,6 @@ public class AllToMainTransition : SceneTransition
 
     protected override void transferInfo()
     {
-        
         SubredditSceneState.instance.reset();
         SubredditDomeState.instance.reset();
 

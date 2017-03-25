@@ -20,6 +20,7 @@ public class ReplyMenu :Menu<ReplyMenu>
 	{
 			try {
 				var comment = instance.GetComponent<ReplyMenuInfo> ().comment.Reply (instance.GetComponent<ReplyMenuInfo> ().input.GetComponent<Text> ().text);
+				instance.GetComponent<ReplyMenuInfo> ().comment.Comments.Insert(0,comment);
 			} catch (WebException w) {
 				GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Web Error: " + w.Message);
 			//Reddit restricts how often new users can comment.

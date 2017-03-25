@@ -13,7 +13,7 @@ using UnityEngine;
 /// <summary>
 /// A singleton class that holds information related to the outside scene.
 /// </summary>
-public class OutsideState : SceneState<OutsideState> {
+public class OutsideState : SceneStateSingleton<OutsideState> {
 
 
     //The center of the loaded chunks

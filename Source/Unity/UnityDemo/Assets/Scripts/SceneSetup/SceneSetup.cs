@@ -22,10 +22,16 @@ public abstract class SceneSetUp: MonoBehaviour  {
     /// </summary>
     private void Start()
     {
+		setCurrentState ();
         setUpScene();
         setPlayerState();
         deactivateLoadingScreen();
     }
+
+	/// <summary>
+	/// Stores the appropriate state for the scene in GameInfo.
+	/// </summary>
+	protected abstract void setCurrentState();
 
     /// <summary>
     /// Loads and instantiates all objects required for the scene.

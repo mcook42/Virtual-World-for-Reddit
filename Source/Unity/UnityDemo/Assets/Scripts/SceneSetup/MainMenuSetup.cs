@@ -14,6 +14,11 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class MainMenuSetup : SceneSetUp {
 
 
+	protected override void setCurrentState()
+	{
+		GameInfo.instance.currentState = null;
+	}
+
     /// <summary>
     /// Unactivates the player.
     /// </summary>

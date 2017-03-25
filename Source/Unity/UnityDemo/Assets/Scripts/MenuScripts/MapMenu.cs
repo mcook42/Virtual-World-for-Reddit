@@ -7,29 +7,56 @@ using RedditSharp.Things;
 using Graph;
 using System.Net;
 
-public class MapMenu : Menu<MapMenu> {
+public class MapMenu : Menu<MapMenu>, LoginObserver {
 
+	//Map
     public GameObject nodePrefab;
 	public GameObject linePrefab;
 
+	//Subscriptions
 	public GameObject subscriptionPanel;
 	public GameObject subscriptionContent;
 	public GameObject subscriptionButtonPrefab;
 
+	//Navigation
 	public InputField inputField;
+	public GameObject homeButton;
 
 	private List<GameObject> lines = new List<GameObject> ();
 	private Transform content;
 
 	public float maxNodeSize{ get { return 3; } }
 
-	// Use this for initialization
+	//Adds this object to the LoginObservers and then draws the graph.
 	void Start () {
-		if (GameInfo.instance.reddit.User != null) {
-			initializeSubscriptions ();
-		}
+		notify (GameInfo.instance.reddit.User != null);
+		GameInfo.instance.redditRetriever.register (this);
         DrawGraph();
-		
+	}
+
+	/// <summary>
+	/// Unregisters this menu from the LoginObervers.
+	/// </summary>
+	void OnDestroy()
+	{
+		GameInfo.instance.redditRetriever.unRegister (this);
+	}
+
+	/// <summary>
+	/// Changes the map state based on whether or not htey are logged in.
+	/// </summary>
+	/// <param name="login">If set to <c>true</c> login.</param>
+	public void notify(bool login)
+	{
+
+		if (login) {
+			initializeSubscriptions ();
+			homeButton.SetActive (true);
+		} else {
+			subscriptionPanel.SetActive (false);
+			homeButton.SetActive (false);
+		}
+
 	}
 
 	/// <summary>
@@ -187,5 +214,31 @@ public class MapMenu : Menu<MapMenu> {
         transition.goToDome(sub);
     }
 
+	public void goToFront()
+	{
+		//activateLoadingScreen();SceneManager.LoadScene("SubredditDome");
+		SubredditDometoSubredditDomeTransition transition = GetComponent<SubredditDometoSubredditDomeTransition>();
+
+		unLoadMenu();
+		transition.goToFront ();
+
+	}
+
+	/// <summary>
+	/// Goes home.
+	/// </summary>
+	public void goToHouse()
+	{
+		SubredditDometoSubredditDomeTransition transition = GetComponent<SubredditDometoSubredditDomeTransition>();
+
+		unLoadMenu();
+		transition.goToHouse ();
+
+	}
+
+	public void close()
+	{
+		unLoadMenu ();
+	}
 
 }

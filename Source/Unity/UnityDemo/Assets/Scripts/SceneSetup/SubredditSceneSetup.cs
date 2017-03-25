@@ -20,7 +20,10 @@ class SubredditSceneSetup : SceneSetUp
 
     public GameObject threads=null;
 
-
+	protected override void setCurrentState()
+	{
+		GameInfo.instance.currentState = SubredditSceneState.instance;
+	}
     /// <summary>
     /// TODO: Calls Reddit, gets the threads, and then adds the threads to the door.
     /// </summary>

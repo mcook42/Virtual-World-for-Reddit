@@ -8,9 +8,10 @@ using System.Linq;
 using Graph;
 using RedditSharp;
 
-public class SubredditDomeState : SceneState<SubredditDomeState> {
+public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 
 	public Node<Subreddit> center;
+	public bool house { get; set; } //If the house is too be loaded in.
 
 	/// <summary>
 	/// Init the state.
@@ -24,6 +25,26 @@ public class SubredditDomeState : SceneState<SubredditDomeState> {
 		else
 			return loadBuildings (centerSubreddit);
 
+	}
+
+	/// <summary>
+	/// Loads the front scene with the house in the center.
+	/// </summary>
+	/// <returns><c>true</c>, if house was inited, <c>false</c> otherwise.</returns>
+	public void initHouse()
+	{
+		if (GameInfo.instance.reddit.User != null)
+			loadFront ();
+		house = true;
+
+	}
+
+	/// <summary>
+	/// Loads the front scene with the front subreddits in the center.
+	/// </summary>
+	public void initFront()
+	{
+		loadFront ();
 	}
 
 	/// <summary>
@@ -63,6 +84,11 @@ public class SubredditDomeState : SceneState<SubredditDomeState> {
 
 	}
 
+	/// <summary>
+	/// Loads the front.
+	/// </summary>
+	/// <returns><c>true</c>, if front was loaded, <c>false</c> otherwise.</returns>
+	/// <param name="house">If set to <c>true</c> house will be loaded.</param>
 	public bool loadFront()
 	{
 
@@ -134,6 +160,7 @@ public class SubredditDomeState : SceneState<SubredditDomeState> {
     public override void reset()
     {
 		center = null;
+		house = false;
     }
 
 }

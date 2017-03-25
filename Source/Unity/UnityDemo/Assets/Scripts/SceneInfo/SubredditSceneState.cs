@@ -15,7 +15,7 @@ using RedditSharp;
 /// <summary>
 /// Holds all information related to the Subreddit scene.
 /// </summary>
-class SubredditSceneState : SceneState<SubredditSceneState>
+class SubredditSceneState : SceneStateSingleton<SubredditSceneState>
 {
     //The building that holds all of the Subreddit information.
     public GameObject currentSubreddit = null;

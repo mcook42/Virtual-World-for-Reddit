@@ -33,7 +33,7 @@ public abstract class Menu<T>: MonoBehaviour
 
         loadPanel();
         instance.transform.SetAsLastSibling(); //make it appear on top of everything else.
-        GameInfo.instance.setCursorLock(false);
+        GameInfo.instance.setCursorLock(false); 
     }
 
     /// <summary>

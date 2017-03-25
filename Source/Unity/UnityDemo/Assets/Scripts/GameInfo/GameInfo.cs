@@ -47,6 +47,8 @@ public class GameInfo : MonoBehaviour {
 
     public GameObject keyController;
 
+	public SceneState currentState { get; set; }
+
 	public Graph<Subreddit> map=null;
 
 	public bool fatalError { get; set; }
@@ -81,15 +83,7 @@ public class GameInfo : MonoBehaviour {
 	/// </summary>
 	public void initializeMap()
 	{
-		try
-		{
 			map =server.getMap();
-		}
-		catch(ServerDownException e)
-		{
-			fatalError = true;
-		}
-
 
 	}
 		
