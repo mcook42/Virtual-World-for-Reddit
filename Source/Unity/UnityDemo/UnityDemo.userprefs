@@ -2,9 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MenuScripts\Comments\CommentMenuManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameInfo\GameInfo.cs" Line="50" Column="46" />
+      <File FileName="Assets\Scripts\GameInfo\GameInfo.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\MenuScripts\Comments\CommentMenu.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MenuScripts\Comments\CommentMenuManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MenuScripts\Comments\CommentMenuManager.cs" Line="115" Column="20" />
       <File FileName="Assets\Scripts\MenuScripts\Comments\CommentInfo.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

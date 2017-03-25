@@ -31,7 +31,6 @@ public class CommentMenuManager : MonoBehaviour {
 	void Start()
 	{
 		commentEnumerator = post.EnumerateComments ().GetEnumerator ();
-		commentEnumerator.MoveNext ();
 		loadMoreButton.GetComponent<Button> ().onClick.AddListener (() => loadMore ());
 		loadMore ();
 
@@ -100,17 +99,20 @@ public class CommentMenuManager : MonoBehaviour {
 	/// </summary>
 	public void loadMore()
 	{
+		bool commentsLeft = true;
 		List<Comment> comments = new List<Comment> ();
 		for (int i = 0; i < topLevelCommentsLoaded; i++) {
-			if (commentEnumerator.Current == null)
-				break;
-			else
+			if (commentEnumerator.MoveNext ())
 				comments.Add ((Comment)commentEnumerator.Current);
-			commentEnumerator.MoveNext ();
+			else {
+				commentsLeft = false;
+				break;
+			}
+			
 
 		}
 		//no more comments to load.
-		if (commentEnumerator.Current == null)
+		if (!commentsLeft)
 			loadMorePanel.SetActive (false);
 			
 		initializeComments (this.gameObject,comments.ToArray(),0);
