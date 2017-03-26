@@ -1,82 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using UnityEngine;
 using RedditSharp.Things;
-using System;
-using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+
 
 /// <summary>
-/// Creates the comments.
+/// An Abstract class with methods for organizing the comments.
 /// </summary>
-public class CommentMenuManager : MonoBehaviour {
-
+public abstract class CommentMenuManager :MonoBehaviour
+{
 	public GameObject commentPrefab;
 	public GameObject title;
 	public GameObject loadMoreButton;
 	public GameObject loadMorePanel;
 
+	protected readonly int topLevelCommentsLoaded = 5;
+	protected 	IEnumerator commentEnumerator;
 
-
-	public Post post { get; set; }
-
-	private readonly int topLevelCommentsLoaded = 5;
-	private IEnumerator commentEnumerator;
-
-
-
-	/// <summary>
-	/// Loads the Comments and sets them up.
-	/// </summary>
-	void Start()
-	{
-		commentEnumerator = post.EnumerateComments ().GetEnumerator ();
-		loadMoreButton.GetComponent<Button> ().onClick.AddListener (() => loadMore ());
-		loadMore ();
-
-	}
-		
 
 	/// <summary>
 	/// Initializes the comments.
 	/// </summary>
-	/// <returns>The number of top level comments initialized.</returns>
-	/// <param name="parent">Parent comments are attached to.</param>
+	/// <returns>The comments.</returns>
+	/// <param name="parent">Parent.</param>
 	/// <param name="comments">Comments.</param>
-	/// <param name="startDepth">Depth of comment tree thus far.</param>
-	public int initializeComments(GameObject parent,Comment parentComment,int startDepth)
-	{
-		
-		Comment[] comments = parentComment.Comments.ToArray();
-		return initializeComments (parent,comments, startDepth);
+	/// <param name="startDepth">Start depth.</param>
+	public abstract int initializeComments (GameObject parent, Comment[] comments, int startDepth);
 
-
-	}
-
-	/// <summary>
-	/// Initializes the comments.
-	/// </summary>
-	/// <returns>The number of top level comments initialized.</returns>
-	/// <param name="parent">Parent comments are attached to.</param>
-	/// <param name="comments">Comments.</param>
-	/// <param name="startDepth">Depth of comment tree thus far.</param>
-	public int initializeComments(GameObject parent, Comment[] comments, int startDepth)
-	{
-		int count = 0;
-		for( int i=0;i<comments.Count();i++) {
-			GameObject commentObject = initializeComment (parent, comments [i], startDepth);
-			count++;
-
-
-			var secondComments = comments [i].Comments.ToArray();
-			commentObject.GetComponent<CommentInfo> ().childPanel.SetActive (true);
-			initializeComments (commentObject.GetComponent<CommentInfo> ().childPanel, secondComments, startDepth + 1);
-
-		}
-
-		return count;
-	}
-		
 
 	/// <summary>
 	/// Initializes the comment.
@@ -84,21 +35,12 @@ public class CommentMenuManager : MonoBehaviour {
 	/// <param name="comment">Comment.</param>
 	/// <param name="depth">Depth in comment tree.</param>
 	/// <returns> The initialized Comment.</returns>
-	public GameObject initializeComment(GameObject parent,Comment comment, int depth)
-	{
-		GameObject commentObject = Instantiate (commentPrefab) as GameObject;
-		commentObject.transform.SetParent (parent.transform);
-		CommentInfo info = commentObject.GetComponent<CommentInfo> ();
-		info.Init (depth, comment);
-		loadMorePanel.transform.SetAsLastSibling ();
-		return commentObject;
-	}
-		
+	public abstract GameObject initializeComment(GameObject parent,Comment comment, int depth);
+
 	/// <summary>
-	/// Loads topCommentsLoaded more comments.
+	/// Loads more comments.
 	/// </summary>
-	public void loadMore()
-	{
+	public void loadMore(){
 		bool commentsLeft = true;
 		List<Comment> comments = new List<Comment> ();
 		for (int i = 0; i < topLevelCommentsLoaded; i++) {
@@ -108,13 +50,17 @@ public class CommentMenuManager : MonoBehaviour {
 				commentsLeft = false;
 				break;
 			}
-			
+
 
 		}
 		//no more comments to load.
 		if (!commentsLeft)
 			loadMorePanel.SetActive (false);
-			
+
 		initializeComments (this.gameObject,comments.ToArray(),0);
+
+
 	}
 }
+
+

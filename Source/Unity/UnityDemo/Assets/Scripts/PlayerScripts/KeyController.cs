@@ -44,7 +44,7 @@ public class KeyController : MonoBehaviour {
 				Debug.Log ("here");
 			}
 
-			GameInfo.instance.menuController.GetComponent<CommentMenu> ().loadMenu (post);
+			GameInfo.instance.menuController.GetComponent<CommentMenu> ().loadPostMenu (post);
 		}
 
         if(Input.GetKeyDown("m"))

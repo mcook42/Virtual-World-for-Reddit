@@ -4,6 +4,7 @@ using UnityEngine;
 using RedditSharp.Things;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Security.Authentication;
 
 /// <summary>
 /// Creates the Comment Menu. Attached to the menuController object. Once created, control of the content of the menu is handled by CommentMenuManager.
@@ -15,12 +16,29 @@ public class CommentMenu :Menu<CommentMenu> {
 	/// The basic menu load. Simply loads the menu and makes the cursor appear.
 	/// </summary>
 	/// <param name="post">The post where the comments are stored.</param>
-	public void loadMenu(Post post)
+	public void loadPostMenu(Post post)
 	{
 		base.loadMenu (true);
-		CommentMenuManager setup= instance.GetComponentInChildren<CommentMenuManager> ();
-		setup.post = post;
-		setup.title.GetComponent<Text> ().text = post.Title;
+		PostCommentMenuManager setup= instance.GetComponentInChildren<PostCommentMenuManager> ();
+		setup.Init (post);
+	}
+
+	/// <summary>
+	/// Loads the overview for the logged in user.
+	/// </summary>
+	public void loadOverviewMenu()
+	{
+		base.loadMenu (true);
+		OverviewCommentMenuManager setup = instance.GetComponentInChildren<OverviewCommentMenuManager> ();
+
+		try{setup.Init ();}
+		catch(AuthenticationException) {
+			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("User not logged in.");
+			unLoadMenu ();
+		}
+
+
+
 	}
 
 	/// <summary>
@@ -31,8 +49,13 @@ public class CommentMenu :Menu<CommentMenu> {
 		if (EventSystem.current.IsPointerOverGameObject())
 			return;
 
-		Post post = thread.GetComponent<BuildingThread> ().thread;
-		loadMenu (post);
+		if (gameObject.name == "Overview")
+			loadOverviewMenu ();
+		else
+		{
+			Post post = thread.GetComponent<BuildingThread> ().thread;
+			loadPostMenu (post);
+		}
 
 	}
 }
