@@ -225,6 +225,19 @@ public class MapMenu : Menu<MapMenu>, LoginObserver {
 	}
 
 	/// <summary>
+	/// Goes to all.
+	/// </summary>
+	public void goToAll()
+	{
+		//activateLoadingScreen();SceneManager.LoadScene("SubredditDome");
+		SubredditDometoSubredditDomeTransition transition = GetComponent<SubredditDometoSubredditDomeTransition>();
+
+		unLoadMenu();
+		transition.goToAll();
+
+	}
+
+	/// <summary>
 	/// Goes home.
 	/// </summary>
 	public void goToHouse()

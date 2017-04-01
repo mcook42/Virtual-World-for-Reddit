@@ -87,7 +87,7 @@ class SubredditSceneSetup : SceneSetUp
         Reddit reddit = GameInfo.instance.reddit;
         if (reddit == null)
             return;
-		RedditSharp.Things.Subreddit subreddit = reddit.GetSubreddit("/r/"+SubredditSceneState.instance.currentSubreddit.GetComponent<BuildingInfo>().subreddit.DisplayName);
+		RedditSharp.Things.Subreddit subreddit = SubredditSceneState.instance.currentSubreddit.GetComponent<BuildingInfo>().subreddit;
 
 
         RedditSharp.Things.Post[] post;

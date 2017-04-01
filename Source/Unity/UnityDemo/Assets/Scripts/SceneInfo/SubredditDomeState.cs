@@ -20,11 +20,7 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 	/// <returns>True if successfully initialized, false otherwise. </returns>
 	public bool init(string centerSubreddit)
 	{
-		if (System.Text.RegularExpressions.Regex.IsMatch (centerSubreddit, "(/r/)?front", System.Text.RegularExpressions.RegexOptions.None))
-			return loadFront ();
-		else
 			return loadBuildings (centerSubreddit);
-
 	}
 
 	/// <summary>
@@ -34,7 +30,7 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 	public void initHouse()
 	{
 		if (GameInfo.instance.reddit.User != null)
-			loadFront ();
+			initFront();
 		house = true;
 
 	}
@@ -44,7 +40,69 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 	/// </summary>
 	public void initFront()
 	{
-		loadFront ();
+
+		loadDefaultSubreddit (GameInfo.instance.reddit.FrontPage);
+
+	}
+
+	/// <summary>
+	/// Loads the All subreddit surrounded by the default subreddits.
+	/// </summary>
+	public void initAll()
+	{
+		loadDefaultSubreddit (GameInfo.instance.reddit.RSlashAll);
+
+	}
+
+	/// <summary>
+	/// Loads the center subreddit surrounded by the default subreddits.
+	/// </summary>
+	/// <param name="centerSub">Center sub.</param>
+	public void loadDefaultSubreddit(Subreddit centerSub)
+	{
+		Graph<Subreddit> temp =new Graph<Subreddit>();
+
+
+		Node<Subreddit> centerNode;
+		try{
+
+			//If front already exists we have to get rid of it.
+			GameInfo.instance.map.Remove(centerSub);
+
+			centerNode = new Node<Subreddit>(centerSub);
+			temp.AddNode (centerNode);
+
+			//If their is a user, get their subscriptions
+			Listing<Subreddit> subs=null;
+			if(GameInfo.instance.reddit.User!=null)
+			{
+				subs = GameInfo.instance.reddit.User.SubscribedSubreddits;
+			}
+
+			//If there is not a user, then just get the defualt subreddits.
+			if((subs==null) || (subs.Count() == 0)){
+
+				subs = GameInfo.instance.reddit.GetDefaultSubreddits();
+			}
+
+			//Add the nodes to the graph.
+			foreach(var sub in subs)
+			{
+				Node<Subreddit> node = new Node<Subreddit>(sub);
+				temp.AddNode(node);
+				temp.AddDirectedEdge(centerNode,node,1);
+			}
+
+
+
+		}
+		catch(System.Net.WebException we) {
+			GameInfo.instance.menuController.GetComponent<FatalErrorMenu>().loadMenu("Unable to connect to Reddit Server: "+we.Message);
+		} 
+
+		GameInfo.instance.map.AddGraph(temp);
+		center = GameInfo.instance.map.getNode (centerSub);
+
 	}
 
 	/// <summary>
@@ -84,64 +142,7 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 
 	}
 
-	/// <summary>
-	/// Loads the front.
-	/// </summary>
-	/// <returns><c>true</c>, if front was loaded, <c>false</c> otherwise.</returns>
-	/// <param name="house">If set to <c>true</c> house will be loaded.</param>
-	public bool loadFront()
-	{
 
-		Graph<Subreddit> temp =new Graph<Subreddit>();
-
-
-		Subreddit centerSub;
-		Node<Subreddit> centerNode;
-		try{
-			centerSub = GameInfo.instance.reddit.FrontPage;
-
-			//If front already exists we have to get rid of it.
-			GameInfo.instance.map.Remove(centerSub);
-
-			centerNode = new Node<Subreddit>(centerSub);
-			temp.AddNode (centerNode);
-
-			//If their is a user, get their subscriptions
-			Listing<Subreddit> subs=null;
-			if(GameInfo.instance.reddit.User!=null)
-			{
-				subs = GameInfo.instance.reddit.User.SubscribedSubreddits;
-			}
-
-			//If there is not a user, then just get the defualt subreddits.
-			if((subs==null) || (subs.Count() == 0)){
-				 
-				subs = GameInfo.instance.reddit.GetDefaultSubreddits();
-			}
-
-			//Add the nodes to the graph.
-			foreach(var sub in subs)
-			{
-				Node<Subreddit> node = new Node<Subreddit>(sub);
-				temp.AddNode(node);
-				temp.AddDirectedEdge(centerNode,node,1);
-			}
-
-
-
-		}
-		catch(System.Net.WebException we) {
-			GameInfo.instance.menuController.GetComponent<FatalErrorMenu>().loadMenu("Unable to connect to Reddit Server: "+we.Message);
-			return false;
-		} 
-
-		GameInfo.instance.map.AddGraph(temp);
-		center = GameInfo.instance.map.getNode (centerSub);
-
-
-		return true;
-	}
-		
 	/// <summary>
 	/// Layouts the map.
 	/// </summary>

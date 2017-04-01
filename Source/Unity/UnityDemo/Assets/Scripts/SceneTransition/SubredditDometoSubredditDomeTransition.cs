@@ -33,6 +33,15 @@ class SubredditDometoSubredditDomeTransition : SceneTransition
 
 	}
 
+	public void goToAll()
+	{
+		activateLoadingScreen ();
+		SubredditDomeState.instance.initAll ();
+		transferInfo ();
+		SceneManager.LoadScene ("SubredditDome");
+
+	}
+
 	public void goToHouse()
 	{
 		activateLoadingScreen ();

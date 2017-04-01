@@ -124,8 +124,8 @@ public class CommentInfo : VotableInfo, LoginObserver {
 		var more = ((Comment)thing).More;
 		List<Comment> comments = new List<Comment> ();
 		more.ParentId = post.FullName;
-		foreach (Thing thing in more.Things()) {
-			comments.Add ((Comment)thing);
+		foreach (Thing comment in more.Things()) {
+			comments.Add ((Comment)comment);
 		}
 		loadMorePanel.SetActive (false);
 		childPanel.SetActive (true);
