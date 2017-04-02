@@ -36,9 +36,16 @@ First, all of the information related to this project is either contained within
  
  - Inside contains the room inside the building.
  
+ - House contains the house scene.
+ 
  - LoadTest: A blank testing scene only used to run load tests.
  
  - DontDestroyOnLoad is a special scene which exists only while the game is running. It contains all of the objects within main.
+ 
+###Menus
+
+ All Menus inherit from the Menu<T> object and are managed by the menuController object. The typical process for creating a menu is to get the menuController object, 
+ get the appropriate script on that object, and then calling loadMenu(bool pause). Unloaded the menu follows the same process except one called unLoadeMenu() in the end.
  
  
 ###Random Notes:

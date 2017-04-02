@@ -75,6 +75,7 @@
      <Compile Include="Assets\Scripts\MenuScripts\Comments\ReplyMenu.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\Comments\ReplyMenuInfo.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\Comments\VotableInfo.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\CreditsMenu.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\ErrorMenu.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\FatalErrorMenu.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\LoadMapMenuOnClick.cs" />
@@ -199,16 +200,16 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="HtmlAgilityPack">
- <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/HtmlAgilityPack.dll</HintPath>
+ <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/Unity/UnityDemo/Assets/Plugins/Resources/HtmlAgilityPack.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/Newtonsoft.Json.dll</HintPath>
+ <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/Unity/UnityDemo/Assets/Plugins/Resources/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="RedditSharp">
- <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/RedditSharp.dll</HintPath>
+ <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/Unity/UnityDemo/Assets/Plugins/Resources/RedditSharp.dll</HintPath>
  </Reference>
  <Reference Include="System.Threading">
- <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit-Unity-Working/Source/Unity/UnityDemo/Assets/Plugins/Resources/System.Threading.dll</HintPath>
+ <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/Unity/UnityDemo/Assets/Plugins/Resources/System.Threading.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Cecil">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
