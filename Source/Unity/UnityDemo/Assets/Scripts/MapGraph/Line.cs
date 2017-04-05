@@ -41,9 +41,11 @@ public class Line: MonoBehaviour
 
 
 			RectTransform rectangle = transform.GetComponent<RectTransform>();
-			rectangle.localPosition = new Vector3(center.x,center.y,1);
+			rectangle.anchoredPosition = new Vector3(center.x,center.y,1);
 
 			rectangle.sizeDelta = new Vector2(8, length);
+			transform.eulerAngles = new Vector3 (0,0,-(float) (360*Mathf.Atan2((position1.x-position2.x),(position1.y-position2.y))/(2*Math.PI)) );
+			transform.SetAsFirstSibling ();
 
 
 

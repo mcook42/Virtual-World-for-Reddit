@@ -10,6 +10,8 @@ using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Specialized;
 using System.Collections.Generic;
+using HtmlAgilityPack;
+using System.Collections;
 
 /// <summary>
 /// A class with a bunch of methods and fields to get the needed Reddit Object.
@@ -203,8 +205,8 @@ public class RedditRetriever:LoginObservable
 		using (StreamWriter writer = new StreamWriter(request.GetRequestStream()))
 			writer.Write(postData.ToString());
 
+		//Getting back the response
 		using (var response = (HttpWebResponse)request.GetResponse ()) {
-
 			//Read the json document that we retrieve after sending the request
 			using (StreamReader reader = new StreamReader (response.GetResponseStream ()))
 				returnData = reader.ReadToEnd ();
@@ -213,6 +215,50 @@ public class RedditRetriever:LoginObservable
 		var inner = outer["json"];
 		JToken data = inner["data"];
 		return data;
+
+	}
+
+	/// <summary>
+	/// Gets the app permission HTML.
+	/// This method assumes that the cookies are already initialized with the user data.
+	/// </summary>
+	/// <returns>The app permission HTML.</returns>
+	public string getAppPermissionHTML()
+	{
+		string returnHTML= string.Empty;
+
+		//Make the request to get the login destination webpage.
+		request = (HttpWebRequest)WebRequest.Create(new Uri("https://ssl.reddit.com/api/v1/authorize?client_id=pQnwWWwHYJGFnQ&response_type=code&state=Njhka97ylApgqZhcn2U2&redirect_uri=https%3A%2F%2F127.0.0.1%3A65010%2Fauthorize_callback&duration=permanent&scope=identity%2Cedit%2Cflair%2Chistory%2Cmodconfig%2Cmodflair%2Cmodlog%2Cmodposts%2Cmodwiki%2Cmysubreddits%2Cprivatemessages%2Cread%2Creport%2Csave%2Csubmit%2Csubscribe%2Cvote%2Cwikiedit%2Cwikiread"));
+		request.Method = "GET";
+		request.ContentType = "application/x-www-form-urlencoded";
+		request.UserAgent = "Mozilla/5.0 (.NET CLR 2.0) "+user_agent;
+		request.Referer = "https://www.reddit.com/";
+		request.AllowAutoRedirect = true;
+		request.KeepAlive = true;
+		request.CookieContainer = cookies;
+
+
+		//Actually make the request.
+		using (HttpWebResponse response = (HttpWebResponse)request.GetResponse ()) {
+
+			using (StreamReader streamerReader = new StreamReader(response.GetResponseStream ())) {
+				returnHTML = streamerReader.ReadToEnd ();
+			}
+
+		}
+
+		var doc = new HtmlDocument ();
+		doc.LoadHtml (returnHTML);
+		HtmlNode node = doc.DocumentNode.SelectSingleNode("//div[@class = 'content']");
+
+		if (node != null)
+		{
+			returnHTML = node.InnerText;
+		}
+
+
+
+		return returnHTML;
 
 	}
 
@@ -366,8 +412,29 @@ public class RedditRetriever:LoginObservable
 	}
 
 	#endregion
-
-
+	//From http://stackoverflow.com/questions/1047669/cookiecontainer-bug
+	//Fix cookie containter bug.
+	private void BugFix_CookieDomain(CookieContainer cookieContainer)
+	{
+		System.Type _ContainerType = typeof(CookieContainer);
+		Hashtable table = (Hashtable)_ContainerType.InvokeMember("m_domainTable",
+			System.Reflection.BindingFlags.NonPublic |
+			System.Reflection.BindingFlags.GetField |
+			System.Reflection.BindingFlags.Instance,
+			null,
+			cookieContainer,
+			new object[] { });
+		ArrayList keys = new ArrayList(table.Keys);
+		foreach (string keyObj in keys)
+		{
+			string key = (keyObj as string);
+			if (key[0] == '.')
+			{
+				string newKey = key.Remove(0, 1);
+				table[newKey] = table[keyObj];
+			}
+		}
+	}
 }
 
 

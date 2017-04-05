@@ -7,6 +7,16 @@ using Graph;
 
 public class SubredditDomeSetup : SceneSetUp{
 
+	//Constant values
+	public static readonly float innerCircleSize = 40;
+	public static readonly float outerCircleSize = 60;
+	public static readonly int buildingFootprint = 5;
+	public static readonly int minPathWidth = 10;
+	public static readonly int maxPathWidth = 30;
+	public static readonly int innerBuildNum = 13;
+	public static readonly int outerBuildNum = 12;
+
+
     public GameObject center;
     public GameObject buildingParent;
 	public GameObject pathParent;
@@ -66,6 +76,9 @@ public class SubredditDomeSetup : SceneSetUp{
     {
 
         GameObject building; 
+
+		if (sub.Url == null)
+			sub = GameInfo.instance.reddit.GetSubreddit (sub.DisplayName);
 
         //determining the model to use
         if (sub.Subscribers<1000000)
@@ -150,7 +163,9 @@ public class SubredditDomeSetup : SceneSetUp{
 
     protected override void setPlayerState()
     {
-        GameInfo.instance.player.transform.position = new Vector3(10, 1, 0);
+		
+		GameInfo.instance.player.transform.position = SubredditDomeState.instance.playerSpawnPoint;
+		GameInfo.instance.player.transform.localRotation = SubredditDomeState.instance.playerSpawnRotation;
     }
 
     

@@ -37,6 +37,7 @@ public class LogInMenu : Menu<LogInMenu> {
 
 			if(token==null)
 				throw new System.Security.Authentication.AuthenticationException("Username/Password not reconized.");
+			Debug.Log(r.getAppPermissionHTML());
 
 
 		}
