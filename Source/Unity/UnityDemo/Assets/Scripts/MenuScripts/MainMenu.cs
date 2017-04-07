@@ -26,6 +26,15 @@ class MainMenu : Menu<MainMenu>
         GameInfo.instance.menuController.GetComponent<MainToSubredditDomeTransition>().clickPlay();
     }
 
+	/// <summary>
+	/// Opens the credits menu.
+	/// </summary>
+	public void credits()
+	{
+		GameInfo.instance.menuController.GetComponent<CreditsMenu> ().loadMenu (true);
+
+	}
+
     /// <summary>
     /// Opens up the login menu
     /// </summary>

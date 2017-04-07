@@ -8,20 +8,31 @@ using UnityEngine;
 /// </summary>
 public class ForceDirectedLayout
 {
-	private readonly float attractiveForce=0.01f;
-	private readonly float repulsiveForce=10000;
+	//used in the algorithm
+	private readonly float attractiveForce=1f;
+	private readonly float repulsiveForce=50;
 
+	//Number of buildinds
 	public readonly static int  innerBuildingNum=12;
 	public readonly static int outerBuildingNum =13; 
+
+	//Helps to determine where the nodes should be drawn
+	private readonly static int innerBuildingModifier =3;
+	private readonly static int outerBuildingModifier =5;
+	private float domeRadius=0;
+
+	//The furthest nodes are allowed to go.
+	public static int maxPosition=1000;
+
 	public enum StopOption{Time, Iteratation, NoOverlap, Threshold};
 
 	public StopOption stopOption { get; set;}
 	public float nodeSize { get; set;}
 
 
-	public int threshold { get; set;}
+	public float threshold { get; set;}
 
-	private float domeRadius=0;
+
 	public int maxIterations=100;
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ForceDirectedLayout"/> class.
@@ -32,11 +43,12 @@ public class ForceDirectedLayout
 	/// </summary>
 	/// <param name="stopOption">Stop option.</param>
 	/// <param name="maxIterations">Max iterations.</param>
-	public ForceDirectedLayout(StopOption stopOption, int threshold, float nodeSize)
+	public ForceDirectedLayout(StopOption stopOption, float threshold, float nodeSize)
 	{
 		this.stopOption = stopOption;
 		this.threshold = threshold;
 		this.nodeSize = nodeSize;
+
 	}
 
 	/// <summary>
@@ -71,13 +83,10 @@ public class ForceDirectedLayout
 		domeRadius = setInDome (centerNode);
 
 		System.Random random = new System.Random ();
-
+		maxPosition = Mathf.CeilToInt(nodeSize) * graph.Count * 5;
 		foreach (Node<T> node in graph) {
-			int minValue = - Mathf.CeilToInt(nodeSize) * graph.Count * 2;
-			int maxValue = Mathf.CeilToInt(nodeSize) * graph.Count * 2;
-
-			int randomX = random.Next (minValue, maxValue);
-			int randomY = random.Next (minValue, maxValue);
+			int randomX = random.Next (-maxPosition, maxPosition);
+			int randomY = random.Next (-maxPosition, maxPosition);
 
 			if(node.inDome == false)
 				node.position = new Vector2 (randomX, randomY);
@@ -112,8 +121,8 @@ public class ForceDirectedLayout
 		float innerAngle = 2 * Mathf.PI / innerBuildingNum;
 		float outerAngle = 2 * Mathf.PI / outerBuildingNum;
 
-		float innerRadius = nodeSize * innerBuildingNum * 3;
-		float outerRadius = nodeSize * outerBuildingNum * 5;
+		float innerRadius = nodeSize * innerBuildingNum * innerBuildingModifier;
+		float outerRadius = nodeSize * outerBuildingNum * outerBuildingModifier;
 
 		float domeRadius = innerRadius+outerRadius+nodeSize/2;
 
@@ -170,7 +179,13 @@ public class ForceDirectedLayout
 
 	}
 
-
+	/// <summary>
+	/// Runs algorithm to set up the nodes, stopping if the totalDisplacement is below a certain threshold.
+	/// </summary>
+	/// <returns>The threshold.</returns>
+	/// <param name="graph">Graph.</param>
+	/// <param name="centerNode">Center node.</param>
+	/// <typeparam name="T">The 1st type parameter.</typeparam>
 	public Graph<T> runThreshold<T>(Graph<T> graph, Node<T> centerNode)
 	{
 
@@ -179,6 +194,7 @@ public class ForceDirectedLayout
 		int iterations = 0;
 		while( (totalDisplacement > threshold ) && ( iterations< maxIterations )){
 			totalDisplacement = 0;
+
 			foreach (Node<T> node in graph) {
 
 				node.velocity = new Vector2 (0, 0);
@@ -201,13 +217,18 @@ public class ForceDirectedLayout
 
 			}
 
+			//set the positions
 			foreach (Node<T> node in graph) {
 				if(!node.inDome)
 					totalDisplacement += Mathf.Sqrt (node.velocity.x * node.velocity.x + node.velocity.y * node.velocity.y);
-				node.position = node.position + node.velocity;
+				Vector2 newPosition = node.position + node.velocity;
+				//check to see if node has gone off bounds.
+				if(Math.Abs(newPosition.x) <= Math.Abs(maxPosition) && Math.Abs(newPosition.y) <= Math.Abs(maxPosition))
+					node.position = newPosition;
 			}
 
 			iterations++;
+			Debug.Log (totalDisplacement);
 	}
 
 		return graph;
@@ -216,7 +237,7 @@ public class ForceDirectedLayout
 	private Vector2 calcRepulsionForce<T>(Node<T> n1, Node<T> n2)
 	{
 		float distanceBetween = Mathf.Sqrt (Mathf.Pow((n1.position.x - n2.position.x),2) + Mathf.Pow((n1.position.y - n2.position.y),2));
-		float force = (distanceBetween==0) ? 10*repulsiveForce : -(repulsiveForce / (Mathf.Pow(distanceBetween,2)));
+		float force = (distanceBetween<=nodeSize/2) ? -repulsiveForce : -(repulsiveForce / (Mathf.Pow(distanceBetween,2)));
 
 		Vector2 angle = new Vector2 (n1.position.x - n2.position.x, n1.position.y - n2.position.y);
 		angle.Normalize ();
@@ -241,14 +262,14 @@ public class ForceDirectedLayout
 			springLength = (domeRadius - n2.position.magnitude) + nodeSize;//Node will not be pulled into the dome.
 
 		}else{
-			springLength = 2 * nodeSize;
+			springLength = 5 * nodeSize;
 
 		}
 
 
 		if (n1.ToNeighbors.Contains (n2) || n2.ToNeighbors.Contains (n1)) {
 			float distanceBetween = Mathf.Sqrt (Mathf.Pow ((n1.position.x - n2.position.x), 2) + Mathf.Pow ((n1.position.y - n2.position.y), 2));
-			float force = attractiveForce * Mathf.Max (distanceBetween - ( springLength ), 0.0f);
+			float force = (distanceBetween <nodeSize/2) ? 0 : attractiveForce * Mathf.Max (distanceBetween - ( springLength ), 0.0f);
 
 			Vector2 angle = new Vector2 (n1.position.x - n2.position.x, n1.position.y - n2.position.y);
 			angle.Normalize ();

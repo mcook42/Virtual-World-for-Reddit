@@ -15,13 +15,7 @@ using UnityEngine;
 /// </summary>
 public class GenerateBuildingPositions : MonoBehaviour {
 
-    public static readonly float innerCircleSize = 40;
-    public static readonly float outerCircleSize = 60;
-    public static readonly int buildingFootprint = 5;
-    public static readonly int minPathWidth = 10;
-    public static readonly int maxPathWidth = 30;
-    public static readonly int innerBuildNum = 13;
-    public static readonly int outerBuildNum = 12;
+
 
 	[MenuItem("GenerateBuildings/GenerateBuildings")]
     public static void generateBuildings()
@@ -33,18 +27,18 @@ public class GenerateBuildingPositions : MonoBehaviour {
         GameObject center = new GameObject("center");
         center.transform.position = new Vector3(0, 0, 0);
 
-        float innerRadius = (minPathWidth*innerBuildNum/(Mathf.PI*2))+(buildingFootprint/2)+buildingFootprint / (2 * Mathf.Tan(180 / innerBuildNum));
+		float innerRadius = (SubredditDomeSetup.minPathWidth*SubredditDomeSetup.innerBuildNum/(Mathf.PI*2))+(SubredditDomeSetup.buildingFootprint/2)+SubredditDomeSetup.buildingFootprint / (2 * Mathf.Tan(180 / SubredditDomeSetup.innerBuildNum));
         
-        if(innerRadius<innerCircleSize)
+		if(innerRadius<SubredditDomeSetup.innerCircleSize)
         {
-            innerRadius = innerCircleSize;
+			innerRadius = SubredditDomeSetup.innerCircleSize;
         }
         
-        float innerAngle = 2*Mathf.PI / innerBuildNum;
+		float innerAngle = 2*Mathf.PI / SubredditDomeSetup.innerBuildNum;
 
         UnityEngine.Object pathPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Path.prefab", typeof(GameObject));
 
-        for (int i=0; i<innerBuildNum;i++)
+		for (int i=0; i<SubredditDomeSetup.innerBuildNum;i++)
         {
             GameObject building = new GameObject("Inner:" + i);
             float x = innerRadius * Mathf.Cos(innerAngle * i);
@@ -54,8 +48,8 @@ public class GenerateBuildingPositions : MonoBehaviour {
             building.transform.SetParent(buildingParent.transform);
 
             GameObject path = Instantiate(pathPrefab) as GameObject;
-            path.transform.localScale = new Vector3(0.5f, 1, (innerRadius-2*buildingFootprint)/10);
-            Vector3 middle = building.transform.position - new Vector3(3*buildingFootprint * Mathf.Cos(innerAngle * i), 0.0f, 3*buildingFootprint* Mathf.Sin(innerAngle * i));
+			path.transform.localScale = new Vector3(0.5f, 1, (innerRadius-2*SubredditDomeSetup.buildingFootprint)/10);
+			Vector3 middle = building.transform.position - new Vector3(3*SubredditDomeSetup.buildingFootprint * Mathf.Cos(innerAngle * i), 0.0f, 3*SubredditDomeSetup.buildingFootprint* Mathf.Sin(innerAngle * i));
             path.transform.position = new Vector3(middle.x, 0.01f, middle.z);
             path.transform.LookAt(building.transform.position);
             path.transform.SetParent(pathParent.transform);
@@ -65,27 +59,27 @@ public class GenerateBuildingPositions : MonoBehaviour {
 
         }
         
-        float outerRadius=3*buildingFootprint+ buildingFootprint / (2 * Mathf.Tan(180 / outerBuildNum));
+		float outerRadius=3*SubredditDomeSetup.buildingFootprint+ SubredditDomeSetup.buildingFootprint / (2 * Mathf.Tan(180 / SubredditDomeSetup.outerBuildNum));
         
-        if (outerRadius<outerCircleSize)
+		if (outerRadius<SubredditDomeSetup.outerCircleSize)
         {
 
-            outerRadius = outerCircleSize;
+			outerRadius = SubredditDomeSetup.outerCircleSize;
         }
         if (outerRadius < innerRadius)
         {
-            outerRadius = innerRadius + 2 * buildingFootprint;
+			outerRadius = innerRadius + 2 * SubredditDomeSetup.buildingFootprint;
         }
         
-        float outerAngle= 2 * Mathf.PI / outerBuildNum;
+		float outerAngle= 2 * Mathf.PI / SubredditDomeSetup.outerBuildNum;
 
-        for (int i = 0; i < outerBuildNum; i++)
+		for (int i = 0; i < SubredditDomeSetup.outerBuildNum; i++)
         {
             GameObject building = new GameObject("Outer: " + i);
             float x = outerRadius * Mathf.Cos(outerAngle * i);
             float z = outerRadius * Mathf.Sin(outerAngle * i);
             building.transform.position = new Vector3(x, 0, z);
-            building.transform.localScale = new Vector3(buildingFootprint, 5, buildingFootprint);
+			building.transform.localScale = new Vector3(SubredditDomeSetup.buildingFootprint, 5, SubredditDomeSetup.buildingFootprint);
             building.transform.eulerAngles = new Vector3(0, 180+-outerAngle*i / (Mathf.PI * 2) * 360, 0);
             building.transform.SetParent(buildingParent.transform);
             

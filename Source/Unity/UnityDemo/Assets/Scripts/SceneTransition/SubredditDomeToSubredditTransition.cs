@@ -19,6 +19,7 @@ class SubredditDomeToSubredditTransition : SceneTransition
         GameInfo.instance.menuController.GetComponent<DoorPopUp>().unLoadMenu();
         activateLoadingScreen();
 
+
         //Saves the building the player is going into.
         saveCurrentBuilding(gameObject.transform.parent.gameObject);
         SubredditDomeState.instance.clear();

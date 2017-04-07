@@ -12,6 +12,9 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 
 	public Node<Subreddit> center;
 	public bool house { get; set; } //If the house is too be loaded in.
+	//where the player spawns
+	public Vector3 playerSpawnPoint = new Vector3(10,1,1);
+	public Quaternion playerSpawnRotation = new Quaternion();
 
 	/// <summary>
 	/// Init the state.
@@ -113,7 +116,10 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 	public bool loadBuildings(string subredditName)
 	{
 		Graph<Subreddit> temp;
-		temp = GameInfo.instance.server.getSubreddits (subredditName);
+		temp = GameInfo.instance.server.getMap (subredditName);
+
+		GameInfo.instance.map.Clear ();
+		GameInfo.instance.map = temp;
 
 		if (temp == null) {
 			
@@ -148,7 +154,7 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 	/// </summary>
 	public void layoutMap()
 	{
-		ForceDirectedLayout fdl = new ForceDirectedLayout (ForceDirectedLayout.StopOption.Threshold, 1,GameInfo.instance.menuController.GetComponent<MapMenu>().maxNodeSize);
+		ForceDirectedLayout fdl = new ForceDirectedLayout (ForceDirectedLayout.StopOption.Threshold, 0.01f,GameInfo.instance.menuController.GetComponent<MapMenu>().maxNodeSize);
 		fdl.run (GameInfo.instance.map, SubredditDomeState.instance.center);
 
 	}
