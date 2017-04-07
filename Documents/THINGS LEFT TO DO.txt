@@ -1,0 +1,39 @@
+PRESENTATION
+
+Intro:
+    What 3D World for Reddit is
+    How I came up with the idea
+    What is Reddit
+    Why we chose Reddit (using topics from description of reddit)
+    Give outline of project
+        Reddit's issue with Subreddit discovery
+
+Map:
+    How we went from data to database to analysis to map
+
+Unity to Reddit interfacing:
+    Dealing with API, working with broken library...
+    -NVM... Schema and why we have a relational database as well
+
+Demo:
+    Show map usage
+    Search bar feature
+    House stuff
+    Show different communities and how this helps subreddit discovery
+
+
+THINGS LEFT TO DO
+
+TODO(MATT):
+    -From client's subreddit request, return map of connected nodes in a JSON format
+    -LIMIT connections to 15?
+    -Make buildings pretty
+    -Make menus pretty 
+        -Every menu has a panel, then layout element
+    -Make Markdown work on Unity
+        
+TODO(KAY):
+    -Client to Server requests. Like setting up threading or whatever on the server side. Steps are as follows.
+        -Unity sends subreddit to server as a request
+        -Server parses request then executes specific script
+        -Results are sent back to Unity
