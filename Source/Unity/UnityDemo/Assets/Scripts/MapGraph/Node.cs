@@ -15,6 +15,9 @@ namespace Graph
 		public Vector2 velocity { get; set; }
 		public bool inDome { get; set; }
 
+		//Variable used when iterating through the nodes.
+		public bool visited {get; set;}
+
 		// Private member-variables
 		private T data;
 		private NodeList<T> toNeighbors;

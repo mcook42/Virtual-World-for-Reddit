@@ -30,7 +30,7 @@ public class AllToMainTransition : SceneTransition
         SubredditDomeState.instance.reset();
 
         GameInfo.instance.menuController.GetComponent<PauseMenu>().resume();
-        GameInfo.instance.keyController.SetActive(false);
+        //TODO change key state
         GameInfo.instance.menuController.GetComponent<LocationPanel>().unLoadMenu();
     }
 }

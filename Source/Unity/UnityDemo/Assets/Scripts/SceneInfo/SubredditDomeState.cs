@@ -13,7 +13,7 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 	public Node<Subreddit> center;
 	public bool house { get; set; } //If the house is too be loaded in.
 	//where the player spawns
-	public Vector3 playerSpawnPoint = new Vector3(10,1,1);
+	public Vector3 playerSpawnPoint = new Vector3(SubredditDomeSetup.buildingFootprint,1,1);
 	public Quaternion playerSpawnRotation = new Quaternion();
 
 	/// <summary>
@@ -118,9 +118,6 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 		Graph<Subreddit> temp;
 		temp = GameInfo.instance.server.getMap (subredditName);
 
-		GameInfo.instance.map.Clear ();
-		GameInfo.instance.map = temp;
-
 		if (temp == null) {
 			
 			Subreddit centerSub;
@@ -139,6 +136,8 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 			temp.AddNode (centerSub);
 		}
 
+
+		GameInfo.instance.map.Clear ();
 		GameInfo.instance.map.AddGraph (temp);
 		center = GameInfo.instance.map.getNode (temp.Nodes [0].Value);
 

@@ -22,6 +22,7 @@ class SubredditDomeToSubredditTransition : SceneTransition
 
         //Saves the building the player is going into.
         saveCurrentBuilding(gameObject.transform.parent.gameObject);
+		SubredditDomeState.instance.playerSpawnPoint = GameInfo.instance.player.transform.position;
         SubredditDomeState.instance.clear();
 
         SceneManager.LoadScene("SubredditBuilding");

@@ -13,8 +13,8 @@ public class ForceDirectedLayout
 	private readonly float repulsiveForce=50;
 
 	//Number of buildinds
-	public readonly static int  innerBuildingNum=12;
-	public readonly static int outerBuildingNum =13; 
+	public readonly static int  innerBuildingNum=6;
+	public readonly static int outerBuildingNum =9; 
 
 	//Helps to determine where the nodes should be drawn
 	private readonly static int innerBuildingModifier =3;
@@ -269,7 +269,7 @@ public class ForceDirectedLayout
 
 		if (n1.ToNeighbors.Contains (n2) || n2.ToNeighbors.Contains (n1)) {
 			float distanceBetween = Mathf.Sqrt (Mathf.Pow ((n1.position.x - n2.position.x), 2) + Mathf.Pow ((n1.position.y - n2.position.y), 2));
-			float force = (distanceBetween <nodeSize/2) ? 0 : attractiveForce * Mathf.Max (distanceBetween - ( springLength ), 0.0f);
+			float force = attractiveForce * Mathf.Log (Mathf.Max (distanceBetween, 0.0f) / springLength);
 
 			Vector2 angle = new Vector2 (n1.position.x - n2.position.x, n1.position.y - n2.position.y);
 			angle.Normalize ();

@@ -42,7 +42,6 @@ public abstract class Menu<T>: MonoBehaviour
     public void loadPanel()
     {
 		GameInfo.instance.menuController.GetComponent<MenuController> ().menusLoaded++;
-		GameInfo.instance.keyController.SetActive (false);
         instance = Instantiate(prefab);
         instance.transform.SetParent(GameInfo.instance.menuController.GetComponent<MenuController>().canvas.transform, false);
     }
@@ -60,7 +59,6 @@ public abstract class Menu<T>: MonoBehaviour
 			GameInfo.instance.menuController.GetComponent<MenuController> ().menusLoaded--;
 			if (GameInfo.instance.menuController.GetComponent<MenuController> ().menusLoaded <= 0) {
 				GameInfo.instance.setCursorLock (true);
-				GameInfo.instance.keyController.SetActive (true);
 				if(Time.timeScale!=1)
 					Time.timeScale = 1;
 			}

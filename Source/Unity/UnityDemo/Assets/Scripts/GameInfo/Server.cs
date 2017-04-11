@@ -96,12 +96,23 @@ public class Server
 	/// <returns>The map.</returns>
 	public Graph<Subreddit> getMap(String centerName)
 	{
+
+		//Temporary. Will be deleted once we connect to the server.
+		if (centerName != "/r/AskReddit") {
+			return null;
+		}
+
+
 		//Get json document from the server and then set up.
 
 		JObject jsonForSubreddits = JObject.Parse (@"{ ""center"" : ""AskReddit"", 
-		""nodes"": [""askscience"",""funny"",""todayilearned"",""science"",""worldnews"",""pics"",""IAmA"",""announcements"",""gaming"",""videos"",""movies"",""blog"",""Music"",""aww"",""news""],
+		""nodes"": [""askscience"",""history"",""noodle"",""histor"", ""televisio"", ""dir"",""Americ"",""America"",""noodles"",""funny"",""television"", ""dirt"",""todayilearned"",""science"",""worldnews"",""pics"",""IAmA"",""announcements"",""gaming"",""videos"",""movies"",""blog"",""Music"",""aww"",""news""],
 	     ""edges"" : [ [ ""AskReddit"",""askscience"",5 ], [ ""AskReddit"", ""science"", 6 ] ,[ ""AskReddit"", ""videos"", 6 ] ,[ ""AskReddit"", ""aww"", 6 ],[ ""AskReddit"", ""news"", 6 ],[ ""AskReddit"", ""gaming"", 6 ], 
-		[ ""todayilearned"", ""askscience"", 6 ],[ ""pics"", ""science"", 6 ],[ ""gaming"", ""science"", 6 ],[ ""AskReddit"", ""movies"", 6 ]]}");
+		[ ""todayilearned"", ""askscience"", 6 ],[ ""pics"", ""science"", 6 ],[ ""gaming"", ""science"", 6 ],[ ""AskReddit"", ""movies"", 6 ],
+		[ ""announcements"", ""history"", 6 ], [""noodles"",""announcements"",9],[ ""announcements"", ""television"", 6 ],
+		[ ""announcements"",""America"", 6 ], [ ""announcements"", ""dirt"", 6 ],
+		[ ""science"", ""histor"", 6 ], [""noodle"",""science"",9],[ ""science"", ""televisio"", 6 ],
+		[ ""science"",""Americ"", 6 ], [ ""science"", ""dir"", 6 ]]}");
 
 		Graph<Subreddit> graph = new Graph<Subreddit> ();
 		//Add center
@@ -125,10 +136,9 @@ public class Server
 		//Adding the Edges
 		foreach (var edge in jsonForSubreddits["edges"]) {
 			List<string> list = edge.ToObject<List<string>> ();
+
 			graph.AddUndirectedEdge (nodeDict[list [0]], nodeDict [list [1]], Int32.Parse(list [2]));
 		}
-
-
 
 		return graph;
 	}
@@ -139,7 +149,11 @@ public class Server
 	/// <returns>The map.</returns>
 	public Graph<Subreddit> getMap()
 	{
-		return getMap (null);
+		Graph<Subreddit> graph = new Graph<Subreddit> ();
+		Subreddit sub = new Subreddit ();
+		sub.DisplayName = "/r/AskReddit";
+		graph.AddNode (sub);
+		return graph;
 	}
 
 

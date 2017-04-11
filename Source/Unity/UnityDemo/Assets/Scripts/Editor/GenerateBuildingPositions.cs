@@ -36,7 +36,7 @@ public class GenerateBuildingPositions : MonoBehaviour {
         
 		float innerAngle = 2*Mathf.PI / SubredditDomeSetup.innerBuildNum;
 
-        UnityEngine.Object pathPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Path.prefab", typeof(GameObject));
+        UnityEngine.Object pathPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Buildings/Path.prefab", typeof(GameObject));
 
 		for (int i=0; i<SubredditDomeSetup.innerBuildNum;i++)
         {

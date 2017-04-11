@@ -23,13 +23,13 @@ class MainToSubredditDomeTransition : SceneTransition
     protected override void transferInfo()
     {
         activateLoadingScreen();
-        SceneManager.LoadScene("SubredditDome");
 
-		SubredditDomeState.instance.init("/r/askscience");
+		SubredditDomeState.instance.init("/r/AskReddit");
+		SceneManager.LoadScene("SubredditDome");
 
         GameInfo.instance.player.SetActive(true);
         GameInfo.instance.menuController.SetActive(true);
-        GameInfo.instance.keyController.SetActive(true);
+        //TODO change key state
 
     }
 }

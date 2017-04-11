@@ -45,11 +45,9 @@ public class GameInfo : MonoBehaviour {
 
     public GameObject menuController;
 
-    public GameObject keyController;
-
 	public SceneState currentState { get; set; }
 
-	public Graph<Subreddit> map=null;
+	public Graph<Subreddit> map= null;
 
 	public bool fatalError { get; set; }
 

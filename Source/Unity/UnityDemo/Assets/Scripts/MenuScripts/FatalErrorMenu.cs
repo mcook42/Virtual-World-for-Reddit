@@ -20,7 +20,7 @@ public class FatalErrorMenu : Menu<FatalErrorMenu> {
     {
         base.loadMenu(true);
        FatalErrorMenu.instance.transform.Find("Text").GetComponent<Text>().text=error;
-        GameInfo.instance.keyController.SetActive(false);
+		//TODO: Make Keys not active
 		GameInfo.instance.fatalError = true;
        
     }

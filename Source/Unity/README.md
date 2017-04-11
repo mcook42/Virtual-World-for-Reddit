@@ -46,7 +46,29 @@ By these dates the above issues will be fixed. Some of the larger issues will sp
  8. April 29
  
  9. April 22
+ 
+ 
+##Issues/fixes
 
+ - Player not faceing correct direction when exiting building/just angle stuff
+ 
+ - Scroll bar in map menu binds to the mouse wheel instead of the zoom unless the user clicks outside of the window/probably add zoom buttons instead
+ 
+ - Long titles run into each other for threads in the thread room/make thread background prefab dynamically grow and move text up as needed.
+ 
+ - 502 Gateway error on around 1/20 of the log in attempts / check for this error and try again?
+
+ - Error menus hard to read / simple text wrap and change of alpha value.
+ 
+ - Layout algorithm treats dome weird / treat dome as a single node or make layout algorithm static.
+ 
+ - Comments don't appear when added. / call "addComment" in ReplyMenu if successful.
+ 
+ - make different types of post more reconizable/ Add different colors and borders depending on the post.
+ 
+ - Comment menu is slow to load / ????
+ 
+ - Subreddits slow to load/ Any bulk way to load subreddits?
 
 
 

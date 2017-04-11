@@ -98,7 +98,7 @@ class SubredditSceneSetup : SceneSetUp
         else 
             post= subreddit.GetTop(RedditSharp.Things.FromTime.All).Take(12).ToArray();
 
-
+		Debug.Log (post [3].Url);
 
 
         if (threads != null)
@@ -107,6 +107,8 @@ class SubredditSceneSetup : SceneSetUp
             int i = 0;
             foreach (Transform thread in threads.transform)
             {
+				
+
 				thread.GetComponent<BuildingThread>().thread = post[i];
                 thread.GetComponent<BuildingThread>().threadName = post[i].Title;
 
@@ -114,7 +116,8 @@ class SubredditSceneSetup : SceneSetUp
                 var name = thread.Find("Name").GetComponent<TextMesh>();
                 if (name != null)
                     name.text = ResolveTextSize(post[i].Title, 55);
-
+				int numLines = name.text.Split('\n').Length;
+				thread.FindChild ("Background").localScale = new Vector3 (Mathf.Max(numLines /2,0.4f),1.0f , 0.9f);
                 var upvotes = thread.Find("UpVotes").GetComponent<TextMesh>();
                 if (upvotes!= null)
                     upvotes.text = "Upvotes:"+post[i].Upvotes;

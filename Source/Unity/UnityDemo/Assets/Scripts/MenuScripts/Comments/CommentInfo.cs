@@ -59,9 +59,7 @@ public class CommentInfo : VotableInfo, LoginObserver {
 
 	}
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="CommentInfo"/> class.
-	/// </summary>
+
 	public new void notify (bool login)
 	{
 		
@@ -127,9 +125,12 @@ public class CommentInfo : VotableInfo, LoginObserver {
 		foreach (Thing comment in more.Things()) {
 			comments.Add ((Comment)comment);
 		}
-		loadMorePanel.SetActive (false);
-		childPanel.SetActive (true);
-		menuManager.initializeComments (childPanel,comments.ToArray(), childDepth + 1);
+
+		if (comments.Count > 0) {
+			loadMorePanel.SetActive (false);
+			childPanel.SetActive (true);
+			menuManager.initializeComments (childPanel, comments.ToArray (), childDepth + 1);
+		}
 	}
 
 

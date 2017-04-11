@@ -256,6 +256,28 @@ namespace Graph
 
 		}
 
+		/// <summary>
+		/// Bredth first searth to return nodes from the given node. 
+		/// Once all nodes have been searched, the algorithm runs through and returns all nodes not present in the initial search.
+		/// </summary>
+		/// <returns>The first searth.</returns>
+		/// <param name="root">node to start at</param>
+		public IEnumerable<Node<T>> breadthFirstSearthExtended(Node<T> root)
+		{
+			yield return root;
+			foreach(Node<T> neighbor in root.ToNeighbors)
+			{
+				if (!neighbor.visited) {
+					yield return neighbor;
+					foreach (Node<T> neighbor2 in this.breadthFirstSearthExtended(neighbor)) {
+						yield return neighbor2;
+					}
+					neighbor.visited = false;
+				}
+			}
+
+			Debug.Log ("here");
+		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
@@ -268,6 +290,15 @@ namespace Graph
 			for (int i = 0; i < nodeSet.Count; i++)
 				yield return nodeSet[i];
 	
+		}
+
+		/// <summary>
+		/// Resets the visited variable in all Nodes to false.
+		/// Used at the end of traversal algorithms.
+		/// </summary>
+		public void resetVisited()
+		{
+
 		}
 	}
 }

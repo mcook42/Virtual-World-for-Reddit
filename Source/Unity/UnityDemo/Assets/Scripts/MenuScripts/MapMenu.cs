@@ -132,7 +132,7 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
         Vector2 center = new Vector2(0, 0);
         RectTransform rectangle = instance.transform.FindChild("Scroll View/Viewport/Content/").GetComponent<RectTransform>();
 
-		rectangle.sizeDelta = new Vector2(ForceDirectedLayout.maxPosition*2+maxNodeSize, ForceDirectedLayout.maxPosition*2+maxNodeSize);
+		rectangle.sizeDelta = new Vector2(ForceDirectedLayout.maxPosition*2+maxNodeSize*2, ForceDirectedLayout.maxPosition*2+maxNodeSize*2);
 
 
 		foreach (Node<Subreddit> node in GameInfo.instance.map)

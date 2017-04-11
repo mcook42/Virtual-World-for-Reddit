@@ -37,7 +37,6 @@ public class LogInMenu : Menu<LogInMenu> {
 
 			if(token==null)
 				throw new System.Security.Authentication.AuthenticationException("Username/Password not reconized.");
-			Debug.Log(r.getAppPermissionHTML());
 
 
 		}
@@ -53,7 +52,7 @@ public class LogInMenu : Menu<LogInMenu> {
 
 
 		GameInfo.instance.menuController.GetComponent<LogInMenu> ().unLoadMenu ();
-		GameInfo.instance.menuController.GetComponent<AuthorizeMenu> ().loadMenu (token,postParams);
+		GameInfo.instance.menuController.GetComponent<AuthorizeMenu> ().loadMenu (token,postParams,user);
 
 
 	}

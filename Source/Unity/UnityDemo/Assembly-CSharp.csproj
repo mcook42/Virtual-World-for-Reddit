@@ -92,7 +92,6 @@
      <Compile Include="Assets\Scripts\MenuScripts\ThreadLoading\GoUp.cs" />
      <Compile Include="Assets\Scripts\MenuScripts\ThreadLoading\Sort.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\CrossHair.cs" />
-     <Compile Include="Assets\Scripts\PlayerScripts\KeyController.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\MyMouseLook.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\MyRigidbodyFirstPersonController.cs" />
      <Compile Include="Assets\Scripts\SceneInfo\BuildingThread.cs" />

@@ -12,6 +12,7 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using HtmlAgilityPack;
 using System.Collections;
+using System.Threading.Tasks;
 
 /// <summary>
 /// A class with a bunch of methods and fields to get the needed Reddit Object.
@@ -42,6 +43,7 @@ public class RedditRetriever:LoginObservable
 	//WebStuff:
 	HttpWebRequest request = null;
 	CookieContainer cookies = new CookieContainer();
+	private string cookieHeader = "";
 
 	//URLs
 	private readonly string logInUrl = "https://www.reddit.com/api/login/";
@@ -207,6 +209,8 @@ public class RedditRetriever:LoginObservable
 
 		//Getting back the response
 		using (var response = (HttpWebResponse)request.GetResponse ()) {
+			cookieHeader = response.Headers["Set-cookie"];
+			cookies.Add (response.Cookies);
 			//Read the json document that we retrieve after sending the request
 			using (StreamReader reader = new StreamReader (response.GetResponseStream ()))
 				returnData = reader.ReadToEnd ();
@@ -219,46 +223,42 @@ public class RedditRetriever:LoginObservable
 	}
 
 	/// <summary>
-	/// Gets the app permission HTML.
-	/// This method assumes that the cookies are already initialized with the user data.
+	/// Gets the app scope descritions for the Authroization menu. The scopes returned are only the ones in the app_scopes variable.
 	/// </summary>
-	/// <returns>The app permission HTML.</returns>
-	public string getAppPermissionHTML()
+	/// <returns>A Dictionary where the scopes are the keys and the values are the descriptions.</returns>
+	public Dictionary<string,string> getAppScopeDescriptions()
 	{
-		string returnHTML= string.Empty;
-
+		string json= string.Empty;
 		//Make the request to get the login destination webpage.
-		request = (HttpWebRequest)WebRequest.Create(new Uri("https://ssl.reddit.com/api/v1/authorize?client_id=pQnwWWwHYJGFnQ&response_type=code&state=Njhka97ylApgqZhcn2U2&redirect_uri=https%3A%2F%2F127.0.0.1%3A65010%2Fauthorize_callback&duration=permanent&scope=identity%2Cedit%2Cflair%2Chistory%2Cmodconfig%2Cmodflair%2Cmodlog%2Cmodposts%2Cmodwiki%2Cmysubreddits%2Cprivatemessages%2Cread%2Creport%2Csave%2Csubmit%2Csubscribe%2Cvote%2Cwikiedit%2Cwikiread"));
+		request = (HttpWebRequest)WebRequest.Create(new Uri("https://www.reddit.com/api/v1/scopes"));
 		request.Method = "GET";
-		request.ContentType = "application/x-www-form-urlencoded";
+		//request.ContentType = "application/x-www-form-urlencoded";
 		request.UserAgent = "Mozilla/5.0 (.NET CLR 2.0) "+user_agent;
 		request.Referer = "https://www.reddit.com/";
 		request.AllowAutoRedirect = true;
 		request.KeepAlive = true;
-		request.CookieContainer = cookies;
+		request.CookieContainer=cookies;
+		request.Headers.Add("Cookie", cookieHeader);
 
-
+		//BugFix_CookieDomain(cookies);
 		//Actually make the request.
 		using (HttpWebResponse response = (HttpWebResponse)request.GetResponse ()) {
 
 			using (StreamReader streamerReader = new StreamReader(response.GetResponseStream ())) {
-				returnHTML = streamerReader.ReadToEnd ();
+				json = streamerReader.ReadToEnd ();
 			}
 
 		}
 
-		var doc = new HtmlDocument ();
-		doc.LoadHtml (returnHTML);
-		HtmlNode node = doc.DocumentNode.SelectSingleNode("//div[@class = 'content']");
+		Dictionary<string,string> dict = new Dictionary<string,string> ();
+		JToken scopes = JToken.Parse(json);
 
-		if (node != null)
-		{
-			returnHTML = node.InnerText;
+		string[] appScopeStrings = app_scopes.ToString ().Split (", ".ToCharArray (),StringSplitOptions.RemoveEmptyEntries);
+		foreach (string scope in appScopeStrings) {
+			dict.Add (scope, scopes [scope] ["description"].ToString());
 		}
 
-
-
-		return returnHTML;
+		return dict;
 
 	}
 
@@ -416,25 +416,30 @@ public class RedditRetriever:LoginObservable
 	//Fix cookie containter bug.
 	private void BugFix_CookieDomain(CookieContainer cookieContainer)
 	{
-		System.Type _ContainerType = typeof(CookieContainer);
-		Hashtable table = (Hashtable)_ContainerType.InvokeMember("m_domainTable",
+		
+		CookieCollection table = (CookieCollection)cookieContainer.GetType().InvokeMember("cookies",
 			System.Reflection.BindingFlags.NonPublic |
 			System.Reflection.BindingFlags.GetField |
 			System.Reflection.BindingFlags.Instance,
 			null,
 			cookieContainer,
 			new object[] { });
-		ArrayList keys = new ArrayList(table.Keys);
-		foreach (string keyObj in keys)
+		foreach (Cookie cookie in table)
 		{
-			string key = (keyObj as string);
+			
+			Debug.Log (cookie.Domain);
+			string key = (cookie.Domain);
 			if (key[0] == '.')
 			{
 				string newKey = key.Remove(0, 1);
-				table[newKey] = table[keyObj];
+				cookie.Domain = newKey;
 			}
+
 		}
 	}
+
+
+
 }
 
 

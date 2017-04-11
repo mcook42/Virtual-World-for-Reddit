@@ -12,11 +12,11 @@ public class AuthorizeMenu : Menu<AuthorizeMenu>{
 
 
 
-
-	public void loadMenu(JToken token,string postParams)
+	public void loadMenu(JToken token,string postParams,string userName)
 	{
 		base.loadMenu (true);
-		instance.GetComponent<AuthorizeMenuInfo> ().init (token, postParams);
+		instance.GetComponent<AuthorizeMenuInfo> ().init (token, postParams,userName);
+		GameInfo.instance.redditRetriever.getAppScopeDescriptions ();
 
 	}
 

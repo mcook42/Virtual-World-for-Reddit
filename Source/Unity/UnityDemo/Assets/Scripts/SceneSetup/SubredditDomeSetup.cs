@@ -8,13 +8,13 @@ using Graph;
 public class SubredditDomeSetup : SceneSetUp{
 
 	//Constant values
-	public static readonly float innerCircleSize = 40;
-	public static readonly float outerCircleSize = 60;
-	public static readonly int buildingFootprint = 5;
+	public static readonly float innerCircleSize = 80;
+	public static readonly float outerCircleSize = 160;
+	public static readonly int buildingFootprint = 40;
 	public static readonly int minPathWidth = 10;
 	public static readonly int maxPathWidth = 30;
-	public static readonly int innerBuildNum = 13;
-	public static readonly int outerBuildNum = 12;
+	public static readonly int innerBuildNum = 6;
+	public static readonly int outerBuildNum = 9;
 
 
     public GameObject center;
@@ -24,6 +24,7 @@ public class SubredditDomeSetup : SceneSetUp{
     public GameObject buildingPrefabSmall;
     public GameObject buildingPrefabMedium;
     public GameObject buildingPrefabLarge;
+	public GameObject frontPrefab;
 
 	public GameObject housePrefab;
 
@@ -80,12 +81,15 @@ public class SubredditDomeSetup : SceneSetUp{
 		if (sub.Url == null)
 			sub = GameInfo.instance.reddit.GetSubreddit (sub.DisplayName);
 
-        //determining the model to use
-        if (sub.Subscribers<1000000)
+		//determining the model to use
+		if (sub.DisplayName == "Front Page" || sub.DisplayName == "/r/all") {
+			building = Instantiate(frontPrefab) as GameObject;
+		}
+        else if (sub.Subscribers<15000000)
         {
             building = Instantiate(buildingPrefabSmall) as GameObject;
         }
-        else if(sub.Subscribers<10000000)
+        else if(sub.Subscribers<16000000)
         {
             building = Instantiate(buildingPrefabMedium) as GameObject;
         }
@@ -116,7 +120,7 @@ public class SubredditDomeSetup : SceneSetUp{
         */
 
         float height = building.GetComponent<BuildingInfo>().height;
-        building.transform.rotation = placeHolder.rotation;
+		building.transform.localEulerAngles = new Vector3(building.transform.localEulerAngles.x,building.transform.localEulerAngles.y+placeHolder.rotation.eulerAngles.y,building.transform.localEulerAngles.z);
         building.transform.position = placeHolder.position + new Vector3(0, height/2, 0);
 
         //give building values using the Building script
