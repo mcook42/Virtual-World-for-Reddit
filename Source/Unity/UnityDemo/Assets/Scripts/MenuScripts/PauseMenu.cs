@@ -9,24 +9,28 @@ using UnityEngine;
 /// <summary>
 /// A menu to pause the game.
 /// </summary>
-public class PauseMenu : Menu<PauseMenu> {
+public class PauseMenu : LogInButtonObserver {
 
-	public GameObject loginButton;
 
     /// <summary>
     /// Resumes the applicaton.
     /// </summary>
     public void resume()
     {
-        unLoadMenu();
+		Destroy (gameObject);
 
     }
 
-    /// <summary>
-    /// Pauses the game.
-    /// </summary>
-    public void pause()
-    {
-        loadMenu(true);
-    }
+	/// <summary>
+	/// Loads the main menu.
+	/// </summary>
+	public void mainMenu()
+	{
+		var transition = GetComponent<AllToMainTransition> ();
+		transition.loadMainMenu ();
+		Destroy (gameObject);
+	}
+
+
+    
 }

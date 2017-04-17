@@ -39,6 +39,9 @@ public abstract class VotableInfo :MonoBehaviour, LoginObserver
 	//text fields
 	public GameObject body;
 
+	//reply menu
+	public GameObject replyMenuPrefab;
+
 	//buttons
 	public GameObject actionPanel;
 	public GameObject replyButton;
@@ -46,7 +49,15 @@ public abstract class VotableInfo :MonoBehaviour, LoginObserver
 	public GameObject upvoteButton;
 	public GameObject downvoteButton;
 
+	/// <summary>
+	/// Initializes the buttons.
+	/// </summary>
 	protected abstract void initializeButtons();
+
+	/// <summary>
+	/// Adds a new child to this item.
+	/// </summary>
+	public abstract void addChild (Comment comment);
 
 	/// <summary>
 	/// Saves the comment if it is saved. Unsaves it if it isn't.
@@ -67,10 +78,10 @@ public abstract class VotableInfo :MonoBehaviour, LoginObserver
 				}
 			}
 			catch(WebException w) {
-				GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Web Error: "+w.Message);
+				GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Web Error: "+w.Message);
 			}
 		} else {
-			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Log in to save.");
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Log in to save.");
 		}
 	}
 
@@ -94,10 +105,10 @@ public abstract class VotableInfo :MonoBehaviour, LoginObserver
 
 			}
 			catch(WebException w) {
-				GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Web Error: "+w.Message);
+				GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Web Error: "+w.Message);
 			}
 		} else {
-			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Log in to upvote.");
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Log in to upvote.");
 		}
 	}
 
@@ -121,10 +132,10 @@ public abstract class VotableInfo :MonoBehaviour, LoginObserver
 
 			}
 			catch(WebException w) {
-				GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Web Error: "+w.Message);
+				GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Web Error: "+w.Message);
 			}
 		} else {
-			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Log in to downvote.");
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Log in to downvote.");
 		}
 	}
 

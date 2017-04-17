@@ -15,9 +15,9 @@ public class GoUp : MonoBehaviour {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        GameInfo.instance.menuController.GetComponent<LoadingPanel>().loadPanel();
+        GameInfo.instance.menuController.GetComponent<MenuController>().loadLoadingMenu();
         SubredditSceneSetup.GetComponent<SubredditSceneSetup>().loadThreads(25,true);
         Debug.Log("Going Up!");
-        GameInfo.instance.menuController.GetComponent<LoadingPanel>().unLoadMenu();
+        GameInfo.instance.menuController.GetComponent<MenuController>().unLoadLoadingMenu();
     }
 }

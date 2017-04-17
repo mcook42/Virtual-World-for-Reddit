@@ -19,8 +19,8 @@ class SubredditDometoSubredditDomeTransition : SceneTransition
 			SceneManager.LoadScene ("SubredditDome");
 		}
 		else {
-			GameInfo.instance.menuController.GetComponent<LoadingPanel> ().unLoadMenu ();
-			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Could not load subreddit");
+			GameInfo.instance.menuController.GetComponent<MenuController> ().unLoadLoadingMenu ();
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Could not load subreddit");
 		}
     }
 

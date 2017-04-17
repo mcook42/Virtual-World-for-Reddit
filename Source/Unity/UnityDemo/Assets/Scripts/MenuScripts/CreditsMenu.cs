@@ -5,11 +5,11 @@ using UnityEngine;
 /// <summary>
 /// The menu that displays the credits.
 /// </summary>
-public class CreditsMenu :Menu<CreditsMenu> {
+public class CreditsMenu : TempMenu {
 
 	public void close()
 	{
 
-		GameInfo.instance.menuController.GetComponent<CreditsMenu> ().unLoadMenu ();
+		Destroy (gameObject);
 	}
 }

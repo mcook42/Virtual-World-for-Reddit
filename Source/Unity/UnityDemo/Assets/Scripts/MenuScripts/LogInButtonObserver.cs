@@ -4,14 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Changes the login button when the user logs in/out.
+/// Handles logging in/out.
 /// </summary>
-public class LogInButtonObserver : MonoBehaviour,LoginObserver {
+public class LogInButtonObserver : TempMenu,LoginObserver {
 
-	public GameObject LoginButton;
+	public GameObject loginButton;
+	public GameObject loginMenu;
 
-	void Start()
+	/// <summary>
+	/// Registers this object with the redditRetriever. 
+	/// </summary>
+	public new void Start()
 	{
+		base.Start ();
 		GameInfo.instance.redditRetriever.register (this);
 
 		if (GameInfo.instance.reddit.User != null) {
@@ -21,25 +26,50 @@ public class LogInButtonObserver : MonoBehaviour,LoginObserver {
 		}
 	}
 
-	public void notify(bool login)
+	/// <summary>
+	/// Changes login button text and functionailty based on whether or not the user is already logged in.
+	/// </summary>
+	/// <param name="loginBool">If set to <c>true</c> login.</param>
+	public void notify(bool loginBool)
 	{
 
-		if (login) {
-			LoginButton.GetComponent<Button> ().onClick.RemoveAllListeners ();
-			LoginButton.GetComponent<Button> ().onClick.AddListener (() => GameInfo.instance.menuController.GetComponent<MainMenu> ().logout ());
-			LoginButton.GetComponentInChildren<Text> ().text = "Logout";
+		if (loginBool) {
+			loginButton.GetComponent<Button> ().onClick.RemoveAllListeners ();
+			loginButton.GetComponent<Button> ().onClick.AddListener ( () => logout() );
+			loginButton.GetComponentInChildren<Text> ().text = "Logout";
 		} else {
-			LoginButton.GetComponent<Button> ().onClick.RemoveAllListeners ();
-			LoginButton.GetComponent<Button> ().onClick.AddListener (() => GameInfo.instance.menuController.GetComponent<MainMenu> ().login());
-			LoginButton.GetComponentInChildren<Text> ().text = "Login";
+			loginButton.GetComponent<Button> ().onClick.RemoveAllListeners ();
+			loginButton.GetComponent<Button> ().onClick.AddListener (() => login());
+			loginButton.GetComponentInChildren<Text> ().text = "Login";
 		}
 
 
 	}
 
-	void OnDestroy()
+	/// <summary>
+	/// Brings up the login menu.
+	/// </summary>
+	public void login()
+	{
+		Instantiate (loginMenu);
+	}
+
+	/// <summary>
+	/// Logs out ths current user.
+	/// </summary>
+	public void logout()
+	{
+		GameInfo.instance.redditRetriever.logout ();
+
+	}
+
+	/// <summary>
+	/// Unregisters this object and then destroys the instance.
+	/// </summary>
+	public new void OnDestroy()
 	{
 		GameInfo.instance.redditRetriever.unRegister (this);
+		base.OnDestroy ();
 	}
 
 }

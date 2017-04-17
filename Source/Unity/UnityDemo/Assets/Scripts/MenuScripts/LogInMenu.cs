@@ -5,17 +5,18 @@ using UnityEngine.UI;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
-public class LogInMenu : Menu<LogInMenu> {
+public class LogInMenu : TempMenu {
 
 	public InputField username;
 	public InputField password;
 
+	public GameObject authorizationPrefab;
 	/// <summary>
 	/// Cancel the log in.
 	/// </summary>
 	public void cancel()
 	{
-		GameInfo.instance.menuController.GetComponent<LogInMenu> ().unLoadMenu ();
+		Destroy (gameObject);
 
 	}
 
@@ -41,19 +42,19 @@ public class LogInMenu : Menu<LogInMenu> {
 
 		}
 		catch(WebException w) {
-			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Web Error: " + w.Message);
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Web Error: " + w.Message);
 			return;
 		}
 		catch (System.Security.Authentication.AuthenticationException ae)
 		{
-			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Authentication Error: " + ae.Message);
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Authentication Error: " + ae.Message);
 			return;
 		}
 
+		var authorizationMenu = Instantiate (authorizationPrefab);
+		authorizationMenu.GetComponent<AuthorizeMenu>().init (token, postParams,user);
 
-		GameInfo.instance.menuController.GetComponent<LogInMenu> ().unLoadMenu ();
-		GameInfo.instance.menuController.GetComponent<AuthorizeMenu> ().loadMenu (token,postParams,user);
-
+		Destroy (gameObject);
 
 	}
 }

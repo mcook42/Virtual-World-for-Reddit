@@ -20,7 +20,7 @@ public abstract class SceneSetUp: MonoBehaviour  {
     /// Sets the player's state.
     /// Removes the loading screen.
     /// </summary>
-    private void Start()
+    protected void Start()
     {
 		setCurrentState ();
         setUpScene();
@@ -48,7 +48,7 @@ public abstract class SceneSetUp: MonoBehaviour  {
     /// </summary>
     private void deactivateLoadingScreen()
     {
-       GameInfo.instance.menuController.GetComponent<LoadingPanel>().unLoadMenu();
+       GameInfo.instance.menuController.GetComponent<MenuController>().unLoadLoadingMenu();
 
     }
 

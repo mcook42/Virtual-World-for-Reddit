@@ -91,12 +91,12 @@ public class RedditRetriever:LoginObservable
 		}
 		catch (System.Security.Authentication.AuthenticationException ae)
 		{
-			GameInfo.instance.menuController.GetComponent<FatalErrorMenu>().loadMenu("Unable to authenticate with Reddit: "+ae.Message);
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadFatalErrorMenu("Unable to authenticate with Reddit: "+ae.Message);
 			return null;
 		}
 		catch (System.Net.WebException we)
 		{
-			GameInfo.instance.menuController.GetComponent<FatalErrorMenu>().loadMenu("Unable to connect to Reddit Server: "+we.Message);
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadFatalErrorMenu("Unable to connect to Reddit Server: "+we.Message);
 			return null;
 		}
 

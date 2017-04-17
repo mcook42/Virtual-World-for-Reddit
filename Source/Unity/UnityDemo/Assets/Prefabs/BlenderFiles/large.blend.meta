@@ -1,22 +1,15 @@
 fileFormatVersion: 2
-guid: 47a0d89e3a9ca354999b0d8ec333d570
-timeCreated: 1491453131
+guid: 2b53415c9b64f104ea86dcdb89e9d628
+timeCreated: 1491545842
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Cube
-    100002: //RootNode
-    100004: Pentagon
-    400000: Cube
-    400002: //RootNode
-    400004: Pentagon
-    2300000: Cube
-    2300002: Pentagon
-    3300000: Cube
-    3300002: Pentagon
-    4300000: Cube
-    4300002: Pentagon
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cube_005
     7400000: Default Take
     9500000: //RootNode
   materials:

@@ -9,11 +9,12 @@ using RedditSharp;
 /// <summary>
 /// Holds the information related to the comment.
 /// </summary>
-public class CommentInfo : VotableInfo, LoginObserver {
+public class CommentInfo : VotableInfo {
 
 	public int childDepth { get; set;}
 
 	public Post post { get; set; }
+
 	//children
 	public GameObject childPanel;
 	  
@@ -23,14 +24,14 @@ public class CommentInfo : VotableInfo, LoginObserver {
 	public GameObject loadMoreButton;
 
 	//menuManager
-	private CommentMenuManager menuManager;
+	private CommentMenu menuManager;
 
 	/// <summary>
 	/// Creates the comment formatted for comments displayed in posts.
 	/// </summary>
 	/// <param name="childDepth">Child depth.</param>
 	/// <param name="comment">Comment.</param>
-	public void PostInit(int childDepth,Comment comment,PostCommentMenuManager menuManager, Post post)
+	public void PostInit(int childDepth,Comment comment,CommentMenu menuManager, Post post)
 	{
 		this.post = post;
 		this.thing = comment;
@@ -59,11 +60,16 @@ public class CommentInfo : VotableInfo, LoginObserver {
 
 	}
 
-
-	public new void notify (bool login)
+	/// <summary>
+	/// Adds a new child to this comment.
+	/// </summary>
+	/// <param name="comment">Comment.</param>
+	public override void addChild (Comment comment)
 	{
-		
+		var newComment = menuManager.initializeComment (childPanel, comment, childDepth + 1);
+		newComment.transform.SetAsFirstSibling ();
 	}
+
 
 	/// <summary>
 	/// Overviews the init.
@@ -111,7 +117,10 @@ public class CommentInfo : VotableInfo, LoginObserver {
 	/// Brings up the reply menu.
 	/// </summary>
 	public void reply(){
-		GameInfo.instance.menuController.GetComponent<ReplyMenu> ().loadMenu ((Comment)thing);
+		
+		var replyMenu = Instantiate(replyMenuPrefab);
+		replyMenu.GetComponent<ReplyMenu>().init((Comment)thing,this);
+
 	}
 		
 	/// <summary>

@@ -5,7 +5,10 @@ using UnityEngine;
 using RedditSharp.Things;
 using Graph;
 
-public class SubredditDomeSetup : SceneSetUp{
+/// <summary>
+/// Handles creation of the Subreddit Dome.
+/// </summary>
+public class SubredditDomeSetup : SceneSetUp, LoginObserver{
 
 	//Constant values
 	public static readonly float innerCircleSize = 80;
@@ -32,11 +35,51 @@ public class SubredditDomeSetup : SceneSetUp{
     public Material mediumReadingMaterial;
     public Material highReadingMaterial;
 
+
+	#region LoginObserver
+
+	/// <summary>
+	/// Registers with the redditRetriever.
+	/// </summary>
+	new void Start()
+	{
+		base.Start ();
+		GameInfo.instance.redditRetriever.register (this);
+	}
+
+	/// <summary>
+	/// Resets the value of the reddit object in the subreddits.
+	/// </summary>
+	/// <param name="login">If set to <c>true</c> login.</param>
+	public void notify(bool login)
+	{
+		SubredditDomeState.instance.center.Value.Reddit = GameInfo.instance.reddit;
+		foreach (Node<Subreddit> node in SubredditDomeState.instance.center.ToNeighbors) {
+
+			node.Value.Reddit = GameInfo.instance.reddit;
+		}
+	}
+
+	/// <summary>
+	/// Unregisters from the redditRetriever.
+	/// </summary>
+	void OnDestroy()
+	{
+		GameInfo.instance.redditRetriever.unRegister (this);
+	}
+	#endregion
+
+
+	/// <summary>
+	/// Stores the appropriate state for the scene in GameInfo.
+	/// </summary>
 	protected override void setCurrentState ()
 	{
 		GameInfo.instance.currentState = SubredditDomeState.instance;
 	}
-
+	/// <summary>
+	/// Loads and instantiates all objects required for the scene.
+	/// </summary>
     protected override void setUpScene()
     {
 

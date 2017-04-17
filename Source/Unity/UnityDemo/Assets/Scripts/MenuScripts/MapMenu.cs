@@ -8,7 +8,7 @@ using Graph;
 using System.Net;
 using UnityEngine.EventSystems;
 
-public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
+public class MapMenu : TempMenu, LoginObserver, IScrollHandler {
 
 	//Map
     public GameObject nodePrefab;
@@ -28,15 +28,19 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
 	public GameObject homeButton;
 	public GameObject selectedNodeButton;
 
+	//map
+	public GameObject content;
+
 	private List<GameObject> lines = new List<GameObject> ();
-	private Transform content;
 
 
 
-	public float maxNodeSize{ get { return 3; } }
+
+	public static float maxNodeSize{ get { return 3; } }
 
 	//Adds this object to the LoginObservers and then draws the graph.
-	void Start () {
+	new void Start () {
+		base.Start ();
 		notify (GameInfo.instance.reddit.User != null);
 		GameInfo.instance.redditRetriever.register (this);
         DrawGraph();
@@ -45,9 +49,10 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
 	/// <summary>
 	/// Unregisters this menu from the LoginObervers.
 	/// </summary>
-	void OnDestroy()
+	new void OnDestroy()
 	{
 		GameInfo.instance.redditRetriever.unRegister (this);
+		base.OnDestroy ();
 	}
 
 	/// <summary>
@@ -98,7 +103,7 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
 
 		}
 		catch(WebException w) {
-			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Web Error: " + w.Message);
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Web Error: " + w.Message);
 		}
 
 	}
@@ -121,16 +126,15 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
 	void DrawGraph()
     {
 
-         content = instance.transform.FindChild("Scroll View/Viewport/Content/");
 
         if(content==null)
         {
-            GameInfo.instance.menuController.GetComponent<ErrorMenu>().loadMenu("Internal Error: Could not find Content on map viewport");
+			GameInfo.instance.menuController.GetComponent<MenuController>().loadErrorMenu("Internal Error: Could not find Content on map viewport");
             return;
         }
 
         Vector2 center = new Vector2(0, 0);
-        RectTransform rectangle = instance.transform.FindChild("Scroll View/Viewport/Content/").GetComponent<RectTransform>();
+        RectTransform rectangle = content.transform.GetComponent<RectTransform>();
 
 		rectangle.sizeDelta = new Vector2(ForceDirectedLayout.maxPosition*2+maxNodeSize*2, ForceDirectedLayout.maxPosition*2+maxNodeSize*2);
 
@@ -139,7 +143,7 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
         {
 			
             GameObject button = (GameObject)Instantiate(nodePrefab);
-            button.transform.SetParent(content, false);
+			button.transform.SetParent(content.transform, false);
 
 			button.transform.GetComponent<RectTransform>().anchoredPosition= new Vector2(node.position.x+center.x, node.position.y+center.y);
 
@@ -195,7 +199,7 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
 
 		foreach (Node<Subreddit> neighbor in node.ToNeighbors) {
 			var line = Instantiate (linePrefab);
-			line.transform.SetParent (content,false);
+			line.transform.SetParent (content.transform,false);
 			line.GetComponent<Line> ().Init (node,neighbor);
 			lines.Add (line);
 
@@ -224,8 +228,8 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
 		//activateLoadingScreen();SceneManager.LoadScene("SubredditDome");
 		SubredditDometoSubredditDomeTransition transition = GetComponent<SubredditDometoSubredditDomeTransition>();
 
-		unLoadMenu();
 		transition.goToDome(sub);
+		Destroy (gameObject);
 	}
 
 	#region navigation bar
@@ -237,8 +241,8 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
 		//activateLoadingScreen();SceneManager.LoadScene("SubredditDome");
 		SubredditDometoSubredditDomeTransition transition = GetComponent<SubredditDometoSubredditDomeTransition>();
 
-		unLoadMenu();
 		transition.goToFront ();
+		Destroy (gameObject);
 
 	}
 
@@ -250,8 +254,8 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
 		//activateLoadingScreen();SceneManager.LoadScene("SubredditDome");
 		SubredditDometoSubredditDomeTransition transition = GetComponent<SubredditDometoSubredditDomeTransition>();
 
-		unLoadMenu();
 		transition.goToAll();
+		Destroy (gameObject);
 
 	}
 
@@ -262,8 +266,8 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
 	{
 		SubredditDometoSubredditDomeTransition transition = GetComponent<SubredditDometoSubredditDomeTransition>();
 
-		unLoadMenu();
 		transition.goToHouse ();
+		Destroy (gameObject);
 
 	}
 
@@ -278,10 +282,10 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
 		Vector2 scrollDelta = eventData.scrollDelta;
 
 		float newScale;
-		newScale = (scrollDelta.y * scrollSpeed) + content.localScale.x;
+		newScale = (scrollDelta.y * scrollSpeed) + content.transform.localScale.x;
 		Debug.Log (newScale);
 		if (newScale <= maxMapScale && newScale >= minMapScale)
-			content.localScale = new Vector3 (newScale, newScale,1);
+			content.transform.localScale = new Vector3 (newScale, newScale,1);
 
 
 	}
@@ -289,7 +293,7 @@ public class MapMenu : Menu<MapMenu>, LoginObserver, IScrollHandler {
 
 	public void close()
 	{
-		unLoadMenu ();
+		Destroy (gameObject);
 	}
 
 }

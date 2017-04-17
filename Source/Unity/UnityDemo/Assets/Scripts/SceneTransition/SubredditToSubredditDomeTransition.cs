@@ -16,7 +16,6 @@ class SubredditToSubredditDomeTransition: SceneTransition
 
 
         SubredditSceneState.instance.clear();
-        GameInfo.instance.menuController.GetComponent<LocationPanel>().unLoadMenu();
         SceneManager.LoadScene("SubredditDome");
 
     }

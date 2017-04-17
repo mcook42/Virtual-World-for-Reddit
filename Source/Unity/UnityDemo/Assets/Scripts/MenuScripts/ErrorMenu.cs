@@ -10,24 +10,22 @@ using UnityEngine.UI;
 /// <summary>
 /// A simple text menu with a single button to resume the game. Meant for small, nonfatal errors.
 /// </summary>
-public class ErrorMenu : Menu<ErrorMenu>{
+public class ErrorMenu : TempMenu{
 
-    /// <summary>
-    /// Loads the menu with the error message.
-    /// </summary>
-    /// <param name="error">The error message.</param>
-    public void loadMenu(string error)
-    {
-        base.loadMenu(false);
-        instance.transform.Find("Text").GetComponent<Text>().text = error;
-
-    }
+	/// <summary>
+	/// Sets the error message.
+	/// </summary>
+	/// <param name="error">Error.</param>
+	public void init(string error)
+	{
+		transform.Find("Text").GetComponent<Text>().text = error;
+	}
 
     /// <summary>
     /// Unloads the menu.
     /// </summary>
     public void resume()
     {
-        unLoadMenu();
+		Destroy (gameObject);
     }
 }

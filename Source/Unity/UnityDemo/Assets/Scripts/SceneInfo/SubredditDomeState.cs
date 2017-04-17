@@ -100,7 +100,7 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 
 		}
 		catch(System.Net.WebException we) {
-			GameInfo.instance.menuController.GetComponent<FatalErrorMenu>().loadMenu("Unable to connect to Reddit Server: "+we.Message);
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadFatalErrorMenu("Unable to connect to Reddit Server: "+we.Message);
 		} 
 
 		GameInfo.instance.map.AddGraph(temp);
@@ -125,7 +125,7 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 				centerSub = GameInfo.instance.reddit.GetSubreddit (subredditName);
 			}
 			catch(System.Net.WebException we) {
-				GameInfo.instance.menuController.GetComponent<FatalErrorMenu>().loadMenu("Unable to connect to Reddit Server: "+we.Message);
+				GameInfo.instance.menuController.GetComponent<MenuController> ().loadFatalErrorMenu("Unable to connect to Reddit Server: "+we.Message);
 				return false;
 			}
 
@@ -153,7 +153,7 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 	/// </summary>
 	public void layoutMap()
 	{
-		ForceDirectedLayout fdl = new ForceDirectedLayout (ForceDirectedLayout.StopOption.Threshold, 0.01f,GameInfo.instance.menuController.GetComponent<MapMenu>().maxNodeSize);
+		ForceDirectedLayout fdl = new ForceDirectedLayout (ForceDirectedLayout.StopOption.Threshold, 0.01f,MapMenu.maxNodeSize);
 		fdl.run (GameInfo.instance.map, SubredditDomeState.instance.center);
 
 	}

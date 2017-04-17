@@ -92,8 +92,10 @@ public class GameInfo : MonoBehaviour {
     /// <param name="cursorLock">If false the cursor will appear. If true the cursor will disappear.</param>
     public void setCursorLock(bool cursorLock)
     {
-        MouseLook mouseLook = GameInfo.instance.player.GetComponent<MyRigidbodyFirstPersonController>().mouseLook;
-        mouseLook.SetCursorLock(cursorLock);
+		if (GameInfo.instance.player != null) {
+			MouseLook mouseLook = GameInfo.instance.player.GetComponent<MyRigidbodyFirstPersonController> ().mouseLook;
+			mouseLook.SetCursorLock (cursorLock);
+		}
     }
 
 

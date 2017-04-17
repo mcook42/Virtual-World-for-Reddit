@@ -11,10 +11,7 @@ class MainToSubredditDomeTransition : SceneTransition
 
     public void clickPlay()
     {
-        
-        
         transferInfo();
-        
     }
 
     /// <summary>
@@ -24,13 +21,11 @@ class MainToSubredditDomeTransition : SceneTransition
     {
         activateLoadingScreen();
 
-		SubredditDomeState.instance.init("/r/AskReddit");
+		SubredditDomeState.instance.initFront ();
 		SceneManager.LoadScene("SubredditDome");
 
         GameInfo.instance.player.SetActive(true);
         GameInfo.instance.menuController.SetActive(true);
-        //TODO change key state
-
     }
 }
 

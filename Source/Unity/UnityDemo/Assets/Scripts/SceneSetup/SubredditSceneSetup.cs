@@ -11,15 +11,58 @@ using System.Linq;
 using System.Text;
 using RedditSharp;
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// Takes the scene threadsParent and initializes the thread doors.
 /// </summary>
-class SubredditSceneSetup : SceneSetUp
+class SubredditSceneSetup : SceneSetUp, LoginObserver
 {
 
     public GameObject threads=null;
 
+	#region LoginObserver
+	/// <summary>
+	/// Grabs data from the Server or Reddit.
+	/// Instantiates all objects using the data.
+	/// Sets the player's state.
+	/// Removes the loading screen.
+	/// Registers with the LoginObserver.
+	/// </summary>
+	new void Start()
+	{
+		base.Start ();
+		GameInfo.instance.redditRetriever.register (this);
+	}
+
+	/// <summary>
+	/// Unregisters the object.
+	/// </summary>
+	void OnDestroy()
+	{
+		GameInfo.instance.redditRetriever.unRegister (this);
+	}
+
+	/// <summary>
+	/// Resets the Reddit object in the posts and the current subreddit.
+	/// </summary>
+	/// <param name="login">Resets the Reddit object in the posts.</param>
+	public void notify(bool login)
+	{
+		RedditSharp.Things.Subreddit subreddit = SubredditSceneState.instance.currentSubreddit.GetComponent<BuildingInfo> ().subreddit;
+		subreddit.Reddit = GameInfo.instance.reddit;
+		Debug.Log (GameInfo.instance.reddit);
+		foreach (Transform thread in threads.transform) {
+
+			thread.GetComponent<BuildingThread> ().thread.Reddit = GameInfo.instance.reddit;
+		}
+	}
+
+	#endregion
+
+	/// <summary>
+	/// Stores the appropriate state for the scene in GameInfo.
+	/// </summary>
 	protected override void setCurrentState()
 	{
 		GameInfo.instance.currentState = SubredditSceneState.instance;
@@ -31,7 +74,6 @@ class SubredditSceneSetup : SceneSetUp
     {
         SubredditSceneState.instance.subbredditSetup = this.gameObject;
         loadThreads(SubredditSceneState.instance.firstThreadLoaded,SubredditSceneState.instance.sortingMethod,false);
-		GameInfo.instance.menuController.GetComponent<LocationPanel>().loadPanel(SubredditSceneState.instance.currentSubreddit.transform.GetComponent<BuildingInfo>().subreddit.DisplayName);
     }
 
     /// <summary>
@@ -98,8 +140,6 @@ class SubredditSceneSetup : SceneSetUp
         else 
             post= subreddit.GetTop(RedditSharp.Things.FromTime.All).Take(12).ToArray();
 
-		Debug.Log (post [3].Url);
-
 
         if (threads != null)
         {
@@ -108,10 +148,8 @@ class SubredditSceneSetup : SceneSetUp
             foreach (Transform thread in threads.transform)
             {
 				
-
 				thread.GetComponent<BuildingThread>().thread = post[i];
                 thread.GetComponent<BuildingThread>().threadName = post[i].Title;
-
                 
                 var name = thread.Find("Name").GetComponent<TextMesh>();
                 if (name != null)

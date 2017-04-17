@@ -1,61 +1,76 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using RedditSharp.Things;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using System.Security.Authentication;
+using System.Collections;
+using System.Collections.Generic;
+
 
 /// <summary>
-/// Creates the Comment Menu. Attached to the menuController object. Once created, control of the content of the menu is handled by CommentMenuManager.
+/// An Abstract class with methods for organizing the comments.
 /// </summary>
-public class CommentMenu :Menu<CommentMenu> {
+public abstract class CommentMenu : TempMenu
+{
+	public GameObject commentPrefab;
+	public GameObject title;
+	public GameObject loadMoreButton;
+	public GameObject loadMorePanel;
 
-	public GameObject thread;
+	public GameObject content;
+
+	protected readonly int topLevelCommentsLoaded = 5;
+	protected 	IEnumerator commentEnumerator;
+
+
 	/// <summary>
-	/// The basic menu load. Simply loads the menu and makes the cursor appear.
+	/// Initializes the comments.
 	/// </summary>
-	/// <param name="post">The post where the comments are stored.</param>
-	public void loadPostMenu(Post post)
-	{
-		base.loadMenu (true);
-		PostCommentMenuManager setup= instance.GetComponentInChildren<PostCommentMenuManager> ();
-		setup.Init (post);
+	/// <returns>The comments.</returns>
+	/// <param name="parent">Parent.</param>
+	/// <param name="comments">Comments.</param>
+	/// <param name="startDepth">Start depth.</param>
+	public abstract int initializeComments (GameObject parent, Comment[] comments, int startDepth);
+
+
+	/// <summary>
+	/// Initializes the comment.
+	/// </summary>
+	/// <param name="comment">Comment.</param>
+	/// <param name="depth">Depth in comment tree.</param>
+	/// <returns> The initialized Comment.</returns>
+	public abstract GameObject initializeComment(GameObject parent,Comment comment, int depth);
+
+	/// <summary>
+	/// Loads more comments.
+	/// </summary>
+	public void loadMore(){
+		bool commentsLeft = true;
+		List<Comment> comments = new List<Comment> ();
+		for (int i = 0; i < topLevelCommentsLoaded; i++) {
+			if (commentEnumerator.MoveNext ())
+				comments.Add ((Comment)commentEnumerator.Current);
+			else {
+				commentsLeft = false;
+				break;
+			}
+
+
+		}
+		//no more comments to load.
+		if (!commentsLeft)
+			loadMorePanel.SetActive (false);
+
+		initializeComments (content,comments.ToArray(),0);
+
+
 	}
 
 	/// <summary>
-	/// Loads the overview for the logged in user.
+	/// Destroys this menu.
 	/// </summary>
-	public void loadOverviewMenu()
+	public void close()
 	{
-		base.loadMenu (true);
-		OverviewCommentMenuManager setup = instance.GetComponentInChildren<OverviewCommentMenuManager> ();
-
-		try{setup.Init ();}
-		catch(AuthenticationException) {
-			GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("User not logged in.");
-			unLoadMenu ();
-		}
-
-
-
-	}
-
-	/// <summary>
-	/// Loads the Menu based on the current thread.
-	/// </summary>
-	public void OnMouseDown()
-	{
-		if (EventSystem.current.IsPointerOverGameObject())
-			return;
-
-		if (gameObject.name == "Overview")
-			loadOverviewMenu ();
-		else
-		{
-			Post post = thread.GetComponent<BuildingThread> ().thread;
-			loadPostMenu (post);
-		}
-
+		Destroy (gameObject);
 	}
 }
+
+

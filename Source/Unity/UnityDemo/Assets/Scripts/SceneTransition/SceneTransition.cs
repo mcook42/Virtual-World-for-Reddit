@@ -32,7 +32,7 @@ public abstract class SceneTransition : MonoBehaviour
     /// </summary>
     protected void activateLoadingScreen()
     {
-        GameInfo.instance.menuController.GetComponent<LoadingPanel>().loadPanel();
+        GameInfo.instance.menuController.GetComponent<MenuController>().loadLoadingMenu();
     }
 
 	/// <summary>

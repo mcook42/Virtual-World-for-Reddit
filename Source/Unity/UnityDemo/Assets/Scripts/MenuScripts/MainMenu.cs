@@ -11,19 +11,21 @@ using UnityEngine;
 /// <summary>
 /// The main menu for the game.
 /// </summary>
-class MainMenu : Menu<MainMenu>
+class MainMenu : LogInButtonObserver
 {
+	public GameObject creditsPrefab=null;
 
-  
     /// <summary>
     /// Starts the game.
     /// TODO: spawn player in different locations based on whether or not they are logged in.
     /// </summary>
     public void play()
     {
-		GameInfo.instance.menuController.GetComponent<MainMenu>().unLoadMenu();
+		
         GameInfo.instance.setCursorLock(true);
-        GameInfo.instance.menuController.GetComponent<MainToSubredditDomeTransition>().clickPlay();
+		var transition = GetComponent<MainToSubredditDomeTransition> ();
+		transition.clickPlay ();
+		Destroy (gameObject);
     }
 
 	/// <summary>
@@ -31,22 +33,10 @@ class MainMenu : Menu<MainMenu>
 	/// </summary>
 	public void credits()
 	{
-		GameInfo.instance.menuController.GetComponent<CreditsMenu> ().loadMenu (true);
+		Instantiate (creditsPrefab);
 
 	}
 
-    /// <summary>
-    /// Opens up the login menu
-    /// </summary>
-    public void login()
-    {
-		GameInfo.instance.menuController.GetComponent<LogInMenu> ().loadMenu (true);
-    }
 
-	public void logout()
-	{
-		GameInfo.instance.redditRetriever.logout ();
-
-	}
 }
 

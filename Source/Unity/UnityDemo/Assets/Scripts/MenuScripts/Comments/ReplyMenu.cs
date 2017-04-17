@@ -5,49 +5,82 @@ using UnityEngine.UI;
 using System.Net;
 using RedditSharp;
 
-
-public class ReplyMenu :Menu<ReplyMenu>
+/// <summary>
+/// Allows the user to reply to a post or comment.
+/// </summary>
+public class ReplyMenu : TempMenu
 {
-	public void loadMenu(Comment comment)
-	{
-		base.loadMenu (true);
-		instance.GetComponent<ReplyMenuInfo> ().comment = comment;
-		instance.GetComponent<ReplyMenuInfo> ().title.GetComponent<Text> ().text = comment.Body;
+	//objects in the menu
+	public GameObject title;
+	public GameObject input;
 
+	//parent post or comment.
+	public Comment comment { get; set; }
+	public Post post {get; set;}
+
+
+	private VotableInfo parent;
+
+
+	/// <summary>
+	/// Sets up a new reply menu that will reply to comment.
+	/// </summary>
+	/// <param name="comment">Comment to reply to.</param>
+	/// <param name="parent">VotableInfo attached to parent comment.</param>
+	public void init(Comment comment,VotableInfo parent)
+	{
+		this.parent = parent;
+		this.comment = comment;
+		title.GetComponent<Text> ().text = comment.Body;
 	}
 
-	public void loadMenu(Post post)
+	/// <summary>
+	/// Sets up a new reply menu that will reply to the post.
+	/// </summary>
+	/// <param name="post">Post to reply to.</param>
+	/// <param name="parent">VotableInfo attached to parent post..</param>
+	public void init(Post post, VotableInfo parent)
 	{
-		base.loadMenu (true);
-		instance.GetComponent<ReplyMenuInfo> ().post = post;
-		instance.GetComponent<ReplyMenuInfo> ().title.GetComponent<Text> ().text = post.SelfText;
+		this.parent = parent;
+		this.post = post;
+		title.GetComponent<Text> ().text = post.SelfText;
 	}
-
+		
+	/// <summary>
+	/// Sends reply request to Reddit. If successful adds new comment to parent object. If failure, displays the error menu.
+	/// </summary>
 	public void reply()
 	{
 			try {
-			if(instance.GetComponent<ReplyMenuInfo> ().comment!=null)
+			if(comment!=null)
 			{
-				var comment = instance.GetComponent<ReplyMenuInfo> ().comment.Reply (instance.GetComponent<ReplyMenuInfo> ().input.GetComponent<Text> ().text);
-				instance.GetComponent<ReplyMenuInfo> ().comment.Comments.Insert(0,comment);}
+				var newComment = comment.Reply (input.GetComponent<Text> ().text);
+				parent.addChild(newComment);
+
+			
+			}
 			else
 			{
-				instance.GetComponent<ReplyMenuInfo> ().post.Comment (instance.GetComponent<ReplyMenuInfo> ().input.GetComponent<Text> ().text);
+				var newComment = post.Comment (input.GetComponent<Text> ().text);
+				parent.addChild(newComment);
 			}
 			} catch (WebException w) {
-				GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("Web Error: " + w.Message);
+				GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Web Error: " + w.Message);
 			//Reddit restricts how often new users can comment.
 			} catch (RateLimitException r) {
-				GameInfo.instance.menuController.GetComponent<ErrorMenu> ().loadMenu ("You are doing that too much. Try again in " + r.TimeToReset+".");
+				GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("You are doing that too much. Try again in " + r.TimeToReset+".");
 			}
 
-		GameInfo.instance.menuController.GetComponent<ReplyMenu> ().unLoadMenu ();
+		Destroy (gameObject);
 
 	}
 
+	/// <summary>
+	/// Closes the menu.
+	/// </summary>
 	public void cancel()
 	{
-		GameInfo.instance.menuController.GetComponent<ReplyMenu> ().unLoadMenu ();
+		Destroy (gameObject);
 	}
 }
 

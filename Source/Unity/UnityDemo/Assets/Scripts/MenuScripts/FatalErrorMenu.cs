@@ -10,28 +10,26 @@ using UnityEngine.UI;
 /// <summary>
 /// A text menu that gives the user the option to quit or return to the main menu. Meant for fatal errors.
 /// </summary>
-public class FatalErrorMenu : Menu<FatalErrorMenu> {
+public class FatalErrorMenu : TempMenu {
 
-    /// <summary>
-    /// Loads the menu with the error message.
-    /// </summary>
-    /// <param name="error">The error message.</param>
-    public void loadMenu(string error)
-    {
-        base.loadMenu(true);
-       FatalErrorMenu.instance.transform.Find("Text").GetComponent<Text>().text=error;
-		//TODO: Make Keys not active
-		GameInfo.instance.fatalError = true;
-       
-    }
-
+	/// <summary>
+	/// Assigns the error message.
+	/// </summary>
+	/// <param name="error">Error.</param>
+	public void init(string error)
+	{
+		transform.Find("Text").GetComponent<Text>().text=error;
+		GameInfo.instance.fatalError = false;
+	}
+		
     /// <summary>
     /// Loads the main menu.
     /// </summary>
 	public void mainMenu()
     {
-        unLoadMenu();
+        
         GameInfo.instance.menuController.GetComponent<AllToMainTransition>().loadMainMenu();
-		GameInfo.instance.fatalError = false;
+		Destroy (gameObject);
+
     }
 }

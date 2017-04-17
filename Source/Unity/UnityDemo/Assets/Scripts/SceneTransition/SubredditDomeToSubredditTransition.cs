@@ -16,15 +16,13 @@ class SubredditDomeToSubredditTransition : SceneTransition
     /// </summary>
     protected override void transferInfo()
     {
-        GameInfo.instance.menuController.GetComponent<DoorPopUp>().unLoadMenu();
         activateLoadingScreen();
-
 
         //Saves the building the player is going into.
         saveCurrentBuilding(gameObject.transform.parent.gameObject);
 		SubredditDomeState.instance.playerSpawnPoint = GameInfo.instance.player.transform.position;
         SubredditDomeState.instance.clear();
-
+		GameInfo.instance.menuController.GetComponent<MenuController> ().clearMenus ();
         SceneManager.LoadScene("SubredditBuilding");
 
 

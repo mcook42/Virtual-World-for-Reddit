@@ -68,7 +68,7 @@ By these dates the above issues will be fixed. Some of the larger issues will sp
  
  - Comment menu is slow to load / ????
  
- - Subreddits slow to load/ Any bulk way to load subreddits?
+ - Subreddits slow to load/ Make map menu more comprehensive/load in bulk
 
 
 

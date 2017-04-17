@@ -14,6 +14,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class MainMenuSetup : SceneSetUp {
 
 
+	public GameObject mainMenuPrefab;
+
 	protected override void setCurrentState()
 	{
 		GameInfo.instance.currentState = null;
@@ -33,7 +35,7 @@ public class MainMenuSetup : SceneSetUp {
     protected override void setUpScene()
     {
 
-        GameInfo.instance.menuController.GetComponent<MainMenu>().loadMenu(false);
+		Instantiate (mainMenuPrefab);
     }
 
 }

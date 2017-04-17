@@ -28,9 +28,5 @@ public class AllToMainTransition : SceneTransition
     {
         SubredditSceneState.instance.reset();
         SubredditDomeState.instance.reset();
-
-        GameInfo.instance.menuController.GetComponent<PauseMenu>().resume();
-        //TODO change key state
-        GameInfo.instance.menuController.GetComponent<LocationPanel>().unLoadMenu();
     }
 }
