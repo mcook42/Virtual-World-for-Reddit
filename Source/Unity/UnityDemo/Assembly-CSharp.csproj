@@ -3,8 +3,9 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{991ACB7A-CC85-4B1E-CE9A-C9C5FDEC3F6F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -33,140 +34,138 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.XML" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEditor.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\BuildingScripts\BuildingInfo.cs" />
-    <Compile Include="Assets\Scripts\BuildingScripts\Point.cs" />
-    <Compile Include="Assets\Scripts\BuildingScripts\subredditList.cs" />
-    <Compile Include="Assets\Scripts\DontDestroyOnLoad.cs" />
-    <Compile Include="Assets\Scripts\GameInfo\GameInfo.cs" />
-    <Compile Include="Assets\Scripts\GameInfo\LoginObservable.cs" />
-    <Compile Include="Assets\Scripts\GameInfo\LoginObserver.cs" />
-    <Compile Include="Assets\Scripts\GameInfo\RedditRetriever.cs" />
-    <Compile Include="Assets\Scripts\GameInfo\Server.cs" />
-    <Compile Include="Assets\Scripts\GameInfo\ServerDownException.cs" />
-    <Compile Include="Assets\Scripts\MapGraph\ForceDirectedLayout.cs" />
-    <Compile Include="Assets\Scripts\MapGraph\Graph.cs" />
-    <Compile Include="Assets\Scripts\MapGraph\Line.cs" />
-    <Compile Include="Assets\Scripts\MapGraph\Node.cs" />
-    <Compile Include="Assets\Scripts\MapGraph\NodeList.cs" />
-    <Compile Include="Assets\Scripts\MapGraph\SubredditGraph.cs" />
-    <Compile Include="Assets\Scripts\MapGraph\SubredditNode.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\AuthorizeMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentInfo.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\Comments\CreatedInfo.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\Comments\PostCommentMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\Comments\PostDescription.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\Comments\PostInfo.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\Comments\ReplyMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\Comments\ThingListMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\Comments\ThingMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\Comments\VotableInfo.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\CreditsMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\ErrorMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\FatalErrorMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadCommentsMenuOnClick.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadMapMenuOnClick.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadMenuOnClick.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadNewMessagesMenuOnClick.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadOverviewMenuOnClick.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadPostMenuOnClick.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadSortOnClick.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadSubmittedMenuOnClick.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\LoadingMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\LogInButtonObserver.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\LogInMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\MainMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\MapMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\Menu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\MenuController.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\OverlayMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\OverlayMenus\DoorPopUp.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\PauseMenu.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\ThreadLoading\GoDown.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\ThreadLoading\GoUp.cs" />
-    <Compile Include="Assets\Scripts\MenuScripts\ThreadLoading\SortMenu.cs" />
-    <Compile Include="Assets\Scripts\PlayerScripts\CrossHair.cs" />
-    <Compile Include="Assets\Scripts\PlayerScripts\MyMouseLook.cs" />
-    <Compile Include="Assets\Scripts\PlayerScripts\MyRigidbodyFirstPersonController.cs" />
-    <Compile Include="Assets\Scripts\SceneInfo\BuildingThread.cs" />
-    <Compile Include="Assets\Scripts\SceneInfo\HouseState.cs" />
-    <Compile Include="Assets\Scripts\SceneInfo\MapInfo.cs" />
-    <Compile Include="Assets\Scripts\SceneInfo\OutsideState.cs" />
-    <Compile Include="Assets\Scripts\SceneInfo\SceneState.cs" />
-    <Compile Include="Assets\Scripts\SceneInfo\SceneStateSingleton.cs" />
-    <Compile Include="Assets\Scripts\SceneInfo\SubredditDomeState.cs" />
-    <Compile Include="Assets\Scripts\SceneInfo\SubredditSceneState.cs" />
-    <Compile Include="Assets\Scripts\SceneSetup\HouseSetup.cs" />
-    <Compile Include="Assets\Scripts\SceneSetup\MainMenuSetup.cs" />
-    <Compile Include="Assets\Scripts\SceneSetup\SceneSetup.cs" />
-    <Compile Include="Assets\Scripts\SceneSetup\SubredditDomeSetup.cs" />
-    <Compile Include="Assets\Scripts\SceneSetup\SubredditSceneSetup.cs" />
-    <Compile Include="Assets\Scripts\SceneTransition\AllToMainTransition.cs" />
-    <Compile Include="Assets\Scripts\SceneTransition\MainToSubredditDomeTransition.cs" />
-    <Compile Include="Assets\Scripts\SceneTransition\SceneTransition.cs" />
-    <Compile Include="Assets\Scripts\SceneTransition\SubredditDomeToHouseTransition.cs" />
-    <Compile Include="Assets\Scripts\SceneTransition\SubredditDomeToSubredditTransition.cs" />
-    <Compile Include="Assets\Scripts\SceneTransition\SubredditDometoSubredditDomeTransition.cs" />
-    <Compile Include="Assets\Scripts\SceneTransition\SubredditToOutsideTransition.cs" />
-    <Compile Include="Assets\Scripts\SceneTransition\SubredditToSubredditDomeTransition.cs" />
-    <None Include="Assets\Rune Assets\Simple\Urban Buildings Pack 1\runesimple.shader" />
-    <None Include="Assets\Plugins\Resources\Newtonsoft.Json.xml" />
-    <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
-    <None Include="Assets\Plugins\Resources\HtmlAgilityPack.xml" />
-    <None Include="Assets\Fonts\TextShader.shader" />
-    <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
-    <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
-    <None Include="Assets\Plugins\Resources\System.Threading.xml" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\Networking\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.PlaymodeTestsRunner">
-      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\PlaymodeTestsRunner\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\UnityAnalytics\UnityEngine.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.HoloLens">
-      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\UnityHoloLens\RuntimeEditor\UnityEngine.HoloLens.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VR">
-      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\UnityVR\RuntimeEditor\UnityEngine.VR.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\Assets\Plugins\Resources\HtmlAgilityPack.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\Assets\Plugins\Resources\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="RedditSharp">
-      <HintPath>C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\Assets\Plugins\Resources\RedditSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading">
-      <HintPath>C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\Assets\Plugins\Resources\System.Threading.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>C:\Program Files\Unity\Editor\Data\Managed\Mono.Cecil.dll</HintPath>
-    </Reference>
+     <Compile Include="Assets\Scripts\BuildingScripts\BuildingInfo.cs" />
+     <Compile Include="Assets\Scripts\BuildingScripts\Point.cs" />
+     <Compile Include="Assets\Scripts\BuildingScripts\subredditList.cs" />
+     <Compile Include="Assets\Scripts\DontDestroyOnLoad.cs" />
+     <Compile Include="Assets\Scripts\GameInfo\GameInfo.cs" />
+     <Compile Include="Assets\Scripts\GameInfo\LoginObservable.cs" />
+     <Compile Include="Assets\Scripts\GameInfo\LoginObserver.cs" />
+     <Compile Include="Assets\Scripts\GameInfo\RedditRetriever.cs" />
+     <Compile Include="Assets\Scripts\GameInfo\Server.cs" />
+     <Compile Include="Assets\Scripts\GameInfo\ServerDownException.cs" />
+     <Compile Include="Assets\Scripts\MapGraph\ForceDirectedLayout.cs" />
+     <Compile Include="Assets\Scripts\MapGraph\Graph.cs" />
+     <Compile Include="Assets\Scripts\MapGraph\Line.cs" />
+     <Compile Include="Assets\Scripts\MapGraph\Node.cs" />
+     <Compile Include="Assets\Scripts\MapGraph\NodeList.cs" />
+     <Compile Include="Assets\Scripts\MapGraph\SubredditGraph.cs" />
+     <Compile Include="Assets\Scripts\MapGraph\SubredditNode.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\AuthorizeMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\CommentInfo.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\CreatedInfo.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\PostCommentMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\PostDescription.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\PostInfo.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\ReplyMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\ThingListMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\ThingMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Comments\VotableInfo.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\CreditsMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\ErrorMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\FatalErrorMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadCommentsMenuOnClick.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadMapMenuOnClick.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadMenuOnClick.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadNewMessagesMenuOnClick.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadOverviewMenuOnClick.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadPostMenuOnClick.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadSortOnClick.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\LoadMenuOnClick\LoadSubmittedMenuOnClick.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\LoadingMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\LogInButtonObserver.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\LogInMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\MainMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\MapMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\Menu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\MenuController.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\OverlayMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\OverlayMenus\DoorPopUp.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\PauseMenu.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\ThreadLoading\GoDown.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\ThreadLoading\GoUp.cs" />
+     <Compile Include="Assets\Scripts\MenuScripts\ThreadLoading\SortMenu.cs" />
+     <Compile Include="Assets\Scripts\PlayerScripts\CrossHair.cs" />
+     <Compile Include="Assets\Scripts\PlayerScripts\MyMouseLook.cs" />
+     <Compile Include="Assets\Scripts\PlayerScripts\MyRigidbodyFirstPersonController.cs" />
+     <Compile Include="Assets\Scripts\SceneInfo\BuildingThread.cs" />
+     <Compile Include="Assets\Scripts\SceneInfo\HouseState.cs" />
+     <Compile Include="Assets\Scripts\SceneInfo\MapInfo.cs" />
+     <Compile Include="Assets\Scripts\SceneInfo\OutsideState.cs" />
+     <Compile Include="Assets\Scripts\SceneInfo\SceneState.cs" />
+     <Compile Include="Assets\Scripts\SceneInfo\SceneStateSingleton.cs" />
+     <Compile Include="Assets\Scripts\SceneInfo\SubredditDomeState.cs" />
+     <Compile Include="Assets\Scripts\SceneInfo\SubredditSceneState.cs" />
+     <Compile Include="Assets\Scripts\SceneSetup\HouseSetup.cs" />
+     <Compile Include="Assets\Scripts\SceneSetup\MainMenuSetup.cs" />
+     <Compile Include="Assets\Scripts\SceneSetup\SceneSetup.cs" />
+     <Compile Include="Assets\Scripts\SceneSetup\SubredditDomeSetup.cs" />
+     <Compile Include="Assets\Scripts\SceneSetup\SubredditSceneSetup.cs" />
+     <Compile Include="Assets\Scripts\SceneTransition\AllToMainTransition.cs" />
+     <Compile Include="Assets\Scripts\SceneTransition\MainToSubredditDomeTransition.cs" />
+     <Compile Include="Assets\Scripts\SceneTransition\SceneTransition.cs" />
+     <Compile Include="Assets\Scripts\SceneTransition\SubredditDomeToHouseTransition.cs" />
+     <Compile Include="Assets\Scripts\SceneTransition\SubredditDomeToSubredditTransition.cs" />
+     <Compile Include="Assets\Scripts\SceneTransition\SubredditDometoSubredditDomeTransition.cs" />
+     <Compile Include="Assets\Scripts\SceneTransition\SubredditToOutsideTransition.cs" />
+     <Compile Include="Assets\Scripts\SceneTransition\SubredditToSubredditDomeTransition.cs" />
+     <None Include="Assets\Rune Assets\Simple\Urban Buildings Pack 1\runesimple.shader" />
+     <None Include="Assets\Plugins\Resources\Newtonsoft.Json.xml" />
+     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
+     <None Include="Assets\Plugins\Resources\HtmlAgilityPack.xml" />
+     <None Include="Assets\Fonts\TextShader.shader" />
+     <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
+     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
+     <None Include="Assets\Plugins\Resources\System.Threading.xml" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.PlaymodeTestsRunner">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.HoloLens">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.VR">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
+ <Reference Include="HtmlAgilityPack">
+ <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/Unity/UnityDemo/Assets/Plugins/Resources/HtmlAgilityPack.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/Unity/UnityDemo/Assets/Plugins/Resources/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="RedditSharp">
+ <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/Unity/UnityDemo/Assets/Plugins/Resources/RedditSharp.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Threading">
+ <HintPath>C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/Unity/UnityDemo/Assets/Plugins/Resources/System.Threading.dll</HintPath>
+ </Reference>
+ <Reference Include="Mono.Cecil">
+ <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{4B763615-BE3B-2FE1-CE65-A479CFBD5603}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
+      <Project>{4B763615-BE3B-2FE1-CE65-A479CFBD5603}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -176,4 +175,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  
 </Project>
