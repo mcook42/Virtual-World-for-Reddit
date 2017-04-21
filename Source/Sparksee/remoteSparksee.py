@@ -5,10 +5,15 @@
 import socket
 import sys
 from thread import start_new_thread
-import get_town_sparksee as gt
+from get_town_sparksee import get_town
+
+__author__ = "Matt Cook"
+__version__ = "1.0.0"
+__contributors__ = ["Matthew Cook"]
+__email__ = "mattheworion.cook@gmail.com"
 
 HOST = ""    # Symbolic name, meaning all available interfaces
-PORT = 8888  # Arbitrary non-privileged port
+PORT = 4269  # Arbitrary port
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print "Socket created"
@@ -20,11 +25,8 @@ except socket.error as msg:
     print "Bind failed. Error Code : " + str(msg[0]) + " Message " + msg[1]
     sys.exit()
 
-print "Socket bind complete"
-
-# Start listening on socket
-s.listen(10)
-print "Socket now listening"
+# Start listening on socket with 500 possible waiting connections
+s.listen(500)
 
 
 # Function for handling connections. This will be used to create threads
@@ -35,25 +37,32 @@ def client_thread(conn):
         # Receiving from client
         data = conn.recv(1024)
 
-        reply = gt.main(data)
+        # If no subreddit sent
         if not data:
             break
 
+        # Get the town info in json format
+        reply = get_town(data)
+
+        # Send the data back to the client
         conn.sendall(reply)
 
-    # came out of loop
+    # came out of loop so close the connection
     conn.close()
 
 
 # now keep talking with the client
-while 1:
+while True:
     # wait to accept a connection - blocking call
     conn, addr = s.accept()
     print 'Connected with ' + addr[0] + ':' + str(addr[1])
 
+
     # Start new thread takes 1st argument as a function name to be run,
     # second is the tuple of arguments to the function.
-    start_new_thread(client_thread, (conn,))
+    try:
+        start_new_thread(client_thread, (conn,))
+    except
 
 s.close()
 
