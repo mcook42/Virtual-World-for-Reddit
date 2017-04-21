@@ -60,9 +60,6 @@ while True:
 
     # Start new thread takes 1st argument as a function name to be run,
     # second is the tuple of arguments to the function.
-    try:
-        start_new_thread(client_thread, (conn,))
-    except
-
+    start_new_thread(client_thread, (conn,))
 s.close()
 
