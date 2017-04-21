@@ -109,20 +109,23 @@ def get_town(subreddit):
         # Sort edge_list in descending order by weight
         edge_list.sort(key=lambda x: int(x[2]), reverse=True)
 
-        if len(edge_list[0]) > 0 and len(edge_list[0]) > limit:
-            # Drop all entries after 'limit'
-            edge_list[0] = edge_list[0][limit]
+        # Drop all entries after 'limit'
+        edge_list_lim = edge_list[:limit]
+        names = [x[0] for x in edge_list_lim]
+        names2 = [x[1] for x in edge_list_lim]
+        nodes_lim = [item for item in nodes if (item in names or item in names2)]
 
         # Store in dictionary for easy translation to json
-        data_dict = dict([('center', subreddit), ('nodes', nodes), ('edges', edge_list)])
+        data_dict = dict([('center', subreddit), ('nodes', nodes_lim), ('edges', edge_list_lim)])
 
     except UnboundLocalError:
         data_dict = dict([('center', subreddit), ('nodes', ""), ('edges', "")])
 
     # Turn to json.
-    data_json = json.dump(data_dict, stdout, ensure_ascii=False)
+#    data_json = json.dump(data_dict, stdout, ensure_ascii=False)
 
     #Print a new line
+    print data_dict
     print ""
 
     # TODO: Make sure we have at least 'limit' nodes?
@@ -145,7 +148,7 @@ def get_town(subreddit):
     if sparks is not None:
         sparks.close()
 
-    return data_json
+    return data_dict
 
 
 if __name__ == '__main__':
@@ -153,4 +156,5 @@ if __name__ == '__main__':
         print "No subreddit provided. Exiting."
         exit(1)
     get_town(argv[1])
+
 
