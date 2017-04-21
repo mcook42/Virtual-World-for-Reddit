@@ -18,16 +18,16 @@ __email__ = "mattheworion.cook@gmail.com"
 
 
 # noinspection PyArgumentList
-def main(subr):
+def main():
     """
     :string subr: name of root subreddit
     """
-    if subr is '':
+    if len(argv) < 2:
         print "No subreddit provided. Exiting."
         exit(1)
 
     # Get root subreddit name from command line
-    subreddit = subr
+    subreddit = argv[1]
 
     # Set limit of nodes
     limit = 15
@@ -84,20 +84,30 @@ def main(subr):
         edge_list = []
 
         # Edges are gotten using graph.explode
-        edges = graph.explode(node, edge_type_id, sparksee.EdgesDirection.OUTGOING)
+        edges = graph.explode(node, edge_type_id, sparksee.EdgesDirection.ANY)
 
         for edge in edges:
             # Can get the edge data using data.get_head() and data.get_tail()
             data = graph.get_edge_data(edge)
 
-            # Check if tail is same as head...
-            if graph.get_attribute(data.get_tail(), name_attr_id).to_string() is not subreddit:
+            # Check if tail is same as head. data.get_head() and data.get_tail() return the unique integer key for the nodes.
+            if not data.get_head() == data.get_tail():
                 # Get weight and store edge with weight in list of lists
-                edge_list.append([subreddit, str(graph.get_attribute(data.get_tail(), name_attr_id).to_string()),
+                edge_list.append([str(graph.get_attribute(data.get_head(), name_attr_id).to_string()), \
+                                  str(graph.get_attribute(data.get_tail(), name_attr_id).to_string()),
                                   int(graph.get_attribute(edge, weight_attr_id).get_integer())])
 
-            # Add to node list for dict use later
-            nodes.append(edge_list[-1][1])
+                # Add to node list for dict use later
+                # All edges in the graph are undirected.
+                #This means that the tail is not always the node we exploded on.
+                #As a result, we must check to see which node (head or tail) should be added.
+
+                #Add head if tail is center node.
+                if data.get_tail() == node:
+                        nodes.append(edge_list[-1][0])
+                #Add tail if head is center node.
+                else:
+                        nodes.append(edge_list[-1][1])
 
         edges.close()
 
@@ -105,7 +115,7 @@ def main(subr):
         # Sort edge_list in descending order by weight
         edge_list.sort(key=lambda x: int(x[2]), reverse=True)
 
-        if len(edge_list[0]) > limit:
+        if len(edge_list) > 0 and len(edge_list[0]) > limit:
             # Drop all entries after 'limit'
             edge_list[0] = edge_list[0][limit]
 
@@ -117,6 +127,9 @@ def main(subr):
 
     # Turn to json.
     data_json = json.dump(data_dict, stdout, ensure_ascii=False)
+
+    #Print a new line
+    print ""
 
     # TODO: Make sure we have at least 'limit' nodes?
     # To get more edges one can do another explode using data.get_tail()
@@ -142,5 +155,5 @@ def main(subr):
 
 
 if __name__ == '__main__':
-    main(argv[1])
+    main()
 
