@@ -61,3 +61,4 @@ Source/PRAW/dbInteractions.py
 *.xml
 Documents/~$MapAlgorithmAnalysis.xlsx
 Source/Python/cleanDuplicates.py
+*.iml

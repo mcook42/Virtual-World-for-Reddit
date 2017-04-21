@@ -18,16 +18,10 @@ __email__ = "mattheworion.cook@gmail.com"
 
 
 # noinspection PyArgumentList
-def main():
+def get_town(subreddit):
     """
     :string subr: name of root subreddit
     """
-    if len(argv) < 2:
-        print "No subreddit provided. Exiting."
-        exit(1)
-
-    # Get root subreddit name from command line
-    subreddit = argv[1]
 
     # Set limit of nodes
     limit = 15
@@ -115,7 +109,7 @@ def main():
         # Sort edge_list in descending order by weight
         edge_list.sort(key=lambda x: int(x[2]), reverse=True)
 
-        if len(edge_list) > 0 and len(edge_list[0]) > limit:
+        if len(edge_list[0]) > 0 and len(edge_list[0]) > limit:
             # Drop all entries after 'limit'
             edge_list[0] = edge_list[0][limit]
 
@@ -155,5 +149,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if len(argv) < 2:
+        print "No subreddit provided. Exiting."
+        exit(1)
+    get_town(argv[1])
 
