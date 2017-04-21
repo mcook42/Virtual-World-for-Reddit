@@ -6,12 +6,14 @@ using UnityEngine.UI;
 
 /// <summary>
 /// An abstract class that represents a votable object.
-/// Holds the similar methods that both CommentInfo and PostInfo share.
 /// </summary>
-public abstract class VotableInfo :MonoBehaviour, LoginObserver
+public abstract class VotableInfo : CreatedInfo, LoginObserver
 {
-	protected VotableThing thing { get; set; }
 
+	//Thing we are representing. Hides the parent thing.
+	protected new VotableThing thing;
+
+	#region LoginObserver
 	/// <summary>
 	/// Sets or deactivates the action panel.
 	/// </summary>
@@ -25,16 +27,17 @@ public abstract class VotableInfo :MonoBehaviour, LoginObserver
 
 	}
 
+	public void Start()
+	{
+		GameInfo.instance.redditRetriever.register (this);
+	}
+
 	public void OnDestroy()
 	{
 		GameInfo.instance.redditRetriever.unRegister (this);
-
 	}
 
-	//text fields
-	public GameObject author;
-	public GameObject time;
-	public GameObject upvotes;
+	#endregion
 
 	//text fields
 	public GameObject body;

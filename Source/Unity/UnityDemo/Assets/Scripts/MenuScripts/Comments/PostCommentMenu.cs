@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Creates the comments.
 /// </summary>
-public class PostCommentMenu : CommentMenu {
+public class PostCommentMenu : ThingMenu {
 
 	public GameObject descriptionPrefab;
 
@@ -19,7 +19,7 @@ public class PostCommentMenu : CommentMenu {
 	public void Init(Post post){
 		this.post = post;
 		title.GetComponent<Text> ().text = post.Title;
-		commentEnumerator = post.EnumerateComments ().GetEnumerator ();
+		thingEnumerator = post.EnumerateComments ().GetEnumerator ();
 		loadMoreButton.GetComponent<Button> ().onClick.AddListener (() => loadMore ());
 		instantiateDescription ();
 		loadMore ();
@@ -31,7 +31,7 @@ public class PostCommentMenu : CommentMenu {
 	private void instantiateDescription()
 	{
 		GameObject description = Instantiate (descriptionPrefab, content.transform);
-		description.GetComponent<PostInfo> ().Init (post,this);
+		description.GetComponent<PostDescription> ().Init (post,this);
 	}
 
 	/// <summary>
@@ -40,12 +40,12 @@ public class PostCommentMenu : CommentMenu {
 	/// <param name="comment">Comment.</param>
 	/// <param name="depth">Depth in comment tree.</param>
 	/// <returns> The initialized Comment.</returns>
-	public override GameObject initializeComment(GameObject parent,Comment comment, int depth)
+	public override GameObject initializeThing(GameObject parent,Thing comment, int depth)
 	{
 		GameObject commentObject = Instantiate (commentPrefab) as GameObject;
 		commentObject.transform.SetParent (parent.transform);
 		CommentInfo info = commentObject.GetComponent<CommentInfo> ();
-		info.PostInit (depth, comment,this,post);
+		info.PostInit (depth, (Comment)comment,this,post);
 		loadMorePanel.transform.SetAsLastSibling ();
 		return commentObject;
 	}
@@ -61,7 +61,7 @@ public class PostCommentMenu : CommentMenu {
 	{
 		
 		Comment[] comments = parentComment.Comments.ToArray();
-		return initializeComments (parent,comments, startDepth);
+		return initializeThings (parent,comments, startDepth);
 
 
 	}
@@ -73,17 +73,17 @@ public class PostCommentMenu : CommentMenu {
 	/// <param name="parent">Parent comments are attached to.</param>
 	/// <param name="comments">Comments.</param>
 	/// <param name="startDepth">Depth of comment tree thus far.</param>
-	public override int initializeComments(GameObject parent, Comment[] comments, int startDepth)
+	public override int initializeThings(GameObject parent, Thing[] comments, int startDepth)
 	{
 		int count = 0;
 		for( int i=0;i<comments.Count();i++) {
-			GameObject commentObject = initializeComment (parent, comments [i], startDepth);
+			GameObject commentObject = initializeThing (parent, comments [i], startDepth);
 			count++;
 
 
-			var secondComments = comments [i].Comments.ToArray();
+			var secondComments = ((Comment)comments [i]).Comments.ToArray();
 			commentObject.GetComponent<CommentInfo> ().childPanel.SetActive (true);
-			initializeComments (commentObject.GetComponent<CommentInfo> ().childPanel, secondComments, startDepth + 1);
+			initializeThings (commentObject.GetComponent<CommentInfo> ().childPanel, secondComments, startDepth + 1);
 
 		}
 

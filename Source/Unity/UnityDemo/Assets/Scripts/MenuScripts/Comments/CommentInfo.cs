@@ -24,14 +24,14 @@ public class CommentInfo : VotableInfo {
 	public GameObject loadMoreButton;
 
 	//menuManager
-	private CommentMenu menuManager;
+	private ThingMenu menuManager;
 
 	/// <summary>
 	/// Creates the comment formatted for comments displayed in posts.
 	/// </summary>
 	/// <param name="childDepth">Child depth.</param>
 	/// <param name="comment">Comment.</param>
-	public void PostInit(int childDepth,Comment comment,CommentMenu menuManager, Post post)
+	public void PostInit(int childDepth,Comment comment,ThingMenu menuManager, Post post)
 	{
 		this.post = post;
 		this.thing = comment;
@@ -66,16 +66,16 @@ public class CommentInfo : VotableInfo {
 	/// <param name="comment">Comment.</param>
 	public override void addChild (Comment comment)
 	{
-		var newComment = menuManager.initializeComment (childPanel, comment, childDepth + 1);
+		var newComment = menuManager.initializeThing (childPanel, comment, childDepth + 1);
 		newComment.transform.SetAsFirstSibling ();
 	}
 
 
 	/// <summary>
-	/// Overviews the init.
+	/// Initalization for the listmenu.
 	/// </summary>
 	/// <param name="comment">Comment.</param>
-	public void OverviewInit(Comment comment)
+	public void listInit(Comment comment)
 	{
 		this.thing = comment;
 		author.GetComponent<Text> ().text = comment.Author;
@@ -138,7 +138,7 @@ public class CommentInfo : VotableInfo {
 		if (comments.Count > 0) {
 			loadMorePanel.SetActive (false);
 			childPanel.SetActive (true);
-			menuManager.initializeComments (childPanel, comments.ToArray (), childDepth + 1);
+			menuManager.initializeThings (childPanel, comments.ToArray (), childDepth + 1);
 		}
 	}
 
