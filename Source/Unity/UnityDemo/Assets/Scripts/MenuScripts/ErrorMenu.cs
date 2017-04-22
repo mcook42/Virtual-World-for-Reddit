@@ -10,7 +10,7 @@ using UnityEngine.UI;
 /// <summary>
 /// A simple text menu with a single button to resume the game. Meant for small, nonfatal errors.
 /// </summary>
-public class ErrorMenu : TempMenu{
+public class ErrorMenu : Menu{
 
 	/// <summary>
 	/// Sets the error message.

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// The menu to let the user allow our application to access their account. 
 /// Is created after a user logs in.
 /// </summary>
-public class AuthorizeMenu : TempMenu{
+public class AuthorizeMenu : Menu{
 
 	public JToken token {get; set;}
 	public string postParams {get; set;}

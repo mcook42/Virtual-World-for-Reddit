@@ -10,7 +10,7 @@ using UnityEngine.UI;
 /// <summary>
 /// A text menu that gives the user the option to quit or return to the main menu. Meant for fatal errors.
 /// </summary>
-public class FatalErrorMenu : TempMenu {
+public class FatalErrorMenu : Menu {
 
 	/// <summary>
 	/// Assigns the error message.

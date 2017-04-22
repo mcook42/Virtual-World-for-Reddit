@@ -8,7 +8,7 @@ using RedditSharp;
 /// <summary>
 /// Allows the user to reply to a post or comment.
 /// </summary>
-public class ReplyMenu : TempMenu
+public class ReplyMenu : Menu
 {
 	//objects in the menu
 	public GameObject title;

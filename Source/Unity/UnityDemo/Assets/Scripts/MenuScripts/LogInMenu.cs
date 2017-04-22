@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
-public class LogInMenu : TempMenu {
+public class LogInMenu : Menu {
 
 	public InputField username;
 	public InputField password;

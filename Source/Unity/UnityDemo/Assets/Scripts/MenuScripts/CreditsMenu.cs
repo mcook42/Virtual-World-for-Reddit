@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// The menu that displays the credits.
 /// </summary>
-public class CreditsMenu : TempMenu {
+public class CreditsMenu : Menu {
 
 	public void close()
 	{

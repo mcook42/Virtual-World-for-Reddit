@@ -9,7 +9,7 @@ using UnityEngine;
 /// <summary>
 /// A loading panel that covers the entire screen.
 /// </summary>
-public class LoadingMenu : TempMenu {
+public class LoadingMenu : Menu {
 
 	
 }

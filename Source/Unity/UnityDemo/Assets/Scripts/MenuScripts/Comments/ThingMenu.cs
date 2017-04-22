@@ -8,7 +8,7 @@ using System.Collections.Generic;
 /// <summary>
 /// An Abstract class with methods for organizing the comments.
 /// </summary>
-public abstract class ThingMenu : TempMenu
+public abstract class ThingMenu : Menu
 {
 	public GameObject commentPrefab;
 	public GameObject postPrefab;

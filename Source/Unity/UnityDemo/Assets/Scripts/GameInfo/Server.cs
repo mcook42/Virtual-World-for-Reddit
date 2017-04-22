@@ -4,126 +4,131 @@ using RedditSharp.Things;
 using Newtonsoft.Json.Linq;
 using Graph;
 using UnityEngine;
+using System.Net.Sockets;
+using UnityEditor;
+using System.Net;
+using System.Text;
 
 /// <summary>
 /// Handles communication with the server.
-/// All methods may throw a ServerDownExcpetion. The excpetion should be expected and handles appropriately.
+/// All methods may throw a ServerDownExcpetion. The excpetion should be expected and handled appropriately.
 /// </summary>
 public class Server
 {
 
+	private readonly string serverIP = "69.146.92.116";
+	private readonly Int32 port = 4269;
 
+	[MenuItem("Servertest/test")]
+	public static void testServer()
+	{
+		Server server = new Server ();
+		server.getJSONMap ("funny");
+
+	}
 
 
 	public Server ()
 	{
 
 	}
-		
 
 	/// <summary>
-	/// A temporary method used to similate getting subreddits from a server.
-	/// Always loads AskScience
+	/// Gets the JSON map.
 	/// </summary>
-	/// <returns>The subreddits.</returns>
-	/// <param name="subreddits">The url field of each subreddit.</param>
-	[System.Obsolete("User getMap(string center) instead")]
-	public Graph<Subreddit> getSubreddits(List<String> subreddits,String center)
+	/// <returns>The JSON map.</returns>
+	/// <param name="center">Center subreddit to receive.</param>
+	/// <exception cref="ServerDownException">Exception thrown when problems with server communicaiton occur.</exception>
+	public JObject getJSONMap(string center)
 	{
-		Graph<Subreddit> returnGraph = new Graph<Subreddit> ();
-		Subreddit tempCenter = new Subreddit ();
-		tempCenter = GameInfo.instance.reddit.GetSubreddit (center);
-		Node<Subreddit> centerNode = new Node<Subreddit>(tempCenter);
-		returnGraph.AddNode (centerNode);
+		//string to be returned
+		string jsonString = "";
+		JObject returnJson = null;
 
-		foreach (String sub in subreddits) {
+		byte[] bytes = new byte[100];
 
-			var return_sub = new Subreddit ();
-			return_sub.DisplayName = sub;
+		//store IP address and port.
+		IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(serverIP), port);
 
 
-			System.Random random = new System.Random ();
+		// Create a TCP/IP  socket.  
+		Socket sender = new Socket(AddressFamily.InterNetwork,SocketType.Stream, ProtocolType.Tcp);
+		// Connect the socket to the remote endpoint. Catch any errors.  
+		try
+		{
+			sender.Connect(remoteEP);
 
-			Node<Subreddit> node = new Node<Subreddit> (return_sub);
-			returnGraph.AddNode(node);
-			returnGraph.AddDirectedEdge (centerNode, node, Mathf.FloorToInt((float)random.NextDouble()*3));
-			returnGraph.AddDirectedEdge (node, centerNode, Mathf.FloorToInt((float)random.NextDouble()*3));
-		}
+			// Encode the data string into a byte array.  
+			byte[] msg = Encoding.ASCII.GetBytes(center);
 
-		return returnGraph;
-	}
+			// Send the data through the socket.  
+			sender.Send(msg);
 
-	/// <summary>
-	/// Gets the subreddits.
-	/// </summary>
-	/// <returns>The subreddits if found, null otherwise</returns>
-	/// <param name="subredditFullName">Subreddit full name.</param>
-	[System.Obsolete("User getMap(string center) instead")]
-	public Graph<Subreddit> getSubreddits(String subredditFullName)
-	{
-
-		return getMap ("");
-		/**
-		if (subredditFullName == "/r/askscience") {
-			List<String> buildingNames = new List<String> ();
-
-			buildingNames.Add ("/r/science"); 
-			buildingNames.Add ("/r/news");
-			buildingNames.Add ("/r/politics"); 
-			buildingNames.Add ("/r/worldnews"); 
-			buildingNames.Add ("/r/bestof"); 
-			buildingNames.Add ("/r/explainitlikeimfive");
-			buildingNames.Add ("/r/LifeProTips"); 
-			buildingNames.Add ("/r/space"); 
-
-			for (int i = 0; i < 100; i++) {
-				buildingNames.Add ("/r/space"); 
+			// Receive the response from the remote device.  
+			int bytesRec = bytes.Length;
+			do {
+				bytesRec = sender.Receive(bytes);
+				jsonString += Encoding.UTF8.GetString(bytes, 0, bytesRec);
 			}
+			while(bytesRec == bytes.Length);
 
-			return getSubreddits (buildingNames, subredditFullName);
-		} else {
 
-			return null;
+			// Release the socket.  
+			sender.Shutdown(SocketShutdown.Both);
+			sender.Close();
+
+			returnJson = JObject.Parse(jsonString);
+
 		}
-		*/
+		catch (ArgumentNullException)
+		{
+			throw new ServerDownException ("Error sending data to server");
+		}
+		catch (SocketException)
+		{
+			throw new ServerDownException ("Cannot connect to server");
+		}
+		catch (Exception e)
+		{
+			throw new ServerDownException (e.Message);
+		}
 
+
+		return returnJson;
 	}
 
+
+
 	/// <summary>
-	/// Gets the maps with the optional parameter of the center node.
+	/// Gets the map from the given center subreddit.
+	/// If the center subreddit cannot be found, returns a map with a single node representing the center subreddit.
 	/// </summary>
-	/// <param name="centerNode"> The Node that should be in the approximate center of the map </param>
+	/// <param name="centerNode"> The Node that should be in the center of the map </param>
 	/// <returns>The map.</returns>
 	public Graph<Subreddit> getMap(String centerName)
 	{
 
-		//Temporary. Will be deleted once we connect to the server.
-		if (centerName != "/r/AskReddit") {
-			return null;
-		}
 
+		//Remove any /r/s or /s on the subreddit name.
+		centerName = parseSlashR (centerName);
 
-		//Get json document from the server and then set up.
+		//Connect to the server and get the map. Will throw an exception if server is down.
+		JObject jsonForSubreddits = getJSONMap (centerName);
 
-		JObject jsonForSubreddits = JObject.Parse (@"{ ""center"" : ""AskReddit"", 
-		""nodes"": [""askscience"",""history"",""noodle"",""histor"", ""televisio"", ""dir"",""Americ"",""America"",""noodles"",""funny"",""television"", ""dirt"",""todayilearned"",""science"",""worldnews"",""pics"",""IAmA"",""announcements"",""gaming"",""videos"",""movies"",""blog"",""Music"",""aww"",""news""],
-	     ""edges"" : [ [ ""AskReddit"",""askscience"",5 ], [ ""AskReddit"", ""science"", 6 ] ,[ ""AskReddit"", ""videos"", 6 ] ,[ ""AskReddit"", ""aww"", 6 ],[ ""AskReddit"", ""news"", 6 ],[ ""AskReddit"", ""gaming"", 6 ], 
-		[ ""todayilearned"", ""askscience"", 6 ],[ ""pics"", ""science"", 6 ],[ ""gaming"", ""science"", 6 ],[ ""AskReddit"", ""movies"", 6 ],
-		[ ""announcements"", ""history"", 6 ], [""noodles"",""announcements"",9],[ ""announcements"", ""television"", 6 ],
-		[ ""announcements"",""America"", 6 ], [ ""announcements"", ""dirt"", 6 ],
-		[ ""science"", ""histor"", 6 ], [""noodle"",""science"",9],[ ""science"", ""televisio"", 6 ],
-		[ ""science"",""Americ"", 6 ], [ ""science"", ""dir"", 6 ]]}");
-
+		//Graph to return
 		Graph<Subreddit> graph = new Graph<Subreddit> ();
+
+		//Temporary dictionary to store the nodes.
+		Dictionary<string,Node<Subreddit>> nodeDict = new Dictionary<string,Node<Subreddit>> ();
+
 		//Add center
 		Subreddit center = new Subreddit();
 		center.DisplayName = jsonForSubreddits ["center"].ToString();
 		Node<Subreddit> centerNode = new Node<Subreddit> (center);
 		graph.AddNode (centerNode);
-
-		Dictionary<string,Node<Subreddit>> nodeDict = new Dictionary<string,Node<Subreddit>> ();
-
 		nodeDict.Add(center.DisplayName,centerNode);
+
+
 		//Adding Nodes
 		foreach (var node in jsonForSubreddits["nodes"]) {
 			Subreddit sub = new Subreddit ();
@@ -156,6 +161,15 @@ public class Server
 		return graph;
 	}
 
+	/// <summary>
+	/// Removes the /r/ and any slashes from a subreddits name. 
+	/// </summary>
+	/// <returns>The slash r.</returns>
+	/// <param name="subreddit">Subreddit.</param>
+	public string parseSlashR(string subreddit)
+	{
+		return subreddit.Replace ("/r/", "").Replace ("/", "");
+	}
 
 
 

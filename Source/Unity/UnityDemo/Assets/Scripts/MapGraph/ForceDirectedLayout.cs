@@ -61,10 +61,11 @@ public class ForceDirectedLayout
 	public Graph<T> run<T>(Graph<T> graph, Node<T> centerNode)
 	{
 		graph = initializePositions (graph, centerNode);
+		/**
 		if (stopOption == StopOption.Threshold) {
 			return runThreshold (graph,centerNode);
 		}
-
+		*/
 		return graph;
 	}
 
@@ -82,15 +83,31 @@ public class ForceDirectedLayout
 		resetInDome (graph);
 		domeRadius = setInDome (centerNode);
 
-		System.Random random = new System.Random ();
-		maxPosition = Mathf.CeilToInt(nodeSize) * graph.Count * 5;
+		//Draws the nodes in a circle around the dome.
+		float radius = domeRadius + nodeSize*2;
+		float nodesInRadius = radius * Mathf.PI * 2 / (nodeSize * 3);
+		float angle = 0; //in radians
 		foreach (Node<T> node in graph) {
-			int randomX = random.Next (-maxPosition, maxPosition);
-			int randomY = random.Next (-maxPosition, maxPosition);
 
-			if(node.inDome == false)
-				node.position = new Vector2 (randomX, randomY);
+
+			if (node.inDome == false) {
+				float x = Mathf.Cos(angle)*radius;
+				float y = Mathf.Sin(angle)*radius;
+
+				node.position = new Vector2 (x, y);
+			}
+
+			nodesInRadius--;
+			angle += (radius * Mathf.PI * 2 / nodesInRadius);
+
+			if (nodesInRadius < 1) {
+				radius += nodeSize * 3;
+				nodesInRadius = radius * Mathf.PI * 2 / (nodeSize * 3);
+
+			}
 		}
+
+		maxPosition = Mathf.CeilToInt(nodeSize) * graph.Count * 5;
 		return graph;
 	}
 

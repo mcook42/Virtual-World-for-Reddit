@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Class all menu's inherit from. The Start and OnDestroy methods control the cursor, pause, and some key methods needed when opening/closing menus.
 /// </summary>
-public abstract class TempMenu:MonoBehaviour
+public abstract class Menu:MonoBehaviour
 {
 
 

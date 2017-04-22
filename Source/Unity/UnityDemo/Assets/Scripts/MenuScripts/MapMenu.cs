@@ -8,7 +8,7 @@ using Graph;
 using System.Net;
 using UnityEngine.EventSystems;
 
-public class MapMenu : TempMenu, LoginObserver, IScrollHandler {
+public class MapMenu : Menu, LoginObserver, IScrollHandler {
 
 	//Map
     public GameObject nodePrefab;

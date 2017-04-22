@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Handles logging in/out.
 /// </summary>
-public class LogInButtonObserver : TempMenu,LoginObserver {
+public class LogInButtonObserver : Menu,LoginObserver {
 
 	public GameObject loginButton;
 	public GameObject loginMenu;

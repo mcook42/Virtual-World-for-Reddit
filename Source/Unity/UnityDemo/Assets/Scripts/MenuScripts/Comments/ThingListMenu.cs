@@ -17,7 +17,7 @@ public class ThingListMenu:ThingMenu
 	/// <summary>
 	/// Sets up the menu to load objects from things.
 	/// </summary>
-	/// <param name="things">Reddit objects to load from..</param>
+	/// <param name="things">Reddit objects to load from.</param>
 	public void init(IEnumerator things)
 	{
 		if (GameInfo.instance.reddit.User == null)
@@ -59,8 +59,8 @@ public class ThingListMenu:ThingMenu
 		if (thing is Comment) {
 			thingObject = Instantiate (commentPrefab) as GameObject;
 			thingObject.transform.SetParent (parent.transform);
-			CommentInfo info = thingObject.GetComponent<CommentInfo> ();
-			info.listInit ((Comment)thing);
+			CommentItemInfo info = thingObject.GetComponent<CommentItemInfo> ();
+			info.init((Comment)thing);
 		}
 
 		if (thing is Post) {

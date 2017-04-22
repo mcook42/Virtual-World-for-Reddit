@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
-public class SortMenu : TempMenu{
+public class SortMenu : Menu{
 
 	public void init()
 	{
