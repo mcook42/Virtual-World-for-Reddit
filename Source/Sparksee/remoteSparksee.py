@@ -42,10 +42,10 @@ def client_thread(conn):
             break
 
         # Get the town info in json format
-        reply = get_town(data)
+        reply = get_town(data.strip("\n"))
 
         # Send the data back to the client
-        conn.sendall(reply)
+        conn.sendall(str(reply))
 
     # came out of loop so close the connection
     conn.close()
