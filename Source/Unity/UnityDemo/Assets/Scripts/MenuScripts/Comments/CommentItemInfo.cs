@@ -14,6 +14,12 @@ public class CommentItemInfo : CreatedInfo {
 
 	public GameObject body;
 
+	public GameObject postCommentMenuPrefab;
+
+	/// <summary>
+	/// Initialize the fields.
+	/// </summary>
+	/// <param name="comment">Comment.</param>
 	public void init(Comment comment)
 	{
 		base.thing = comment;
@@ -24,6 +30,16 @@ public class CommentItemInfo : CreatedInfo {
 		time.GetComponent<Text> ().text = comment.Created.ToString();
 		upvotes.GetComponent<Text> ().text = "Upvotes: "+comment.Upvotes;
 
+	}
+
+	/// <summary>
+	/// Brings up the postCommentMenu for the comment.
+	/// </summary>
+	public void view()
+	{
+		GameObject postCommentMenu = Instantiate (postCommentMenuPrefab);
+
+		postCommentMenu.GetComponent<PostCommentMenu> ().Init ((Post)GameInfo.instance.reddit.GetThingByFullname(((Comment)thing).LinkId));
 	}
 
 }

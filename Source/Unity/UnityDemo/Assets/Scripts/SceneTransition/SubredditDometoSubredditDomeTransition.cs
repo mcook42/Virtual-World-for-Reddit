@@ -7,23 +7,41 @@ using UnityEngine.SceneManagement;
 using RedditSharp.Things;
 using System.Security.Authentication;
 
+/// <summary>
+/// Handles traveling to a new subreddit dome.
+/// </summary>
 class SubredditDometoSubredditDomeTransition : SceneTransition
 {
 
-
+	/// <summary>
+	/// Travels to the new subreddit dome.
+	/// </summary>
+	/// <param name="newCenter">New center.</param>
     public void goToDome(string newCenter)
     {
 		activateLoadingScreen ();
-		if (SubredditDomeState.instance.init (newCenter)) {
-			transferInfo ();
-			SceneManager.LoadScene ("SubredditDome");
+
+		try{
+			if (SubredditDomeState.instance.init (newCenter)) {
+				transferInfo ();
+				SceneManager.LoadScene ("SubredditDome");
+			}
+			else {
+				GameInfo.instance.menuController.GetComponent<MenuController> ().unLoadLoadingMenu ();
+				GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Could not load subreddit");
+			}
 		}
-		else {
+		catch(ServerDownException s) {
+			
 			GameInfo.instance.menuController.GetComponent<MenuController> ().unLoadLoadingMenu ();
-			GameInfo.instance.menuController.GetComponent<MenuController> ().loadErrorMenu("Could not load subreddit");
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadFatalErrorMenu(s.Message);
+
 		}
     }
 
+	/// <summary>
+	/// Travel to the front subreddit
+	/// </summary>
 	public void goToFront()
 	{
 		activateLoadingScreen ();
@@ -33,6 +51,9 @@ class SubredditDometoSubredditDomeTransition : SceneTransition
 
 	}
 
+	/// <summary>
+	/// Travel to /r/all
+	/// </summary>
 	public void goToAll()
 	{
 		activateLoadingScreen ();
@@ -42,6 +63,9 @@ class SubredditDometoSubredditDomeTransition : SceneTransition
 
 	}
 
+	/// <summary>
+	/// Travel to the house if the player is logged in.
+	/// </summary>
 	public void goToHouse()
 	{
 		activateLoadingScreen ();
@@ -51,6 +75,9 @@ class SubredditDometoSubredditDomeTransition : SceneTransition
 
 	}
 
+	/// <summary>
+	/// Clears the state of this scene.
+	/// </summary>
 	protected override void transferInfo()
 	{
 		clearCurrentState ();

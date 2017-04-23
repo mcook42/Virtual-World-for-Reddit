@@ -26,6 +26,8 @@ public class MenuController : MonoBehaviour {
 
 	//number of menus currently loaded. This is used to tell if the player is still in the menu screen.
 	public int menusLoaded = 0;
+	//Lock to keep multiple menus from accessing menusLoaded at once.
+	private readonly object menusLoadedLock = new object();
 
 	/// <summary>
 	/// Records that a menu has been added.
@@ -34,9 +36,11 @@ public class MenuController : MonoBehaviour {
 	/// </summary>
 	public void addMenu()
 	{
-		menusLoaded++;
-		GameInfo.instance.setCursorLock(false); 
-		Time.timeScale = 0;
+		lock (menusLoadedLock) {
+			menusLoaded++;
+			GameInfo.instance.setCursorLock (false); 
+			Time.timeScale = 0;
+		}
 
 	}
 
@@ -47,10 +51,12 @@ public class MenuController : MonoBehaviour {
 	/// </summary>
 	public void removeMenu()
 	{
-		menusLoaded--;
-		if (GameInfo.instance.menuController.GetComponent<MenuController> ().menusLoaded <= 0) {
-			GameInfo.instance.setCursorLock (true);
-			Time.timeScale = 1;
+		lock (menusLoadedLock) {
+			menusLoaded--;
+			if (GameInfo.instance.menuController.GetComponent<MenuController> ().menusLoaded <= 0) {
+				GameInfo.instance.setCursorLock (true);
+				Time.timeScale = 1;
+			}
 		}
 	}
 	void Update () {
@@ -62,10 +68,6 @@ public class MenuController : MonoBehaviour {
 
 			if (Input.GetKeyDown ("e")) {
 				GameInfo.instance.menuController.GetComponent<MenuController> ().loadFatalErrorMenu("You can't press that");
-			}
-
-			if (Input.GetKeyDown ("r")) {
-				GameInfo.instance.menuController.GetComponent<LoadSortOnClick> ().OnMouseDown ();
 			}
 				
 
