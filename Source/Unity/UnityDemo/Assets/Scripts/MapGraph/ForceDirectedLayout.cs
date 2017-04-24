@@ -165,8 +165,6 @@ public class ForceDirectedLayout
 		}
 
 		return domeRadius;
-
-
 	}
 
 
@@ -205,7 +203,6 @@ public class ForceDirectedLayout
 	/// <typeparam name="T">The 1st type parameter.</typeparam>
 	public Graph<T> runThreshold<T>(Graph<T> graph, Node<T> centerNode)
 	{
-
 
 		float totalDisplacement=threshold+1;
 		int iterations = 0;

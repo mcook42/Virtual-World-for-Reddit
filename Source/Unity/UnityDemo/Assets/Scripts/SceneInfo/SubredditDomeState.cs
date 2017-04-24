@@ -106,6 +106,8 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 		GameInfo.instance.map.AddGraph(temp);
 		center = GameInfo.instance.map.getNode (centerSub);
 
+		layoutMap ();
+
 	}
 
 	/// <summary>
