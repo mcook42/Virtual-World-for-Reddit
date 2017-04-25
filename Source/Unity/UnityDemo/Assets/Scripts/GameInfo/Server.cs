@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 using Graph;
 using UnityEngine;
 using System.Net.Sockets;
-using UnityEditor;
 using System.Net;
 using System.Text;
 
@@ -19,14 +18,14 @@ public class Server
 	private readonly string serverIP = "69.146.92.116";
 	private readonly Int32 port = 4269;
 
-	[MenuItem("Servertest/test")]
+	/**[MenuItem("Servertest/test")]
 	public static void testServer()
 	{
 		Server server = new Server ();
 		server.getJSONMap ("funny");
 
 	}
-
+*/
 
 	public Server ()
 	{

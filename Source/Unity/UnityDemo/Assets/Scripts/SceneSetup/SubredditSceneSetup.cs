@@ -151,11 +151,16 @@ class SubredditSceneSetup : SceneSetUp, LoginObserver
 				thread.GetComponent<BuildingThread>().thread = post[i];
                 thread.GetComponent<BuildingThread>().threadName = post[i].Title;
                 
+				//set name
                 var name = thread.Find("Name").GetComponent<TextMesh>();
                 if (name != null)
-                    name.text = ResolveTextSize(post[i].Title, 55);
+                    name.text = ResolveTextSize(post[i].Title, 50);
+				//change size based on number of lines
 				int numLines = name.text.Split('\n').Length;
-				thread.FindChild ("Background").localScale = new Vector3 (Mathf.Max(numLines /2,0.4f),1.0f , 0.9f);
+				float scaleFactor = Mathf.Max (numLines - 2, 1);
+				name.transform.localScale = new Vector3 (name.transform.localScale.x, name.transform.localScale.y/scaleFactor, name.transform.localScale.z);
+				//set background
+				thread.FindChild ("Background").localScale = new Vector3 (0.4f,1.0f , 0.9f);
                 var upvotes = thread.Find("UpVotes").GetComponent<TextMesh>();
                 if (upvotes!= null)
                     upvotes.text = "Upvotes:"+post[i].Upvotes;
