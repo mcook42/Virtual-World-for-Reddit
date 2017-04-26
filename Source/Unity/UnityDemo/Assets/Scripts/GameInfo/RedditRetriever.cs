@@ -427,7 +427,6 @@ public class RedditRetriever:LoginObservable
 		foreach (Cookie cookie in table)
 		{
 			
-			Debug.Log (cookie.Domain);
 			string key = (cookie.Domain);
 			if (key[0] == '.')
 			{

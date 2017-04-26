@@ -276,7 +276,6 @@ namespace Graph
 				}
 			}
 
-			Debug.Log ("here");
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()

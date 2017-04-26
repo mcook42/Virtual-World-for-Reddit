@@ -20,10 +20,12 @@ public abstract class VotableInfo : CreatedInfo, LoginObserver
 	/// <param name="login">If set to <c>true</c> login.</param>
 	public void notify(bool login)
 	{
-		if (login)
-			actionPanel.SetActive (true);
-		else
-			actionPanel.SetActive (false);
+		if (actionPanel != null) {
+			if (login)
+				actionPanel.SetActive (true);
+			else
+				actionPanel.SetActive (false);
+		}
 
 	}
 

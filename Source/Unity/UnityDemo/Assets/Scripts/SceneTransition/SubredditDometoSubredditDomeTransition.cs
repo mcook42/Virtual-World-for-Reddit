@@ -19,6 +19,9 @@ class SubredditDometoSubredditDomeTransition : SceneTransition
 	/// <param name="newCenter">New center.</param>
     public void goToDome(string newCenter)
     {
+
+		//clear the door pop up menu.
+		GameInfo.instance.menuController.GetComponent<MenuController> ().clearMenus ();
 		activateLoadingScreen ();
 
 		try{
@@ -80,6 +83,7 @@ class SubredditDometoSubredditDomeTransition : SceneTransition
 	/// </summary>
 	protected override void transferInfo()
 	{
+		SubredditDomeState.instance.loadNew = true;
 		clearCurrentState ();
 	}
 

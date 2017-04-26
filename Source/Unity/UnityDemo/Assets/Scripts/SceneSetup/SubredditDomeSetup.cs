@@ -14,7 +14,7 @@ public class SubredditDomeSetup : SceneSetUp, LoginObserver{
 	public static readonly float innerCircleSize = 60;
 	public static readonly float outerCircleSize = 100;
 	public static readonly int buildingFootprint = 30;
-	public static readonly int minPathWidth = 10;
+	public static readonly int minPathWidth = 30;
 	public static readonly int maxPathWidth = 30;
 	public static readonly int innerBuildNum = 6;
 	public static readonly int outerBuildNum = 9;
@@ -87,7 +87,11 @@ public class SubredditDomeSetup : SceneSetUp, LoginObserver{
 			instantiateHouse (center.transform);
 		} else {
 			Subreddit centerSub = SubredditDomeState.instance.center.Value;
-			instantiateBuilding (center.transform, centerSub);
+			var building = instantiateBuilding (center.transform, centerSub);
+			if (SubredditDomeState.instance.loadNew) {
+				SubredditDomeState.instance.playerSpawnPoint = new Vector3 (building.GetComponent<BuildingInfo> ().footprint + 5, 1, 1);
+				SubredditDomeState.instance.loadNew = false;
+			}
 		}
 
 		int i = 0;
@@ -116,7 +120,7 @@ public class SubredditDomeSetup : SceneSetUp, LoginObserver{
 	/// </summary>
 	/// <param name="placeHolder">Position and rotation of the new building.</param>
 	/// <param name="sub">Subreddit attached to the building.</param>
-    private void instantiateBuilding(Transform placeHolder, Subreddit sub)
+	private GameObject instantiateBuilding(Transform placeHolder, Subreddit sub)
     {
 
         GameObject building; 
@@ -141,26 +145,6 @@ public class SubredditDomeSetup : SceneSetUp, LoginObserver{
             building = Instantiate(buildingPrefabLarge) as GameObject;
         }
 			
-        //adding the correct material
-
-		/**
-        Renderer renderer = building.GetComponent<Renderer>();
-
-
-        if(sub.lexil<5)
-        {
-            renderer.material = lowReadingMaterial;
-        }
-        else if(sub.lexil <6)
-        {
-            renderer.material = mediumReadingMaterial;
-        }
-        else
-        {
-            
-            renderer.material = highReadingMaterial;
-        }
-        */
 
         float height = building.GetComponent<BuildingInfo>().height;
 		building.transform.localEulerAngles = new Vector3(building.transform.localEulerAngles.x,building.transform.localEulerAngles.y+placeHolder.rotation.eulerAngles.y,building.transform.localEulerAngles.z);
@@ -172,6 +156,8 @@ public class SubredditDomeSetup : SceneSetUp, LoginObserver{
         //set the name on the front of the building
         var name = building.transform.Find("Name").GetComponent<TextMesh>();
 		name.text = sub.DisplayName;
+
+		return building;
     }
 
 	/// <summary>

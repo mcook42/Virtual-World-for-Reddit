@@ -241,7 +241,6 @@ public class ForceDirectedLayout
 			}
 
 			iterations++;
-			Debug.Log (totalDisplacement);
 	}
 
 		return graph;

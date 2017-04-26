@@ -30,12 +30,9 @@ public class Line: MonoBehaviour
 	{
 		if (pt1 != null && pt2 != null) {
 			Vector2 position1 = pt1.position;
-			Debug.Log ("Position 1: " + position1);
 			Vector2 position2 = pt2.position;
-			Debug.Log ("Position 2: " + position2);
 
 			Vector2 center = ((position1 - position2) / 2) + position2;
-			Debug.Log ("cetner : " + center);
 			float length = (position1 - position2).magnitude;
 
 

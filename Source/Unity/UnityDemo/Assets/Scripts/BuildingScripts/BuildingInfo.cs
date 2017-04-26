@@ -11,5 +11,6 @@ public class BuildingInfo : MonoBehaviour {
     public Subreddit subreddit;
 
     public float height;
+	public float footprint;
 
 }

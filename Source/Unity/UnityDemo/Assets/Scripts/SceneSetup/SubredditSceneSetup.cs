@@ -52,7 +52,6 @@ class SubredditSceneSetup : SceneSetUp, LoginObserver
 	{
 		RedditSharp.Things.Subreddit subreddit = SubredditSceneState.instance.currentSubreddit.GetComponent<BuildingInfo> ().subreddit;
 		subreddit.Reddit = GameInfo.instance.reddit;
-		Debug.Log (GameInfo.instance.reddit);
 		foreach (Transform thread in threads.transform) {
 
 			thread.GetComponent<BuildingThread> ().thread.Reddit = GameInfo.instance.reddit;
@@ -135,12 +134,18 @@ class SubredditSceneSetup : SceneSetUp, LoginObserver
 
         RedditSharp.Things.Post[] post;
 		int threadNum = threads.transform.childCount;
+		try{
         if (sortingMethod == RedditSharp.Things.Sort.Hot)
             post = subreddit.Hot.Take(threadNum).ToArray();
         else if (sortingMethod == RedditSharp.Things.Sort.New)
             post = subreddit.New.Take(threadNum).ToArray();
         else 
 			post= subreddit.GetTop(RedditSharp.Things.FromTime.All).Take(threadNum).ToArray();
+		}
+		catch(Exception e) {
+			GameInfo.instance.menuController.GetComponent<MenuController> ().loadFatalErrorMenu (e.Message);
+			return;
+		}
 
 
         if (threads != null)

@@ -43,7 +43,6 @@ class SubredditDomeToSubredditTransition : SceneTransition
         DontDestroyOnLoad(building);
         SubredditSceneState.instance.init(building);
         
-        
     }
 
 }

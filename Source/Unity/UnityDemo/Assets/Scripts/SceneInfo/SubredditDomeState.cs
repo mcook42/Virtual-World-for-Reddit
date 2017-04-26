@@ -12,8 +12,9 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 
 	public Node<Subreddit> center;
 	public bool house { get; set; } //If the house is too be loaded in.
+	public bool loadNew {get; set;} //If we are loading from the map or start as opposed to exiting a building.
 	//where the player spawns
-	public Vector3 playerSpawnPoint = new Vector3(SubredditDomeSetup.buildingFootprint,1,1);
+	public Vector3 playerSpawnPoint = new Vector3(SubredditDomeSetup.buildingFootprint+6,1,1);
 	public Quaternion playerSpawnRotation = new Quaternion();
 
 	/// <summary>
@@ -88,12 +89,17 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 				subs = GameInfo.instance.reddit.GetDefaultSubreddits();
 			}
 
+			int limit = SubredditDomeSetup.innerBuildNum+SubredditDomeSetup.outerBuildNum;
 			//Add the nodes to the graph.
 			foreach(var sub in subs)
 			{
 				Node<Subreddit> node = new Node<Subreddit>(sub);
 				temp.AddNode(node);
-				temp.AddDirectedEdge(centerNode,node,1);
+				temp.AddUndirectedEdge(centerNode,node,1);
+
+				limit--;
+				if(limit<=0)
+					break;
 			}
 
 
