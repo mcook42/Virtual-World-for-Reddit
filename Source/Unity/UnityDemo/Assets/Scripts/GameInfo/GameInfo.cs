@@ -58,8 +58,7 @@ public class GameInfo : MonoBehaviour {
 	{
 
 		fatalError = false;
-
-		initializeMap ();
+		map = new Graph<Subreddit> ();
         
         if (instance == null) 
 		{
@@ -75,15 +74,7 @@ public class GameInfo : MonoBehaviour {
 
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
     }
-
-	/// <summary>
-	/// Initializes the map.
-	/// </summary>
-	public void initializeMap()
-	{
-			map =server.getMap();
-
-	}
+		
 		
 
     /// <summary>

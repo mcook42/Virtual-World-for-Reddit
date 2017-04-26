@@ -12,6 +12,7 @@ using System.Text;
 using RedditSharp;
 using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.FirstPerson;
 
 /// <summary>
 /// Takes the scene threadsParent and initializes the thread doors.
@@ -81,7 +82,7 @@ class SubredditSceneSetup : SceneSetUp, LoginObserver
     /// </summary>
     protected override void setPlayerState()
     {
-        GameInfo.instance.player.transform.position = new UnityEngine.Vector3(0, 1, 0);
+        GameInfo.instance.player.transform.position = new UnityEngine.Vector3(0, 1, 13);
     }
 
 	/// <summary>
@@ -133,12 +134,13 @@ class SubredditSceneSetup : SceneSetUp, LoginObserver
 
 
         RedditSharp.Things.Post[] post;
+		int threadNum = threads.transform.childCount;
         if (sortingMethod == RedditSharp.Things.Sort.Hot)
-            post = subreddit.Hot.Take(12).ToArray();
+            post = subreddit.Hot.Take(threadNum).ToArray();
         else if (sortingMethod == RedditSharp.Things.Sort.New)
-            post = subreddit.New.Take(12).ToArray();
+            post = subreddit.New.Take(threadNum).ToArray();
         else 
-            post= subreddit.GetTop(RedditSharp.Things.FromTime.All).Take(12).ToArray();
+			post= subreddit.GetTop(RedditSharp.Things.FromTime.All).Take(threadNum).ToArray();
 
 
         if (threads != null)
@@ -147,7 +149,10 @@ class SubredditSceneSetup : SceneSetUp, LoginObserver
             int i = 0;
             foreach (Transform thread in threads.transform)
             {
-				
+				if (i > threadNum - 1) {
+					break;
+				}
+
 				thread.GetComponent<BuildingThread>().thread = post[i];
                 thread.GetComponent<BuildingThread>().threadName = post[i].Title;
                 

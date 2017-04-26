@@ -2,13 +2,13 @@ Mono path[0] = 'C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/
 Mono path[1] = 'C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/Unity/UnityDemo/test_Data/Mono'
 Mono config path = 'C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/Unity/UnityDemo/test_Data/Mono/etc'
 PlayerConnection initialized from C:/Users/caleb/Documents/GitHub/Virtual-World-for-Reddit/Source/Unity/UnityDemo/test_Data (debug = 0)
-PlayerConnection initialized network socket : 0.0.0.0 55059
-Multi-casting "[IP] 192.168.56.1 [Port] 55059 [Flags] 3 [Guid] 796900634 [EditorId] 3319172826 [Version] 1048832 [Id] WindowsPlayer(DESKTOP-ONBFJJ4) [Debug] 1" to [225.0.0.222:54997]...
-Waiting for connection from host on [0.0.0.0:55059]...
-PlayerConnection accepted from [192.168.1.133] handle:0x2f8
-Started listening to [0.0.0.0:55059]
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56634
-PlayerConnection already initialized - listening to [0.0.0.0:55059]
+PlayerConnection initialized network socket : 0.0.0.0 55158
+Multi-casting "[IP] 192.168.56.1 [Port] 55158 [Flags] 3 [Guid] 4009161800 [EditorId] 3829818096 [Version] 1048832 [Id] WindowsPlayer(DESKTOP-ONBFJJ4) [Debug] 1" to [225.0.0.222:54997]...
+Waiting for connection from host on [0.0.0.0:55158]...
+PlayerConnection accepted from [192.168.1.133] handle:0x2f4
+Started listening to [0.0.0.0:55158]
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56800
+PlayerConnection already initialized - listening to [0.0.0.0:55158]
 Initialize engine version: 5.5.0f3 (38b4efef76f0)
 GfxDevice: creating device client; threaded=1
 Direct3D:
@@ -38,7 +38,7 @@ Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Sour
 Loading C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\test_Data\Managed\RedditSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\test_Data\Managed\System.Threading.dll (this message is harmless)
 Loading C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\test_Data\Managed\System.Threading.dll into Unity Child Domain
-- Completed reload, in  0.468 seconds
+- Completed reload, in  0.506 seconds
 Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\test_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\test_Data\Managed\System.dll (this message is harmless)
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
@@ -52,25 +52,16 @@ The referenced script on this Behaviour (Game Object 'MenuCommands') is missing!
 
 Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\test_Data\Managed\System.Configuration.dll (this message is harmless)
 Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\test_Data\Managed\System.Xml.dll (this message is harmless)
-UnloadTime: 3.561058 ms
+UnloadTime: 2.166979 ms
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 2234 -> priority: 1 
+  Thread -> id: 29b0 -> priority: 1 
 Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\test_Data\Managed\Mono.Security.dll (this message is harmless)
 Platform assembly: C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\test_Data\Managed\System.Data.dll (this message is harmless)
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.117363 ms
-System memory in use before: 22.8 MB.
-System memory in use after: 22.9 MB.
+UnloadTime: 0.275334 ms
+System memory in use before: 22.6 MB.
+System memory in use after: 22.7 MB.
 
 Unloading 104 unused Assets to reduce memory usage. Loaded Objects now: 1451.
-Total: 1.879149 ms (FindLiveObjects: 0.120486 ms CreateObjectMapping: 0.108438 ms MarkObjects: 1.589088 ms  DeleteObjects: 0.047748 ms)
+Total: 2.484261 ms (FindLiveObjects: 0.123164 ms CreateObjectMapping: 0.085233 ms MarkObjects: 2.188399 ms  DeleteObjects: 0.073630 ms)
 
-Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.277649 ms
-System memory in use before: 23.8 MB.
-System memory in use after: 22.5 MB.
-
-Unloading 489 unused Assets to reduce memory usage. Loaded Objects now: 1706.
-Total: 2.716310 ms (FindLiveObjects: 0.149939 ms CreateObjectMapping: 0.092819 ms MarkObjects: 1.890752 ms  DeleteObjects: 0.581460 ms)
-
-Waiting for finish

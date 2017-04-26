@@ -33,9 +33,6 @@ public class MapMenu : Menu, LoginObserver, IScrollHandler {
 
 	private List<GameObject> lines = new List<GameObject> ();
 
-
-
-
 	public static float maxNodeSize{ get { return 3; } }
 
 	//Adds this object to the LoginObservers and then draws the graph.
@@ -138,7 +135,7 @@ public class MapMenu : Menu, LoginObserver, IScrollHandler {
 
 		rectangle.sizeDelta = new Vector2(ForceDirectedLayout.maxPosition*2+maxNodeSize*2, ForceDirectedLayout.maxPosition*2+maxNodeSize*2);
 
-
+		int limit = 15;
 		foreach (Node<Subreddit> node in GameInfo.instance.map)
         {
 			
@@ -162,8 +159,14 @@ public class MapMenu : Menu, LoginObserver, IScrollHandler {
 
 
 			button.GetComponent<Button>().onClick.AddListener(() => clickOnNode(node));
+
+			limit--;
+			if (limit < 0)
+				break;
         }
 			
+
+		content.transform.localScale = new Vector3 (0.9f, 0.9f, 1);
         
     }
 
@@ -278,12 +281,11 @@ public class MapMenu : Menu, LoginObserver, IScrollHandler {
 	public void OnScroll(PointerEventData eventData)
 	{
 		
-		float scrollSpeed = 0.01f;
+		float scrollSpeed = 0.05f;
 		Vector2 scrollDelta = eventData.scrollDelta;
 
 		float newScale;
 		newScale = (scrollDelta.y * scrollSpeed) + content.transform.localScale.x;
-		Debug.Log (newScale);
 		if (newScale <= maxMapScale && newScale >= minMapScale)
 			content.transform.localScale = new Vector3 (newScale, newScale,1);
 

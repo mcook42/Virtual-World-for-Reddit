@@ -146,19 +146,7 @@ public class Server
 
 		return graph;
 	}
-
-	/// <summary>
-	/// Gets the map.
-	/// </summary>
-	/// <returns>The map.</returns>
-	public Graph<Subreddit> getMap()
-	{
-		Graph<Subreddit> graph = new Graph<Subreddit> ();
-		Subreddit sub = new Subreddit ();
-		sub.DisplayName = "/r/AskReddit";
-		graph.AddNode (sub);
-		return graph;
-	}
+		
 
 	/// <summary>
 	/// Removes the /r/ and any slashes from a subreddits name. 

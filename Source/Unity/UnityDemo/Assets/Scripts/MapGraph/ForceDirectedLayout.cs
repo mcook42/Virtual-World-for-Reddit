@@ -99,7 +99,6 @@ public class ForceDirectedLayout
 
 			nodesInRadius--;
 			angle += (radius * Mathf.PI * 2 / nodesInRadius);
-
 			if (nodesInRadius < 1) {
 				radius += nodeSize * 3;
 				nodesInRadius = radius * Mathf.PI * 2 / (nodeSize * 3);
