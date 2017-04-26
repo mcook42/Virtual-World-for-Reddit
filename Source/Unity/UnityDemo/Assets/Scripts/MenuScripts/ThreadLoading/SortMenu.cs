@@ -31,7 +31,7 @@ public class SortMenu : Menu{
 		GameInfo.instance.menuController.GetComponent<MenuController>().loadLoadingMenu();
 		SubredditSceneState.instance.subbredditSetup.GetComponent<SubredditSceneSetup>().loadThreads(sortingMethod);
 		Destroy (gameObject);
-		Debug.Log("Sorting!");
+		System.Threading.Thread.Sleep(2000);
 		GameInfo.instance.setCursorLock (false);
 		GameInfo.instance.menuController.GetComponent<MenuController>().unLoadLoadingMenu();
 

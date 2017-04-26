@@ -23,6 +23,7 @@ public class MenuController : MonoBehaviour {
 	public GameObject mapMenuPrefab;
 	public GameObject loadingMenuPrefab;
 	private GameObject loadingMenu;
+	public GameObject sortMenuPrefab;
 
 	//number of menus currently loaded. This is used to tell if the player is still in the menu screen.
 	public int menusLoaded = 0;
@@ -52,7 +53,8 @@ public class MenuController : MonoBehaviour {
 	public void removeMenu()
 	{
 		lock (menusLoadedLock) {
-			menusLoaded--;
+			if(menusLoaded>0)
+				menusLoaded--;
 			if (GameInfo.instance.menuController.GetComponent<MenuController> ().menusLoaded <= 0) {
 				GameInfo.instance.setCursorLock (true);
 				Time.timeScale = 1;
@@ -67,7 +69,8 @@ public class MenuController : MonoBehaviour {
 			}
 
 			if (Input.GetKeyDown ("e")) {
-				GameInfo.instance.menuController.GetComponent<MenuController> ().loadFatalErrorMenu("You can't press that");
+				if(GameInfo.instance.currentState is SubredditSceneState)
+					loadSortMenu ();
 			}
 				
 
@@ -76,6 +79,15 @@ public class MenuController : MonoBehaviour {
 			}
 				
 		}
+	}
+
+	/// <summary>
+	/// Loads the sort menu.
+	/// </summary>
+	public void loadSortMenu()
+	{
+		var sortMenu = Instantiate (sortMenuPrefab);
+		sortMenu.GetComponent<SortMenu> ().init ();
 	}
 
 	/// <summary>

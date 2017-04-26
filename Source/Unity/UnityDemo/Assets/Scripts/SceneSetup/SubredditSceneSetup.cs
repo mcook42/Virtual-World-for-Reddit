@@ -149,7 +149,7 @@ class SubredditSceneSetup : SceneSetUp, LoginObserver
             int i = 0;
             foreach (Transform thread in threads.transform)
             {
-				if (i > threadNum - 1) {
+				if (i > threadNum - 1 || i>post.Count()-1) {
 					break;
 				}
 
