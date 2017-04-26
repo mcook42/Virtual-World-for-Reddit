@@ -1,11 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameInfo\GameInfo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\SceneSetup\SubredditDomeSetup.cs">
     <Files>
-      <File FileName="Assets\Scripts\MenuScripts\FatalErrorMenu.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MapGraph\ForceDirectedLayout.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameInfo\GameInfo.cs" Line="61" Column="33" />
-      <File FileName="Assets\Scripts\SceneInfo\SubredditDomeState.cs" Line="73" Column="1" />
+      <File FileName="Assets\Scripts\Editor\GenerateBuildingPositions.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\SceneSetup\SubredditDomeSetup.cs" Line="17" Column="47" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

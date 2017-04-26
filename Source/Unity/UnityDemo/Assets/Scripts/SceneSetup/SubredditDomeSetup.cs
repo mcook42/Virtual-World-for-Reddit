@@ -11,9 +11,9 @@ using Graph;
 public class SubredditDomeSetup : SceneSetUp, LoginObserver{
 
 	//Constant values
-	public static readonly float innerCircleSize = 80;
-	public static readonly float outerCircleSize = 160;
-	public static readonly int buildingFootprint = 40;
+	public static readonly float innerCircleSize = 60;
+	public static readonly float outerCircleSize = 100;
+	public static readonly int buildingFootprint = 30;
 	public static readonly int minPathWidth = 10;
 	public static readonly int maxPathWidth = 30;
 	public static readonly int innerBuildNum = 6;
