@@ -1,7 +1,7 @@
-﻿/**GameInfo.cs
-* Caleb Whitman
-* January 28, 2017
-*/
+﻿/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 
 using System.Collections;
 using System.Collections.Generic;
@@ -32,14 +32,12 @@ public class GameInfo : MonoBehaviour {
 	public WebAgent webAgent {get {return redditRetriever.webAgent;}}
     #endregion
 
+
 	#region Server
 	public Server server = new Server();
 
 	#endregion
 
-
-
-    public static GameInfo instance = null;
 
     public GameObject player;
 
@@ -51,6 +49,8 @@ public class GameInfo : MonoBehaviour {
 
 	public bool fatalError { get; set; }
 
+
+	public static GameInfo instance = null;
     /// <summary>
     /// Initializes the Reddit Object and loads the main menu scene.
     /// </summary>
@@ -76,7 +76,6 @@ public class GameInfo : MonoBehaviour {
     }
 		
 		
-
     /// <summary>
     /// Enables or disables the cursor.
     /// </summary>

@@ -1,8 +1,7 @@
-﻿/**SceneInfo.cs
- * Caleb Whitman
- * January 28, 2017
- * 
- */
+﻿/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 
 using System;
 using System.Collections.Generic;

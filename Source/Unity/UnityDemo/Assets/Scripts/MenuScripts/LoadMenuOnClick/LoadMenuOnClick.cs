@@ -2,6 +2,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 
 /// <summary>
 /// Instantiates and loads a menu when the user clicks on the object this script is attatched too.

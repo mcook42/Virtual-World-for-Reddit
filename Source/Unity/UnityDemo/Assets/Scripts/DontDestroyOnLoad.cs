@@ -1,9 +1,7 @@
-﻿/* DontDestroyOnLoad.cs
- * Author: Caleb Whitman
- * October 29, 2016
- * 
- * 
- */
+﻿/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 
 using UnityEngine;
 using System.Collections;

@@ -4,6 +4,11 @@ using UnityEngine;
 using RedditSharp.Things;
 using UnityEngine.UI;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// Displays the comment as an item in a list. Action buttons are missing and post and subreddit are displayed.
 /// </summary>
@@ -11,6 +16,8 @@ public class CommentItemInfo : CreatedInfo {
 
 	public GameObject postTitle;
 	public GameObject viewButton;
+	public GameObject author;
+	public GameObject time;
 
 	public GameObject body;
 
@@ -27,7 +34,7 @@ public class CommentItemInfo : CreatedInfo {
 		postTitle.GetComponent<Text> ().text = comment.LinkTitle;
 		body.GetComponent<Text> ().text = comment.Body;
 		author.GetComponent<Text> ().text = comment.Author;
-		time.GetComponent<Text> ().text = comment.Created.ToString();
+		time.GetComponent<Text> ().text = getTimeCreated (comment.CreatedUTC);
 		upvotes.GetComponent<Text> ().text = "Upvotes: "+comment.Upvotes;
 
 	}

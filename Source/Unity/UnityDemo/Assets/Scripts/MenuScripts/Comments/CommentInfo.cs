@@ -6,6 +6,11 @@ using UnityEngine.UI;
 using System.Net;
 using RedditSharp;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// Holds the information related to the comment.
 /// </summary>
@@ -17,7 +22,8 @@ public class CommentInfo : VotableInfo {
 
 	//children
 	public GameObject childPanel;
-	  
+	public GameObject author;
+	public GameObject time;
 
 	//buttons
 	public GameObject loadMorePanel;
@@ -49,7 +55,7 @@ public class CommentInfo : VotableInfo {
 		}
 
 		author.GetComponent<Text> ().text = dotPadding+comment.Author;
-		time.GetComponent<Text> ().text = comment.Created.ToString();
+		time.GetComponent<Text> ().text = getTimeCreated (comment.CreatedUTC);
 		upvotes.GetComponent<Text> ().text = "Upvotes:"+comment.Upvotes;
 		body.GetComponent<Text> ().text = comment.Body;
 

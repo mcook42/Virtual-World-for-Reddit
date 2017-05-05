@@ -1,8 +1,7 @@
-﻿/**SubredditSceneState.cs
- * Author: Caleb Whitman
- * January 29, 2017
- * 
- */
+﻿/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 
 
 using System;
@@ -35,18 +34,7 @@ class SubredditSceneState : SceneStateSingleton<SubredditSceneState>
         this.currentSubreddit = currentSubreddit;
         currentSubreddit.SetActive(false);
     }
-
-    /// <summary>
-    /// TODO
-    /// Sets all held gameObjects to null.
-    /// Does not destroy the gameObjects on the chance that they will be needed again.
-    /// </summary>
-    public override void clear()
-    {
-        subbredditSetup = null;
-        if (currentSubreddit != null)
-            GameObject.Destroy(currentSubreddit);
-    }
+		
 
     /// <summary>
     /// Destroys all gameObjects and resets all values.

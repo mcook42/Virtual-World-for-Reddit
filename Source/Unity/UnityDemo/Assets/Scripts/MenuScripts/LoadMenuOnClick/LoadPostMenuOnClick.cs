@@ -2,6 +2,11 @@
 using UnityEngine;
 using RedditSharp.Things;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// Load post menu on click.
 /// </summary>

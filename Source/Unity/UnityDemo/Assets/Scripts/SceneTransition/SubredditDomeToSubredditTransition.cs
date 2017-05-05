@@ -6,6 +6,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
+/// <summary>
+/// Loads the inside of a building from the SubredditDome.
+/// </summary>
 class SubredditDomeToSubredditTransition : SceneTransition
 {
 
@@ -21,7 +29,6 @@ class SubredditDomeToSubredditTransition : SceneTransition
         //Saves the building the player is going into.
         saveCurrentBuilding(gameObject.transform.parent.gameObject);
 		SubredditDomeState.instance.playerSpawnPoint = GameInfo.instance.player.transform.position;
-        SubredditDomeState.instance.clear();
 		GameInfo.instance.menuController.GetComponent<MenuController> ().clearMenus ();
         SceneManager.LoadScene("SubredditBuilding");
 

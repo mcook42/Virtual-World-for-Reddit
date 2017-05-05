@@ -5,6 +5,14 @@ using UnityEngine.UI;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
+/// <summary>
+/// A simple menu that gets a user's username and password before sending them to the authorization menu.
+/// </summary>
 public class LogInMenu : Menu {
 
 	public InputField username;

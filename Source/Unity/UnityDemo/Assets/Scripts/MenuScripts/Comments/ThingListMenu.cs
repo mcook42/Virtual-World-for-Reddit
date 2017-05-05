@@ -7,6 +7,11 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Collections.Generic;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// A menu that displays a list of Reddit things.
 /// </summary>

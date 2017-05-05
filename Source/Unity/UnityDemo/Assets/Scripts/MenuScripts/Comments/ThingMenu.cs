@@ -4,6 +4,10 @@ using RedditSharp.Things;
 using System.Collections;
 using System.Collections.Generic;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 
 /// <summary>
 /// An Abstract class with methods for organizing the comments.

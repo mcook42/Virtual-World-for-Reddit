@@ -1,9 +1,7 @@
-﻿/**SubredditSceneSetup.cs
- * Author: Caleb Whitman
- * January 29, 2017
- * 
- */
-
+﻿/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 
 using System;
 using System.Collections.Generic;
@@ -13,6 +11,7 @@ using RedditSharp;
 using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.Characters.FirstPerson;
+using RedditSharp.Things;
 
 /// <summary>
 /// Takes the scene threadsParent and initializes the thread doors.
@@ -50,12 +49,8 @@ class SubredditSceneSetup : SceneSetUp, LoginObserver
 	/// <param name="login">Resets the Reddit object in the posts.</param>
 	public void notify(bool login)
 	{
-		RedditSharp.Things.Subreddit subreddit = SubredditSceneState.instance.currentSubreddit.GetComponent<BuildingInfo> ().subreddit;
-		subreddit.Reddit = GameInfo.instance.reddit;
-		foreach (Transform thread in threads.transform) {
-
-			thread.GetComponent<BuildingThread> ().thread.Reddit = GameInfo.instance.reddit;
-		}
+		SubredditSceneState.instance.currentSubreddit.GetComponent<BuildingInfo> ().subreddit= GameInfo.instance.redditRetriever.reloadSubreddit (SubredditSceneState.instance.currentSubreddit.GetComponent<BuildingInfo> ().subreddit.DisplayName);
+		loadThreads(SubredditSceneState.instance.firstThreadLoaded, SubredditSceneState.instance.sortingMethod, false);
 	}
 
 	#endregion
@@ -167,7 +162,7 @@ class SubredditSceneSetup : SceneSetUp, LoginObserver
                     name.text = ResolveTextSize(post[i].Title, 50);
 				//change size based on number of lines
 				int numLines = name.text.Split('\n').Length;
-				float scaleFactor = Mathf.Max (numLines - 2, 1);
+				float scaleFactor = Mathf.Max ((numLines - 2)/2, 1);
 				name.transform.localScale = new Vector3 (name.transform.localScale.x, name.transform.localScale.y/scaleFactor, name.transform.localScale.z);
 				//set background
 				thread.FindChild ("Background").localScale = new Vector3 (0.4f,1.0f , 0.9f);

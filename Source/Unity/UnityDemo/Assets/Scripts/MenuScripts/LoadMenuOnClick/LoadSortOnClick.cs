@@ -4,6 +4,11 @@
 * Email: calebrwhitman@gmail.com
 */
 
+/**Caleb Whitman
+* calebrwhitman@gmail.com
+* Spring 2017
+*/ 
+
 using System;
 using System.Collections;
 using System.Collections.Generic;

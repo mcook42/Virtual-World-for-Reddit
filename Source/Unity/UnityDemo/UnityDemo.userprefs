@@ -1,18 +1,23 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\SceneSetup\SubredditDomeSetup.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\SceneTransition\AllToMainTransition.cs">
     <Files>
-      <File FileName="Assets\Scripts\SceneTransition\SubredditDometoSubredditDomeTransition.cs" Line="89" Column="2" />
-      <File FileName="Assets\Scripts\SceneSetup\SubredditDomeSetup.cs" Line="17" Column="45" />
-      <File FileName="Assets\Scripts\SceneInfo\SubredditDomeState.cs" Line="15" Column="109" />
-      <File FileName="Assets\Scripts\SceneTransition\SubredditToSubredditDomeTransition.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\SceneSetup\SubredditSceneSetup.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MenuScripts\Comments\PostInfo.cs" Line="9" Column="5" />
+      <File FileName="Assets\Scripts\SceneSetup\SubredditSceneSetup.cs" Line="22" Column="36" />
+      <File FileName="Assets\Scripts\SceneTransition\AllToMainTransition.cs" Line="31" Column="24" />
+      <File FileName="Assets\Scripts\SceneInfo\SubredditDomeState.cs" Line="171" Column="6" />
+      <File FileName="Assets\Scripts\SceneInfo\SceneState.cs" Line="12" Column="2" />
+      <File FileName="Assets\Scripts\SceneInfo\SubredditSceneState.cs" Line="37" Column="3" />
+      <File FileName="Assets\Scripts\SceneInfo\HouseState.cs" Line="12" Column="49" />
+      <File FileName="Assets\Scripts\SceneInfo\SceneStateSingleton.cs" Line="4" Column="5" />
+      <File FileName="Assets\Scripts\SceneTransition\SceneTransition.cs" Line="43" Column="40" />
+      <File FileName="Assets\Scripts\SceneTransition\SubredditDomeToSubredditTransition.cs" Line="31" Column="94" />
+      <File FileName="Assets\Scripts\SceneTransition\SubredditToSubredditDomeTransition.cs" Line="26" Column="37" />
+      <File FileName="Assets\Scripts\SceneSetup\SubredditDomeSetup.cs" Line="96" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="C:\Users\caleb\Documents\GitHub\Virtual-World-for-Reddit\Source\Unity\UnityDemo\Assets\Scripts\MenuScripts\Comments\ReplyMenu.cs" line="57" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

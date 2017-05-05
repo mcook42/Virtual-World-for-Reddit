@@ -1,6 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// An Observer interface that updates whenever a user logins or logouts.
 /// </summary>

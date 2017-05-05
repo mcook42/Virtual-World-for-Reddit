@@ -6,6 +6,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// Causes a small door popup to appear when walking up to a door.
 /// </summary>

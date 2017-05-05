@@ -1,6 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 
 /// <summary>
 /// Class all menu's inherit from. The Start and OnDestroy methods control the cursor, pause, and some key methods needed when opening/closing menus.

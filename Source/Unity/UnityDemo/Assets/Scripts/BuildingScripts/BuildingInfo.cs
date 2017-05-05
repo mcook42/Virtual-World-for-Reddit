@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using RedditSharp.Things;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// A simple script the stores the information related to the building.
 /// </summary>

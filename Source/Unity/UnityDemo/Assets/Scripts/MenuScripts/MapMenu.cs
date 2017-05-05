@@ -8,6 +8,14 @@ using Graph;
 using System.Net;
 using UnityEngine.EventSystems;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
+/// <summary>
+/// Controls the Map Menu, the menu with the map and subscriptions.
+/// </summary>
 public class MapMenu : Menu, LoginObserver, IScrollHandler {
 
 	//Map

@@ -5,36 +5,42 @@ using UnityEngine;
 using RedditSharp.Things;
 using Graph;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// Handles creation of the Subreddit Dome.
 /// </summary>
 public class SubredditDomeSetup : SceneSetUp, LoginObserver{
 
 	//Constant values
-	public static readonly float innerCircleSize = 60;
-	public static readonly float outerCircleSize = 100;
+	public readonly float innerCircleSize = 60;
+	public readonly float outerCircleSize = 100;
+	public readonly float domeSize = 300;
 	public static readonly int buildingFootprint = 30;
-	public static readonly int minPathWidth = 30;
-	public static readonly int maxPathWidth = 30;
-	public static readonly int innerBuildNum = 6;
-	public static readonly int outerBuildNum = 9;
+	public readonly int minPathWidth = 30;
+	public readonly int maxPathWidth = 30;
+	public readonly int innerBuildNum = 6;
+	public readonly int outerBuildNum = 9;
 
 
-    public GameObject center;
-    public GameObject buildingParent;
-	public GameObject pathParent;
 
+
+	//Objects in the world
+    private GameObject center;
+    private GameObject buildingParent;
+	private GameObject pathParent;
+	public GameObject dome;
+
+	//Prefabs
     public GameObject buildingPrefabSmall;
     public GameObject buildingPrefabMedium;
     public GameObject buildingPrefabLarge;
 	public GameObject frontPrefab;
 
 	public GameObject housePrefab;
-
-    public Material lowReadingMaterial;
-    public Material mediumReadingMaterial;
-    public Material highReadingMaterial;
-
 
 	#region LoginObserver
 
@@ -82,6 +88,7 @@ public class SubredditDomeSetup : SceneSetUp, LoginObserver{
 	/// </summary>
     protected override void setUpScene()
     {
+		generateBuildingPositions ();
 
 		if (SubredditDomeState.instance.house) {
 			instantiateHouse (center.transform);
@@ -114,6 +121,93 @@ public class SubredditDomeSetup : SceneSetUp, LoginObserver{
 
 
     }
+
+	/// <summary>
+	/// Generates the building positions depending on the fields in the above script.
+	/// </summary>
+	public void generateBuildingPositions()
+	{
+		buildingParent = new GameObject("buildingParent");
+		pathParent = new GameObject ("pathParent");
+
+		//set center
+		center = new GameObject("center");
+		center.transform.position = new Vector3(0, 0, 0);
+
+		//center inner buildings and paths
+		float innerRadius = (minPathWidth*innerBuildNum/(Mathf.PI*2))+(buildingFootprint/2)+buildingFootprint / (2 * Mathf.Tan(180 / innerBuildNum));
+
+		if(innerRadius<innerCircleSize)
+		{
+			innerRadius = innerCircleSize;
+		}
+
+		float innerAngle = 2*Mathf.PI / innerBuildNum;
+
+		UnityEngine.Object pathPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Buildings/Path.prefab", typeof(GameObject));
+
+		for (int i=0; i<innerBuildNum;i++)
+		{
+			GameObject building = new GameObject("Inner:" + i);
+			float x = innerRadius * Mathf.Cos(innerAngle * i);
+			float z =  innerRadius * Mathf.Sin(innerAngle * i);
+			building.transform.position = new Vector3(x, 0, z);
+			building.transform.eulerAngles = new Vector3(0,180+-innerAngle*i/(Mathf.PI*2)*360, 0);
+			building.transform.SetParent(buildingParent.transform);
+
+			GameObject path = Instantiate(pathPrefab) as GameObject;
+			path.transform.localScale = new Vector3(0.5f, 1, (innerRadius-2*buildingFootprint)/10);
+			Vector3 middle = building.transform.position - new Vector3(3*buildingFootprint * Mathf.Cos(innerAngle * i), 0.0f, 3*buildingFootprint* Mathf.Sin(innerAngle * i));
+			path.transform.position = new Vector3(middle.x, 0.01f, middle.z);
+			path.transform.LookAt(building.transform.position);
+			path.transform.SetParent(pathParent.transform);
+			path.name = "InnerPath:" + i;
+			path.SetActive (false);
+
+
+		}
+
+		//set outer buildings and positions
+		float outerRadius=3*buildingFootprint+ buildingFootprint / (2 * Mathf.Tan(180 / outerBuildNum));
+
+		if (outerRadius<outerCircleSize)
+		{
+
+			outerRadius = outerCircleSize;
+		}
+		if (outerRadius < innerRadius)
+		{
+			outerRadius = innerRadius + 2 * buildingFootprint;
+		}
+
+		float outerAngle= 2 * Mathf.PI / outerBuildNum;
+
+		for (int i = 0; i < outerBuildNum; i++)
+		{
+			GameObject building = new GameObject("Outer: " + i);
+			float x = outerRadius * Mathf.Cos(outerAngle * i);
+			float z = outerRadius * Mathf.Sin(outerAngle * i);
+			building.transform.position = new Vector3(x, 0, z);
+			building.transform.localScale = new Vector3(buildingFootprint, 5, buildingFootprint);
+			building.transform.eulerAngles = new Vector3(0, 180+-outerAngle*i / (Mathf.PI * 2) * 360, 0);
+			building.transform.SetParent(buildingParent.transform);
+
+			GameObject path = Instantiate(pathPrefab) as GameObject;
+			path.transform.localScale = new Vector3(0.5f, 1, (outerRadius-innerRadius) / 10);
+			Vector3 middle = building.transform.position - new Vector3((innerRadius) * Mathf.Cos(outerAngle * i), 0.0f, (innerRadius) * Mathf.Sin(outerAngle * i));
+			path.transform.position = new Vector3(building.transform.position.x-(middle.x/2), 0.01f, building.transform.position.z - (middle.z/2));
+			path.transform.LookAt(building.transform.position);
+			path.transform.SetParent(pathParent.transform);
+			path.name = "OuterPath:" + i;
+			path.SetActive (false);
+
+		}
+
+		//resize dome
+		dome.transform.localScale = new Vector3 (domeSize, domeSize, domeSize);
+
+	}
+
 
 	/// <summary>
 	/// Instantiates the building.

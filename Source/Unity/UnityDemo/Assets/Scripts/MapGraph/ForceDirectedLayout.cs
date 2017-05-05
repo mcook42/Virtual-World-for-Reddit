@@ -1,7 +1,10 @@
 ﻿using System;
 using Graph;
 using UnityEngine;
-
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 
 /// <summary>
 /// Draws the graph using a force directed layout algorithm. 

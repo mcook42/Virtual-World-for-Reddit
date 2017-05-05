@@ -1,5 +1,8 @@
 ﻿using System;
-
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 /// <summary>
 /// An exception thrown when the server cannot be accessed.
 /// </summary>

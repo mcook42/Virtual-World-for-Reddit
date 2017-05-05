@@ -5,6 +5,11 @@ using UnityEngine.UI;
 using System.Net;
 using RedditSharp;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// Allows the user to reply to a post or comment.
 /// </summary>
@@ -56,8 +61,6 @@ public class ReplyMenu : Menu
 			{
 				var newComment = comment.Reply (input.GetComponent<Text> ().text);
 				parent.addChild(newComment);
-
-			
 			}
 			else
 			{

@@ -4,6 +4,11 @@ using RedditSharp.Things;
 using System.Net;
 using UnityEngine.UI;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// An abstract class that represents a votable object.
 /// </summary>
@@ -144,6 +149,16 @@ public abstract class VotableInfo : CreatedInfo, LoginObserver
 		}
 	}
 
+	/// <summary>
+	/// Converts the reddit markdown into a string that unity can understand.
+	/// </summary>
+	/// <returns>A string that can be reconized by Unity.</returns>
+	/// <param name="markdown">string with Reddit markdown.</param>
+	public string convertRedditMarkdown(string markdown)
+	{
+
+		return null;
+	}
 }
 
 

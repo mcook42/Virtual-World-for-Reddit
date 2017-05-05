@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
+/// <summary>
+/// Loads the inside of the house.
+/// </summary>
 public class HouseSetup :SceneSetUp {
 	
 

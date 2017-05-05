@@ -7,6 +7,11 @@ using UnityEngine.SceneManagement;
 using RedditSharp.Things;
 using System.Security.Authentication;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// Handles traveling to a new subreddit dome.
 /// </summary>

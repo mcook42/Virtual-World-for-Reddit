@@ -6,6 +6,11 @@ using RedditSharp.Things;
 using System;
 using UnityEngine.UI;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// Creates the comments.
 /// </summary>

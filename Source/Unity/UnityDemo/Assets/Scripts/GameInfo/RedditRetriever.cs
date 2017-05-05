@@ -14,11 +14,17 @@ using HtmlAgilityPack;
 using System.Collections;
 using System.Threading.Tasks;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
+
 /// <summary>
 /// A class with a bunch of methods and fields to get the needed Reddit Object.
-/// Can return a non-logged in Reddit object and also provides the methods to log a user in.
-/// A Non-logged in reddit is created on start up, just access the reddit Field.
-/// Most of the methods in this class have the possibility to return somesort of web excpetion.
+/// Provides methods to get a logged in and non-logged in Reddit Object.
+/// A non-logged in reddit is created on construction, just access the Reddit field.
+/// Most of the methods in this class have the possibility to return some sort of web exception.
 /// Updates LoginObservers whenever the user logs in.
 /// </summary>
 public class RedditRetriever:LoginObservable
@@ -33,14 +39,14 @@ public class RedditRetriever:LoginObservable
 	private string app_uri = "https://127.0.0.1:65010/authorize_callback";
 	private Scope app_scopes = Scope.edit | Scope.flair | Scope.history | Scope.identity | Scope.modconfig | Scope.modflair | Scope.modlog | Scope.modposts | Scope.modwiki | Scope.mysubreddits | Scope.privatemessages | Scope.read | Scope.report | Scope.save | Scope.submit | Scope.subscribe | Scope.vote | Scope.wikiedit | Scope.wikiread;
 
-	//These values will be retrieved from the code as needed.
+	//This value will be created by the code before a request.
 	private static string app_state = "";
 
-	//RedditSharpStuff
+	//RedditSharp Stuff
 	public WebAgent webAgent;
 	public AuthProvider authProvider;
 
-	//WebStuff:
+	//Web Stuff
 	HttpWebRequest request = null;
 	CookieContainer cookies = new CookieContainer();
 	private string cookieHeader = "";
@@ -49,6 +55,10 @@ public class RedditRetriever:LoginObservable
 	private readonly string logInUrl = "https://www.reddit.com/api/login/";
 	private readonly string authorizeUrl = "https://ssl.reddit.com/api/v1/authorize";
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="RedditRetriever"/> class.
+	/// Initializes the Reddit and web agent object.
+	/// </summary>
 	public RedditRetriever ()
 	{
 		//WebAgent has a bunch of functions and parameters used for making requests.
@@ -71,16 +81,14 @@ public class RedditRetriever:LoginObservable
 
 	/// <summary>
 	/// Connects to Reddit and returns the Reddit Object.
-	/// If we are unable to connect to Reddit  Object, then the fatalError menu will be called and null will be returned.
+	/// If we are unable to connect to Reddit, then the FatalError menu will be instantiated and null will be returned.
 	/// </summary>
-	/// <returns>The Reddit Object if we are able to connect or null otherwise..</returns>
+	/// <returns>The Reddit Object if we are able to connect or null otherwise.</returns>
 	public Reddit getRedditObject()
 	{
 
 		try
 		{
-
-
 			//Sets up the rest of the webAgent. authProvider isn't really even needed after this.
 			authProvider = new AuthProvider(app_id, app_secret, app_uri, webAgent);
 
@@ -229,10 +237,10 @@ public class RedditRetriever:LoginObservable
 	public Dictionary<string,string> getAppScopeDescriptions()
 	{
 		string json= string.Empty;
+
 		//Make the request to get the login destination webpage.
 		request = (HttpWebRequest)WebRequest.Create(new Uri("https://www.reddit.com/api/v1/scopes"));
 		request.Method = "GET";
-		//request.ContentType = "application/x-www-form-urlencoded";
 		request.UserAgent = "Mozilla/5.0 (.NET CLR 2.0) "+user_agent;
 		request.Referer = "https://www.reddit.com/";
 		request.AllowAutoRedirect = true;
@@ -240,7 +248,7 @@ public class RedditRetriever:LoginObservable
 		request.CookieContainer=cookies;
 		request.Headers.Add("Cookie", cookieHeader);
 
-		//BugFix_CookieDomain(cookies);
+
 		//Actually make the request.
 		using (HttpWebResponse response = (HttpWebResponse)request.GetResponse ()) {
 
@@ -250,6 +258,7 @@ public class RedditRetriever:LoginObservable
 
 		}
 
+		//Parsing the JSON.
 		Dictionary<string,string> dict = new Dictionary<string,string> ();
 		JToken scopes = JToken.Parse(json);
 
@@ -348,7 +357,7 @@ public class RedditRetriever:LoginObservable
 	{
 		var authToken = authProvider.GetOAuthToken (code);
 		reddit = new Reddit (authToken);
-		notifyOvservers (true);
+		notifyObservers (true);
 
 	}
 
@@ -358,7 +367,7 @@ public class RedditRetriever:LoginObservable
 	public void logout()
 	{
 		reddit = getRedditObject ();
-		notifyOvservers (false);
+		notifyObservers (false);
 	}
 
 	/// <summary>
@@ -392,18 +401,30 @@ public class RedditRetriever:LoginObservable
 
 	List<LoginObserver> observers = new List<LoginObserver> ();
 
+	/// <summary>
+	/// Register the specified observer.
+	/// </summary>
+	/// <param name="anObserver">An observer.</param>
 	public void register (LoginObserver anObserver)
 	{
 		observers.Add (anObserver);
 	}
 
+	/// <summary>
+	/// Unregister an observer.
+	/// </summary>
+	/// <param name="anObserver">An observer.</param>
 	public void unRegister (LoginObserver anObserver)
 	{
 		observers.Remove (anObserver);
 
 	}
 
-	private void notifyOvservers(bool login)
+	/// <summary>
+	/// Notifies the ovservers that a user has logged in or out.
+	/// </summary>
+	/// <param name="login">Set to true when a user logs in and false when a user logs out.</param>
+	private void notifyObservers(bool login)
 	{
 		foreach (var observer in observers) {
 
@@ -412,32 +433,20 @@ public class RedditRetriever:LoginObservable
 	}
 
 	#endregion
-	//From http://stackoverflow.com/questions/1047669/cookiecontainer-bug
-	//Fix cookie containter bug.
-	private void BugFix_CookieDomain(CookieContainer cookieContainer)
+
+	/// <summary>
+	/// Reloads the subreddit.
+	/// </summary>
+	/// <param name="displayName">Subreddit display name.</param>
+	/// <returns>The subreddit reloaded</returns>
+	public Subreddit reloadSubreddit(string displayName)
 	{
-		
-		CookieCollection table = (CookieCollection)cookieContainer.GetType().InvokeMember("cookies",
-			System.Reflection.BindingFlags.NonPublic |
-			System.Reflection.BindingFlags.GetField |
-			System.Reflection.BindingFlags.Instance,
-			null,
-			cookieContainer,
-			new object[] { });
-		foreach (Cookie cookie in table)
-		{
-			
-			string key = (cookie.Domain);
-			if (key[0] == '.')
-			{
-				string newKey = key.Remove(0, 1);
-				cookie.Domain = newKey;
-			}
-
-		}
+		if (displayName == "Front Page")
+			return reddit.FrontPage;
+		if (displayName == "/r/all")
+			return reddit.RSlashAll;
+		return reddit.GetSubreddit (displayName);
 	}
-
-
 
 }
 

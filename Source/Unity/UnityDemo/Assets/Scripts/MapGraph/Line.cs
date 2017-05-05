@@ -4,6 +4,11 @@ using UnityEngine.UI;
 using Graph;
 using RedditSharp.Things;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// The class that draws the lines between the objects.
 /// </summary>

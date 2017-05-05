@@ -7,6 +7,10 @@ using UnityEngine;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 
 /// <summary>
 /// Handles communication with the server.
@@ -18,14 +22,6 @@ public class Server
 	private readonly string serverIP = "69.146.92.116";
 	private readonly Int32 port = 4269;
 
-	/**[MenuItem("Servertest/test")]
-	public static void testServer()
-	{
-		Server server = new Server ();
-		server.getJSONMap ("funny");
-
-	}
-*/
 
 	public Server ()
 	{

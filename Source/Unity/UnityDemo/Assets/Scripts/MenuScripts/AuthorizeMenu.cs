@@ -5,6 +5,11 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using UnityEngine.UI;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// The menu to let the user allow our application to access their account. 
 /// Is created after a user logs in.

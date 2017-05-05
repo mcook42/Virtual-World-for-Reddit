@@ -3,6 +3,11 @@ using RedditSharp.Things;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// Displays post information, like title, author, upvotes etc.
 /// Attached to the post object.
@@ -14,6 +19,9 @@ public class PostInfo : CreatedInfo
 	public GameObject title;
 	public GameObject commentNum;
 	public GameObject viewButton;
+	public GameObject author;
+	public GameObject time;
+
 
 	public GameObject PostCommentMenuPrefab;
 	/// <summary>
@@ -25,7 +33,7 @@ public class PostInfo : CreatedInfo
 		title.GetComponent<Text> ().text = post.Title;
 		commentNum.GetComponent<Text> ().text = "Comment #:" + post.CommentCount;
 		author.GetComponent<Text> ().text = post.AuthorName;
-		time.GetComponent<Text> ().text = post.Created.ToString();
+		time.GetComponent<Text> ().text = getTimeCreated (post.CreatedUTC);
 		upvotes.GetComponent<Text> ().text = "Upvotes:"+post.Upvotes;
 
 		thing = post;

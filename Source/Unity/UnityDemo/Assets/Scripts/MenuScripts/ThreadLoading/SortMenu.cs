@@ -4,6 +4,11 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 public class SortMenu : Menu{
 
 	public void init()

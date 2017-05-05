@@ -1,15 +1,15 @@
 ﻿using System;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 /// <summary>
 /// /// SceneStates are classes responsible for managing the state of a scene.
 /// </summary>
 public abstract class SceneState
 {
-	/// <summary>
-	/// Sets any stored objects that take up a lot of memory to null.
-	/// Called when this scene transitions to another scene.
-	/// </summary>
-	public abstract void clear();
 
 	/// <summary>
 	/// Completely destroys/resets every stored value.

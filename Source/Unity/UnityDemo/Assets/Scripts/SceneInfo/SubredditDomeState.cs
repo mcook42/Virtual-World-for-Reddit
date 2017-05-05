@@ -8,6 +8,11 @@ using System.Linq;
 using Graph;
 using RedditSharp;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
 public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 
 	public Node<Subreddit> center;
@@ -88,8 +93,7 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 
 				subs = GameInfo.instance.reddit.GetDefaultSubreddits();
 			}
-
-			int limit = SubredditDomeSetup.innerBuildNum+SubredditDomeSetup.outerBuildNum;
+				
 			//Add the nodes to the graph.
 			foreach(var sub in subs)
 			{
@@ -97,9 +101,6 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 				temp.AddNode(node);
 				temp.AddUndirectedEdge(centerNode,node,1);
 
-				limit--;
-				if(limit<=0)
-					break;
 			}
 
 
@@ -166,15 +167,16 @@ public class SubredditDomeState : SceneStateSingleton<SubredditDomeState> {
 
 	}
 
-    public override void clear()
-    {
-        
-    }
-
+	/// <summary>
+	/// Completely destroys/resets every stored value.
+	/// Usually only called when exiting to the menu screen.
+	/// </summary>
     public override void reset()
     {
 		center = null;
 		house = false;
+		playerSpawnPoint=new Vector3(SubredditDomeSetup.buildingFootprint+6,1,1);
+		playerSpawnRotation = new Quaternion();
     }
 
 }

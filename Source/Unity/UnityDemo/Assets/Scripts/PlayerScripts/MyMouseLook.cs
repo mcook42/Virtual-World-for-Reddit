@@ -1,9 +1,7 @@
-﻿/* MyMouseLook.cs
- * Author: Caleb Whitman
- * January 18, 2016
- * 
- * 
- */
+﻿/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
 
 using System.Collections;
 using System.Collections.Generic;

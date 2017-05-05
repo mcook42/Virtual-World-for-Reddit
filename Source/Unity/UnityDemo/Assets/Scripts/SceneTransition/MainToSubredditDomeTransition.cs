@@ -6,6 +6,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using RedditSharp.Things;
 
+/**Caleb Whitman
+ * calebrwhitman@gmail.com
+ * Spring 2017
+ */ 
+
+/// <summary>
+/// Loads the SubredditDome from the main menu.
+/// </summary>
 class MainToSubredditDomeTransition : SceneTransition
 {
 
