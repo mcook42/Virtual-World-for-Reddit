@@ -2,6 +2,10 @@
 import sparksee
 import DatabaseNames
 
+__author__ = "Caleb Whitman"
+__version__ = "1.0.0"
+__email__ = "calebrwhitman@gmail.com"
+
 #Creates the database "Map" and adds the appropriate types and attributes from the DatabaseNames module.
 def main():
 
