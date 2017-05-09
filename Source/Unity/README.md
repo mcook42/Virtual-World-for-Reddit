@@ -1,6 +1,6 @@
 # UnityProject
 
-This is the Unity Project for 3D World for Reddit. The project is currently under development.
+This is the Unity Project for City for Reddit. The project is currently under development.
  
 ## Project Overview
  
