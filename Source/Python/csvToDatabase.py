@@ -95,18 +95,19 @@ def main():
             table_name = "reddit.post"
 
         # sleep(1.5)
-        # with open(new_filename, 'r', encoding='utf-8') as infile:
-        #     query = "COPY %s FROM %s CSV HEADER"
-        #     print("file opened")
-        #     try:
-        #         path = "'" + directory + '\\' + new_filename + "'"
-        #         print("got to path spec")
-        #         cur.copy_expert(sql=query % (table_name, path), file=infile)
-        #         print("got past copy")
-        #     except Exception as e:
-        #         print("something went wrong with ", new_filename, ": ", e)
-        #         conn.rollback()
-        #         conn.commit()
+        # Copies the data from csv to our postgresql database
+        with open(new_filename, 'r', encoding='utf-8') as infile:
+            query = "COPY %s FROM %s CSV HEADER"
+            print("file opened")
+            try:
+                path = "'" + directory + '\\' + new_filename + "'"
+                print("got to path spec")
+                cur.copy_expert(sql=query % (table_name, path), file=infile)
+                print("got past copy")
+            except Exception as e:
+                print("something went wrong with ", new_filename, ": ", e)
+                conn.rollback()
+                conn.commit()
         cur.close()
         print("Done with: ", new_filename)
 
